@@ -21,10 +21,14 @@
     <![endif]-->
   </head>
   <body>
-  <div class ="col-md-4 col-md-offset-3">
+  <div><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="100px" ></a>
+  </div>
+  <div class ="col-md-3 col-md-offset-4">
     <form action="" method="POST">
       {{ form.csrf_token }}
+
       <center>
+      <label><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"”/ height="100px"></a></label>  <p>
       <label><h1><b>SASA</b></h1></label>
       <br/>
       <label >Sistema de Análise de Situações Acadêmicas</label></center>

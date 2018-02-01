@@ -1,7 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
+<head>
+<script languagem="javascript" >
+function chamar(){
+ var valor = document.getElementById("periodo").value;
+  alert(valor);
+}
+</script>
+</head>
 <div class="jumbotron"><center>
   <br/>
   <br/>
@@ -19,7 +26,7 @@
      <label for="periodo">Período : - </label>
     </td>
     <td align="left">
-     <select name="periodo">
+     <select name="periodo" id="periodo" onclick="chamar()">
      <option value="1periodo">1º Período</option>
      <option value="2periodo">2º Período</option>
      <option value="3periodo">3º Período</option>
