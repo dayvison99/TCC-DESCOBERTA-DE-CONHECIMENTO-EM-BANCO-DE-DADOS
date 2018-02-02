@@ -1,13 +1,4 @@
 import sqlite3
-
-
-
-
-
-
-
-
-
 # Função Delete (excluindo um usuario da tabela)
 conn = sqlite3.connect('data.db')
 cursor = conn.cursor()

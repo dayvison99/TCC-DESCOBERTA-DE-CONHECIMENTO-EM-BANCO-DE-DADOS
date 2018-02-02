@@ -11,14 +11,9 @@ from app.models.tables import User
 def load_user(id):
     return User.query.filter_by(id=id).first()
 
-@app.route("/index")
-@app.route("/")
-def index():
-    return render_template('index.html'
-    )
 
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -31,6 +26,13 @@ def login():
             flash("Login ou Senha Incorretos!")
     return render_template('login.html',
                             form=form)
+
+
+@app.route("/index")
+
+def index():
+    return render_template('index.html')
+
 @app.route("/logout")
 def logout():
     return redirect(url_for("login"))

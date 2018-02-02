@@ -14,15 +14,39 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
 
+    <!--<link rel="stylesheet" type="text/css" href="estilo.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+    .fieldset-border {
+                border: 1px groove #ddd !important;
+                padding: 0 1.4em 1.4em 1.4em !important;
+                margin: 0 0 1.5em 0 !important;
+                -webkit-box-shadow: 0px 0px 0px 0px #000;
+                box-shadow: 0px 0px 0px 0px #000;
+            }
+
+            .fieldset-border .legend-border {
+                font-size: 1.2em !important;
+                text-align: left !important;
+                width: auto;
+                padding: 0 10px;
+                border-bottom: none;
+            }
+    </style>
+
+
+
+
+
+
   </head>
   <body>
 
-    <img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="100px"></a>
+    <img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" ></a>
 
     <div class="container">
       <div class="header clearfix">

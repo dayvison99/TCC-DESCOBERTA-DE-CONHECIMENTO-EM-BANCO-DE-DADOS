@@ -25,7 +25,7 @@
   </div>
   <div class ="col-md-3 col-md-offset-4">
     <form action="" method="POST">
-      {{ form.csrf_token }}
+    {{ form.csrf_token }}
 
       <center>
       <label><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"”/ height="100px"></a></label>  <p>
@@ -40,7 +40,7 @@
         <div class="alert alert-darger" role="alert">
           <ul>
             {% for e in form.errors.username %}
-              <li>{{ e }}</li>
+              <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
             {% endfor %}
           </ul>
         </div>
@@ -53,7 +53,7 @@
         <div class="alert alert-darger" role="alert">
           <ul>
             {% for e in form.errors.password %}
-              <li>{{ e }}</li>
+              <li><strong>Campo Senha Não pode Ser Vazio !</strong></li>
             {% endfor %}
           </ul>
         </div>
