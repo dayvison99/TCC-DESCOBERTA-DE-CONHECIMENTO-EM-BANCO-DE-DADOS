@@ -1,11 +1,9 @@
 from app import app, db, lm
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import login_user, logout_user
 import os
 from flask import Flask, Response, request, abort, render_template_string, send_from_directory
-
 from wtforms import Form
-
 
 from app.models.forms import LoginForm
 from app.models.tables import User
@@ -17,8 +15,6 @@ from app.models.forms import CadastroUsuarioForm
 def load_user(id):
     return User.query.filter_by(id=id).first()
 
-
-
 @app.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -27,13 +23,11 @@ def login():
         if usuario and usuario.senha == form.password.data:
             login_user(usuario)
             flash("Bem Vindo!")
-            flash()
             return redirect(url_for("index"))
         else:
             flash("Login ou Senha Incorretos!")
     return render_template('login.html',
                             form=form)
-
 
 @app.route("/index")
 
@@ -49,9 +43,9 @@ def logout():
 def listagemUsuario():
     return render_template('listagemUsuarios.html')
 
-@app.route("/cadastroUsuario")
+@app.route("/cadastroUsuario", methods=['GET', 'POST'])
 def cadastroUsuario():
-    cadastroform = CadastroUsuarioForm()
+    cadastroform = CadastroUsuarioForm(request.form)
     return render_template('cadastroUsuarios.html', form = cadastroform)
 
 @app.route("/inserirSituacoes")

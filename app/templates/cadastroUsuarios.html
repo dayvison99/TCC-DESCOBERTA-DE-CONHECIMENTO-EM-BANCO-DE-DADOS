@@ -3,60 +3,89 @@
 
 {% block content %}
 
+
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h3> Cadastro de Usuários </h3></legend>
   <form action="Script_do_Formulario.php" method="post">
+
 <!-- DADOS PESSOAIS-->
   {% from "_macro.html" import render_field %}
 
-  <form name="cadastroUsuarios" id="cadastroFomulario" method=post>
+  <form name="cadastroUsuarios" id="cadastroFomulario" method="POST">
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-          {{ render_field(form.nome) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls" >
+          {{ render_field(form.nome , class='form-control', placeholder='Nome',title="Nome") }}
+          {% if form.errors.username %}
+          <div class="alert alert-darger" role="alert">
+            <ul>
+              {% for e in form.errors.username %}
+                <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
+              {% endfor %}
+            </ul>
+          </div>
+            {% endif %}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-            {{ render_field(form.cpf) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls">
+            {{ render_field(form.cpf , class='form-control', placeholder="Cpf",title="CPF") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-          {{ render_field(form.email) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls">
+          {{ render_field(form.email , class='form-control', placeholder="E-mail",title="E-mail") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-          {{ render_field(form.celular) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls">
+          {{ render_field(form.celular , class='form-control', placeholder="Celular",title="Celular") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-          {{ render_field(form.nomeUsuario) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls">
+          {{ render_field(form.nomeUsuario , class='form-control',placeholder="Nome de Usuário",title="Nome de Usuário") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-12 floating-label-form-group controls">
-          {{ render_field(form.senha) }}
+      <div class="form-group col-xs-5 floating-label-form-group controls">
+          {{ render_field(form.senha , class='form-control', placeholder="Senha", title="Senha") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
+    <br>
+    <div id="sucess"></div>
+    <div class="row">
+      <div class="form-group col-xs-3">
+        <button title="Salvar dados do Usuário! " type="submit" class="btn btn-default"> SALVAR </butoon>
+        </div>
+
+
+      <div class="row">
+        <div class="form-group col-xs-1">
+          <button title="Limpar os dados acima!" type="reset" class="btn btn-default"> LIMPAR </butoon>
+          </div>
+        </div>
+      </div>
 
   </form>
 
 </center></div>
 
 </fieldset
+
+
+
+
 
 {% endblock %}
