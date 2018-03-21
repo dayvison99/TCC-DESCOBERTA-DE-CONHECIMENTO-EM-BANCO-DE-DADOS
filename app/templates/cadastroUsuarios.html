@@ -1,85 +1,62 @@
 {% extends 'base.html' %}
+{% block title %} {{ title}} {% endblock %}
 
-{% block content%}
+{% block content %}
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h3> Cadastro de Usuários </h3></legend>
   <form action="Script_do_Formulario.php" method="post">
-
 <!-- DADOS PESSOAIS-->
+  {% from "_macro.html" import render_field %}
 
- <table>
-  <tr >
-     <td>
-      <label for="nome">Nome: </label>
-     </td>
+  <form name="cadastroUsuarios" id="cadastroFomulario" method=post>
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+          {{ render_field(form.nome) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
 
-     <td align="left">
-      <input type="text" name="nome" size="50">
-     </td>
-     <td rowspan="8"><img src="{{ url_for('static', filename='img/branco.png') }}" alt="IFNMG" height="50%"></a><td>
-     <td rowspan="8" ><img src="{{ url_for('static', filename='img/users_cad.png') }}" alt="IFNMG" height="50%"></a></td>
-  </tr>
-  <br/>
-  <tr>
-     <td>
-      <label>CPF:</label>
-     </td>
-     <td align="left">
-      <input type="text" name="cpf" size="9" maxlength="9"> - <input type="text" name="cpf2" size="2" maxlength="2">
-     </td>
-  </tr>
-  <tr>
-   <td>
-    <label for="email">E-mail: </label>
-   </td>
-   <td align="left">
-    <input type="text" name="email" size="50">
-   </td>
-  </tr>
-  <tr>
-     <td>
-      <label>Celular:</label>
-     </td>
-     <td align="left">
-      <input type="text" name="celularddd" size="2" maxlength="2"> - <input type="text" name="celular" size="9" maxlength="9">
-     </td>
-    </tr>
-  <tr>
-   <td>
-    <label for="login">Nome de usuário: </label>
-   </td>
-   <td align="left">
-    <input type="text" name="login" size="50">
-   </td>
-  </tr>
-  <tr>
-   <td>
-    <label for="pass">Senha: </label>
-   </td>
-   <td align="left">
-    <input type="password" name="pass" size="30">
-   </td>
-  <tr><td ><td></tr>
-  </tr>
-  <tr>
-   <td>
-    <label for="passconfirm">Confirme a senha: </label>
-   </td>
-   <td align="left">
-    <input type="password" name="passconfirm" size="30">
-   </td>
-  </tr>
- </table>
-<br />
-<input type="submit" value="Salvar">
-<input type="submit" value="Editar">
-<input type="reset" value="Excluir">
-<input type="reset" value="Voltar">
-</form>
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+            {{ render_field(form.cpf) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+          {{ render_field(form.email) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+          {{ render_field(form.celular) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+          {{ render_field(form.nomeUsuario) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+
+    <div class="row control-group">
+      <div class="form-group col-xs-12 floating-label-form-group controls">
+          {{ render_field(form.senha) }}
+        <p class="help-block text-danger"></p>
+      </div>
+    </div>
+
+  </form>
 
 </center></div>
 
-</fieldset>
+</fieldset
+
 {% endblock %}

@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+  <!--  <link rel="icon" href="../../favicon.ico">-->
 
     <title>Sistema de Analise de Situações Acadêmica</title>
 
@@ -46,17 +46,18 @@
   </head>
   <body>
 
-    <img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" ></a>
+    <div style="float:left;"><a href="www.ifnmg.edu.br"><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" ></a>
+    </div>
 
     <div class="container">
-      <div class="header clearfix">
+      <div class="header clearfix" style="float:right;">
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active" dropzone="move"><a href="{{ url_for('index') }}">Home</a></li>
-            <li role="presentation" class="active"><a href="{{ url_for('cadastroUsuario') }}">Cadastros</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('listagemUsuario') }}">Cadastros</a></li>
             <li role="presentation" class="active"><a href="{{ url_for('inserirSituacoes') }}">Situações</a></li>
             <li role="presentation" class="active"><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
-            <li role="presentation" class="active"><a href="#">Ajuda</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('ajuda') }}">Ajuda</a></li>
             {% if current_user.is_authenticated %}
 
                   <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Logoult</a></li>

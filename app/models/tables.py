@@ -1,6 +1,5 @@
 from app import db
 
-
 class User(db.Model):
     __tablename__ = "usuario"
 
@@ -36,28 +35,30 @@ class User(db.Model):
     def __repr__(self):
         return "<User %r>" % self.username
 
-class Post(db.Model):
-    __tablename__ = "posts"
+class Periodo(db.Model):
+    __tablename__ = "periodo"
 
     id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-    user_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+    nome = db.Column(db.Text)
 
-    user = db.relationship('User', foreign_keys=user_id)
-
-    def __init__(self, content, user_id):
-        self.content = content
-        self.user_id = user_id
+    def __init__(self, nome):
+        self.nome = nome
 
     def __repr__(self):
-        return "<Post %r>" % self.id
+        return "<Periodo %r>" % self.id
 
-class Follow(db.Model):
-    __tablename__ = "follow"
+class Disciplina(db.Model):
+            __tablename__ = "disciplina"
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
-    follower_id = db.Column(db.Integer, db.ForeignKey('usuario.id'))
+            id = db.Column(db.Integer, primary_key=True)
+            nome = db.Column(db.Text)
+            periodo_id = db.Column(db.Integer, db.ForeignKey('periodo.id'))
 
-    user = db.relationship('User', foreign_keys=user_id)
-    follower = db.relationship('User', foreign_keys=follower_id)
+            periodo = db.relationship('Periodo', foreign_keys=periodo_id)
+
+            def __init__(self, nome, periodo_id):
+                self.nome = nome
+                self.periodo_id = periodo_id
+
+            def __repr__(self):
+                return "<Disciplina %r>" % self.id
