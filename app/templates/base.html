@@ -54,7 +54,7 @@
             <li role="presentation" class="active"><a href="{{ url_for('ajuda') }}">Ajuda</a></li>
             {% if current_user.is_authenticated %}
 
-                  <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Logoult</a></li>
+                  <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Sair</a></li>
                   </li>
 
                 </ul>
@@ -72,9 +72,36 @@
 
       <!--saudação ao usuario logado  -->
 
-      {% if current_user.is_authenticated %}
-      ---/ {{ current_user.nome}} /---
-      {% endif %}
+
+      <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="glyphicon glyphicon-user"></i>
+                <span class="hidden-xs">  {% if current_user.is_authenticated %}
+                  {{ current_user.nome}}
+                  {% endif %} <i class="caret"></i></span>
+            </a>
+            <ul class="dropdown-menu">
+
+                <li class="user-footer">
+     <!--                            <div class="pull-left">
+                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                    </div>-->
+                    <div class="pull-left">
+                        <a href="/cajui/alterar-senha" class="btn btn-default btn-flat">Alterar senha</a>
+                    </div>
+                    <div class="pull-right">
+                        <a class="btn btn-default btn-flat" href="#" data-toggle="modal" data-target="#myModal">Sair</a>                       </div>
+                </li>
+            </ul>
+        </li>
+
+
+
+
+
+
+
+
 
 
       <!-- Confimar ser o usuario deseja sair do sitema-->

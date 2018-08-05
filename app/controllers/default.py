@@ -14,10 +14,7 @@ from app.models.forms import CadastroUsuarioForm
 
 @lm.user_loader
 def load_user(id):
-    #return User(id)
     return User.query.filter_by(id=id).first()
-
-
 
 @app.route("/", methods=["GET", "POST"])
 def login():
@@ -34,14 +31,14 @@ def login():
                             form=form)
 
 @app.route("/cadastroUsuario", methods=["GET", "POST"])
+@login_required
 def cadastroUsuario():
     cadastroform = CadastroUsuarioForm()
     return render_template('cadastroUsuarios.html',
                             cadastroform = cadastroform)
 
-
 @app.route("/index")
-
+@login_required
 def index():
     return render_template('index.html')
 
@@ -51,24 +48,23 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-
-#def logout():
-#    return redirect(url_for("login"))
-#    logout_user()
-
 @app.route("/listagemUsuario")
+@login_required
 def listagemUsuario():
     return render_template('listagemUsuarios.html')
 
 
 @app.route("/inserirSituacoes")
+@login_required
 def inserirSituacoes():
     return render_template('inserirSituacoes.html')
 
 @app.route("/relatorios")
+@login_required
 def relatorios():
     return render_template('relatorios.html')
 
 @app.route("/ajuda")
+@login_required
 def ajuda():
         return render_template('')
