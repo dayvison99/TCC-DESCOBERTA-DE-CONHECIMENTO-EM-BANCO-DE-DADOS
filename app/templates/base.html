@@ -7,8 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-  <!--  <link rel="icon" href="../../favicon.ico">-->
-
+   <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <title>Sistema de Analise de Situações Acadêmica</title>
 
     <!-- Bootstrap core CSS -->
@@ -37,12 +36,6 @@
                 border-bottom: none;
             }
     </style>
-
-
-
-
-
-
   </head>
   <body>
 
@@ -51,6 +44,7 @@
 
     <div class="container">
       <div class="header clearfix" style="float:right;">
+
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active" dropzone="move"><a href="{{ url_for('index') }}">Home</a></li>
@@ -75,6 +69,13 @@
         </div>
       </div>
       </nav>
+
+      <!--saudação ao usuario logado  -->
+
+      {% if current_user.is_authenticated %}
+      ---/ {{ current_user.nome}} /---
+      {% endif %}
+
 
       <!-- Confimar ser o usuario deseja sair do sitema-->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

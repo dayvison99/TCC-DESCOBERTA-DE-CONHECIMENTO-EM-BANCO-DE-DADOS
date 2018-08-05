@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
-{% block title %} {{ title}} {% endblock %}
 
 {% block content %}
-
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h3> Cadastro de Usuários </h3></legend>
-  <form action="Script_do_Formulario.php" method="post">
-<!-- DADOS PESSOAIS-->
-  {% from "_macro.html" import render_field %}
+  <form action="#" method="post">
 
-  <form name="cadastroUsuarios" id="cadastroFomulario" method=post>
+  {{ cadastroform.csrf_token }}
+<!-- DADOS PESSOAIS-->
+  <!--{% from "_macro.html" import render_field %}
+
+  <form name="cadastroUsuarios" id="cadastroFomulario" method=post>-->
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls" >
-          {{ render_field(form.nome , class='form-control', placeholder='Nome', title="Nome") }}
-          {% if form.errors.username %}
+          {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome', title="Nome") }}
+          {% if cadastroform.errors.nome %}
           <div class="alert alert-darger" role="alert">
             <ul>
-              {% for e in form.errors.username %}
+              {% for e in cadatroform.errors.nome %}
                 <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
               {% endfor %}
             </ul>
@@ -30,35 +30,49 @@
 
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls">
-            {{ render_field(form.cpf , class='form-control', placeholder="Cpf", title="CPF") }}
+            {{ render_field(cadastroform.cpf, class='form-control',pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
+            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",placeholder="Cpf", OnKeyPress="formatar('###.###.###-##', this)")}}
+            {% if cadastroform.errors.cpf %}
+
+            <div class="alert alert-darger" role="alert">
+              <ul>
+                {% for e in cadastroform.errors.cpf %}
+                  <li><strong>Campo CPF Não pode Ser Vazio !</strong></li>
+                {% endfor %}
+            {% endif %}
+              <!--  <input type="text"  pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder=" Somente Numeros" name="username"
+                id="idDoInput" required maxlength="14" OnKeyPress="formatar('###.###.###-##', this)" pattern="[0-9]+$"/>
+-->
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls">
-          {{ render_field(form.email , class='form-control', placeholder="E-mail",title="E-mail") }}
+          {{ render_field(cadastroform.email , class='form-control', placeholder="E-mail",title="E-mail") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls">
-          {{ render_field(form.celular , class='form-control', placeholder="Celular", title="Celular") }}
+          {{ render_field(cadastroform.celular , class='form-control', placeholder="Celular", title="Celular") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls">
-          {{ render_field(form.nomeUsuario , class='form-control',placeholder="Nome de Usuário", title="Nome de Usuário") }}
+          {{ render_field(cadastroform.nomeUsuario , class='form-control',placeholder="Nome de Usuário", title="Nome de Usuário") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
 
     <div class="row control-group">
       <div class="form-group col-xs-5 floating-label-form-group controls">
-          {{ render_field(form.senha , class='form-control', placeholder="Senha", title="Senha") }}
+
+<!--<input type="text"  pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder=" Somente Numeros" name="username" id="idDoInput" required maxlength="14"
+-->{{ render_field(cadastroform.senha, class='form-control', placeholder="Senha", title="Senha") }}
         <p class="help-block text-danger"></p>
       </div>
     </div>
@@ -66,7 +80,7 @@
     <div id="sucess"></div>
     <div class="row">
       <div class="form-group col-xs-3">
-        <button title="Salvar dados do Usuário! " type="submit" class="btn btn-default"> SALVAR </butoon>
+        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-default">
         </div>
 
       <div class="row">
@@ -76,10 +90,84 @@
         </div>
       </div>
 
+
+
   </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-warning">
+      <ul class=flashes>
+        {% for message in messages %}
+          <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+
+
+
+
+    <div class="form-group">
+      <p>
+
+      <label class="glyphicon glyphicon-user"> Usuário :</label>
+
+      {{ cadastroform.nome(class="form-control",placeholder="Digite o Usuário")}}
+      {% if cadastroform.errors.nome %}
+
+
+
+
+      <div class="alert alert-darger" role="alert">
+        <ul>
+          {% for e in cadastroform.errors.nome %}
+            <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    <div class="form-group">
+      <label class="glyphicon glyphicon-lock">  Senha :</label>
+      {{ cadastroform.senha(class="form-control",placeholder="Digite a Senha") }}
+      {% if cadastroform.errors.senha %}
+      <div class="alert alert-darger" role="alert">
+        <ul>
+          {% for e in cadastroform.errors.senha %}
+            <li><strong>Campo Senha Não pode Ser Vazio !</strong></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+    </div>
+    <div class="checkbox">
+      <label>
+        {{ cadastroform.remember_me }} Mantenha-me conectado
+      </label>
+    </div>
+      <center>
+        <button title="Entrar no Sistema" type="submit" class="btn btn-primary"> Entrar</button>
+        <a button title="Sair da Pagina" class="btn btn-primary" href="https://www.ifnmg.edu.br/"> Sair </a>
+  </form>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-warning">
+      <ul class=flashes>
+        {% for message in messages %}
+          <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endwith %}
+  </div>
+
+
 
 </center></div>
 
 </fieldset
+
 
 {% endblock %}

@@ -7,9 +7,11 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
 
     <title>Sistema de Analise de Situações Acadêmica</title>
+
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
@@ -20,52 +22,65 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
-  <div><a href="www.ifnmg.edu.br"><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG" height="120px" ></a>
-  </div>
-  <div class ="col-md-3 col-md-offset-4">
-    <form action="" method="POST">
-    {{ form.csrf_token }}
+  <body >
+    <a href="https://www.ifnmg.edu.br/"><img src="{{ url_for('static', filename='img/ifnmg.png') }}" alt="IFNMG" height="120px" ></a>
+    <div class="login-box-body login-header text-center">
 
+      <div class="login-box-body">
+        <div class ="col-md-3 col-md-offset-4" >
+          <div class="jumbotron"><center>
+            <form action="" method="POST">
+              {{ form.csrf_token }}
+              <center>
+                <label><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"” height="80px"></a></label>
+                <img src="{{ url_for('static', filename='img/tads2.png') }}" alt="IFNMG" height="80px" ></p></p>
+                  <br/>
+                  <div class="login-box-body">
+                    <p class="login-box-msg" >Sistema de Análise de Situações Acadêmicas<br>
+                      <span><font color="red"></font></span>
+                  </div>
+                   </p>
+              </center>
+              </p>
+              </p>
+
+          <div class="form-group">
+                  <p>
+                    <div class="form-group has-feedback">
+                      <div class="form-group field-loginform-username required">
+                        {{ form.username(class="form-control",id="loginform-username",placeholder="Usuário", )}}
+                        {% if form.errors.username %}
+                        <div class="alert alert-darger" role="alert">
+                          <ul>
+                  {         {% for e in form.errors.username %}
+                              <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
+                            {% endfor %}
+                          </ul>
+                        </div>
+                        {% endif %}
+
+                      </div>
+                      <span class="glyphicon glyphicon-user form-control-feedback"></span>
+                    </div>
+          <div class="form-group has-feedback">
+            <div class="form-group field-loginform-password required">
+              {{ form.password(class="form-control",placeholder="Digite a Senha") }}
+              {% if form.errors.password %}
+              <div class="alert alert-darger" role="alert">
+                <ul>
+                  {% for e in form.errors.password %}
+                    <li><strong>Campo Senha Não pode Ser Vazio !</strong></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+            </div>
+              <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+         </div>
+      </div>
       <center>
-      <label><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"”/ height="100px"></a></label>  <p>
-      <label><h1><b>SASA</b></h1></label>
-      <br/>
-      <label >Sistema de Análise de Situações Acadêmicas</label></center>
-      <div class="form-group">
-        <p>
-        <label>Login :</label>
-        {{ form.username(class="form-control",placeholder="Digite o Usuário")}}
-        {% if form.errors.username %}
-        <div class="alert alert-darger" role="alert">
-          <ul>
-            {% for e in form.errors.username %}
-              <li><strong>Campo Usuário Não pode Ser Vazio !</strong></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-      </div>
-      <div class="form-group">
-        <label>Senha :</label>
-        {{ form.password(class="form-control",placeholder="Digite a Senha") }}
-        {% if form.errors.password %}
-        <div class="alert alert-darger" role="alert">
-          <ul>
-            {% for e in form.errors.password %}
-              <li><strong>Campo Senha Não pode Ser Vazio !</strong></li>
-            {% endfor %}
-          </ul>
-        </div>
-        {% endif %}
-      </div>
-      <div class="checkbox">
-        <label>
-          {{ form.remember_me }} Mantenha-me conectado
-        </label>
-      </div>
-      <button title="Entrar no Sistema" type="submit" class ="btn btn-default"> Entrar</button>
-      <button title="Sair da Pagina" class ="btn btn-default" ><a href="www.ifnmg.edu.br">Sair</a></button>
+          <button title="Entrar no Sistema" type="submit" class="btn btn-primary"> Entrar</button>
+          <a href="/cajui/alterar-senha">Alterar minha senha</a><br>
     </form>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -79,5 +94,8 @@
       {% endif %}
     {% endwith %}
   </div>
+</div>
+</div>
+</div>
 </body>
 </html>

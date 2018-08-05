@@ -1,4 +1,4 @@
-#!/home/dayvison/AULA_FLASK/venv/bin/python
+#!/home/dayvison/TCC/venv/bin/python
 
 import sys
 import getopt
