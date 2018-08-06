@@ -9,6 +9,7 @@ class User(db.Model):
     nome = db.Column(db.String)
     celular = db.Column(db.Integer, unique=True)
     email = db.Column(db.String, unique=True)
+    tipo = db.Column(db.String)
 
     @property
     def is_authenticated(self):
@@ -31,6 +32,7 @@ class User(db.Model):
         self.nome = nome
         self.celular = celular
         self.email = email
+        self.tipo = tipo
 
     def __repr__(self):
         return "<User %r>" % self.username
