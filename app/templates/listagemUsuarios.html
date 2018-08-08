@@ -4,45 +4,43 @@
 <div class="jumbotron">
 <center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h3> Usuários Cadastrados </h3></legend>
-  <form action="Script_do_Formulario.php" method="post">
+  <legend class="legend-border"><h4> Usuários Cadastrados </h4></legend>
+  <form action="listagemUsuario" method="post">
 <!-- DADOS PESSOAIS-->
+  <table class="table">
+    <thead>
+      <tr class="info">
+        <th>Cód Usuario</th>
+        <th>Nome</th>
+        <th>Celular</th>
+        <th>E-mail</th>
+      </tr>
 
- <table cellspacing="10">
-  <tr >
-     <td>
-      <label for="nome">Nome: </label>
-     </td>
-      <td>
-      <input type="text" name="nome" size="50">
-      <input type="submit" value="Pesquisar">
-     </td>
-     <td rowspan="8"><img src="{{ url_for('static', filename='img/branco.png') }}" alt="IFNMG" height="60%"></a><td>
-     <td rowspan="8" ><img src="{{ url_for('static', filename='img/users_cad.png') }}" alt="IFNMG" height="40%"></a></td>
-   </tr>
-  <tr border-bottom >
-   <td style="border-bottom">
-    <label for="id">ID </label>
-   </td>
-   <td >
-    <label for="nome">Nome</label>
-   </td>
-  </tr>
-  <tr>
-   <td >
-    <label for="id">01 </label>
-   </td>
-   <td>
-    <label for="nome">teste</label>
-   </td>
-  </tr>
-</table>
+    {%for usuario in usuario %}
+
+      <tr class="success">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.celular }}</td>
+        <td>{{ usuario.email }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+
+    </tr>
+      </table>
   <br />
-  <a href='{{ url_for('cadastroUsuario') }}'/> <button type="button">Novo</button> </a>
-
-  <input type="submit" value="Editar">
-  <input type="submit" value="Excluir">
-  <input type="submit" value="Voltar">
+    <div id="sucess"></div>
+  <div class="row">
+    <div class="form-group col-xs-6">
+      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button">Novo</button> </a>
+      <input title="Editar dados do Usuário! " type="submit" value="Editar" class="btn btn-primary">
+      <input title="Excluir dados do Usuário! " type="submit" value="Excluir" class="btn btn-primary">
+      <!--<input title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">-->
+      <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
+    </div>
+  </div>
   </form>
      </form>
 

@@ -5,7 +5,6 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
 
-
 app = Flask(__name__)
 app.config.from_object('config')
 

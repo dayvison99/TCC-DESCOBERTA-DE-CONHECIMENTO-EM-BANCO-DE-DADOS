@@ -1,0 +1,53 @@
+{% extends 'basePadrao.html' %}
+
+{% block content%}
+<div class="jumbotron">
+<center>
+<fieldset class="fieldset-border">
+  <legend class="legend-border"><h3> Usuários Cadastrados </h3></legend>
+  <form action="Script_do_Formulario.php" method="post">
+<!-- DADOS PESSOAIS-->
+
+ <table cellspacing="10">
+  <tr >
+     <td>
+      <label for="nome">Nome: </label>
+     </td>
+      <td>
+      <input type="text" name="nome" size="50">
+      <input type="submit" value="Pesquisar">
+     </td>
+     <td rowspan="8"><img src="{{ url_for('static', filename='img/branco.png') }}" alt="IFNMG" height="60%"></a><td>
+     <td rowspan="8" ><img src="{{ url_for('static', filename='img/users_cad.png') }}" alt="IFNMG" height="40%"></a></td>
+   </tr>
+  <tr border-bottom >
+   <td style="border-bottom">
+    <label for="id">ID </label>
+   </td>
+   <td >
+    <label for="nome">Nome</label>
+   </td>
+  </tr>
+  <tr>
+   <td >
+    <label for="id">01 </label>
+   </td>
+   <td>
+    <label for="nome">teste</label>
+   </td>
+  </tr>
+</table>
+  <br />
+  <a href='{{ url_for('cadastroUsuario') }}'/> <button type="button">Novo</button> </a>
+
+  <input type="submit" value="Editar">
+  <input type="submit" value="Excluir">
+  <input type="submit" value="Voltar">
+  </form>
+     </form>
+
+</center></div>
+
+</fieldset>
+</div>
+{% endblock %}

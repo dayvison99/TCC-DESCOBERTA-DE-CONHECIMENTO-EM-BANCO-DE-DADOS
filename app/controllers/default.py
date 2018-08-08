@@ -11,6 +11,8 @@ from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
 
 
+
+
 @lm.user_loader
 def load_user(id):
     return User.query.filter_by(id=id).first()
@@ -29,12 +31,8 @@ def login():
         if usuario and usuario.senha == form.password.data:
             login_user(usuario)
             flash("Bem Vindo!")
-            #tipoUser = User.query.filter_by(tipo=form.tipo.data).first()
-            if usuario.tipo == "admin":
-                return redirect(url_for('index'))
-            else:
-                return redirect(url_for('cadastroUsuario'))
-            if not is_safe_url(next):
+            return redirect(url_for('index'))
+            if not is_safe_url('login.html'):
                 return flask.abort(400)
         else:
             flash("Login ou Senha Incorretos!")
@@ -46,29 +44,16 @@ def login():
 def cadastroUsuario():
     cadastroform = CadastroUsuarioForm()
     if request.method == 'POST' and cadastroform.validate():
-        user = User(cadastroform.name.data, cadastroform.cpf.data,cadastroform.email.data,
-        cadastroform.celular.data,cadastroform.nomeUsuario.data,
-                    cadastroform.senha.data)
-        db_session.add(user)
+        user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+        cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+        #,cadastroform.confirm.data)
+        db.session.add(user)
+        db.commit()
         flash('Thanks for registering')
-        return redirect(url_for('login'))
+        return redirect(url_for('listagemUsuario'))
     return render_template('cadastroUsuarios.html',
                             cadastroform = cadastroform)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegistrationForm(request.form)
-    if request.method == 'POST' and form.validate():
-        user = User(form.username.data, form.email.data,
-                    form.password.data)
-        db_session.add(user)
-        flash('Thanks for registering')
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
-
-
-
-
+#Usuários admin
 @app.route("/index")
 @login_required
 def index():
@@ -83,8 +68,8 @@ def logout():
 @app.route("/listagemUsuario")
 @login_required
 def listagemUsuario():
-    return render_template('listagemUsuarios.html')
-
+    usuario = User.query.all()
+    return render_template('listagemUsuarios.html',usuario=usuario)
 
 @app.route("/inserirSituacoes")
 @login_required

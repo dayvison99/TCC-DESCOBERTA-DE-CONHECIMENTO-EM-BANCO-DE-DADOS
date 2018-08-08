@@ -4,129 +4,126 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h3> Cadastro de Usuários </h3></legend>
-  <form action="" method="post">
+  <legend class="legend-border"><h4> Cadastro de Usuários </h4></legend>
+  <form action="cadastroUsuario" method="post" class="form">
 
   {{ cadastroform.csrf_token }}
 <!-- DADOS PESSOAIS-->
   {% from "_macro.html" import render_field %}
+  <div class="row control-group">
+    <div class="form-group col-xs-3 floating-label-form-group controls" >
+
+    </div>
+  </div>
     <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls" >
+      <div class="form-group col-xs-3 floating-label-form-group controls" >
+
           {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8") }}
           {% if cadastroform.errors.nome %}
-          <div class="alert alert-darger" role="alert">
-            <ul>
-              {% for e in cadastroform.errors.nome %}
-                <li><strong>* Campos Obrigatórios !</strong></li>
+          <p class="help-block text-danger"></p>
+             {% for e in cadastroform.errors.nome %}
+                <strong>* Campo Obrigatório !</strong>
               {% endfor %}
-            </ul>
-          </div>
             {% endif %}
         <p class="help-block text-danger"></p>
       </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-2 floating-label-form-group controls">
+              {{ render_field(cadastroform.cpf, class='form-control',pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
+              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
+              {% if cadastroform.errors.cpf %}
+                <p class="help-block text-danger"></p>
+                  {% for e in cadastroform.errors.cpf %}
+                    <strong>* Campo Obrigatório ! </strong>
+                  {% endfor %}
+              {% endif %}
+              <p class="help-block text-danger"></p>
+      </div>
     </div>
+  </div>
 
     <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
-            {{ render_field(cadastroform.cpf, class='form-control',pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
-            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
-            {% if cadastroform.errors.cpf %}
-            <div class="alert alert-darger" role="alert">
-              <ul>
-                {% for e in cadastroform.errors.cpf %}
-                <!--  <li><strong>Campo CPF Não pode Ser Vazio !</strong></li> -->
-                {% endfor %}
-            {% endif %}
-        <p class="help-block text-danger"></p>
-      </div>
-    </div>
-    <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
+      <div class="form-group col-xs-3 floating-label-form-group controls">
           {{ render_field(cadastroform.email , class='form-control', placeholder="E-mail *",title="E-mail") }}
           {% if cadastroform.errors.email %}
-        <p class="help-block text-danger"></p>
-        <ul>
-          {% for e in cadastroform.errors.email %}
-          <!--  <li><strong>Campo E-mail Não pode Ser Vazio !</strong></li>-->
-          {% endfor %}
-      {% endif %}
-  <p class="help-block text-danger"></p>
+          <p class="help-block text-danger"></p>
+            {% for e in cadastroform.errors.email %}
+              <strong>* Campo Obrigatório !</strong>
+            {% endfor %}
+          {% endif %}
+          <p class="help-block text-danger"></p>
   </div>
-  </div>
-
+  <div class="row control-group">
+    <div class="form-group col-xs-2 floating-label-form-group controls">
+        {{ render_field(cadastroform.celular , class='form-control', placeholder="Celular *", title="DDD+9+Número", maxlength="11",minlength="11", pattern="[0-9]{2}[0-9]{4,6}[0-9]{3,4}") }}
+        {% if cadastroform.errors.celular %}
+      <p class="help-block text-danger"></p>
+      {% for e in cadastroform.errors.celular %}
+          <strong>* Campo Obrigatório !</strong>
+        {% endfor %}
+    {% endif %}
+<p class="help-block text-danger"></p>
+</div>
+</div>
+</div>
     <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
-          {{ render_field(cadastroform.celular , class='form-control', placeholder="Celular *", title="DD9XXXXXXXX", maxlength="11",minlength="11", pattern="[0-9]{2}[0-9]{4,6}[0-9]{3,4}") }}
-          {% if cadastroform.errors.celular %}
-        <p class="help-block text-danger"></p>
-        <ul>
-          {% for e in cadastroform.errors.celular %}
-            <!--<li><strong>Campo obrigatorio !</strong></li>-->
-          {% endfor %}
-      {% endif %}
-  <p class="help-block text-danger"></p>
-  </div>
-  </div>
-    <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
+      <div class="form-group col-xs-3 floating-label-form-group controls">
           {{ render_field(cadastroform.nomeUsuario , class='form-control',placeholder="Nome de Usuário *", title="Nome de Usuário") }}
           {% if cadastroform.errors.nomeUsuario %}
         <p class="help-block text-danger"></p>
-        <ul>
           {% for e in cadastroform.errors.nomeUsuario %}
-          <!--  <li><strong>Campo obrigatorio !</strong></li>-->
+            <strong>Campo obrigatorio !</strong>
           {% endfor %}
       {% endif %}
   <p class="help-block text-danger"></p>
   </div>
+  <div class="row control-group">
+    <div class="form-group col-xs-2 floating-label-form-group controls">
+        {{ render_field(cadastroform.tipo , class='form-control',placeholder="Tipo Permissões *", title="Tipo Usuário") }}
+        {% if cadastroform.errors.tipo %}
+      <p class="help-block text-danger"></p>
+        {% for e in cadastroform.errors.tipo %}
+          <strong>Campo obrigatorio !</strong>
+        {% endfor %}
+    {% endif %}
+<p class="help-block text-danger"></p>
+</div>
+</div>
   </div>
-
     <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
+      <div class="form-group col-xs-2 floating-label-form-group controls">
         {{ render_field(cadastroform.senha, class='form-control', placeholder="Senha *", title="Senha") }}
         {% if cadastroform.errors.senha %}
         <p class="help-block text-danger"></p>
-        <p class="help-block text-danger"></p>
-        <ul>
         {% for e in cadastroform.errors.senha %}
-          <!--<li><strong>Campo obrigatorio !</strong></li>-->
+          <strong>* Campo Obrigatório !</strong>
         {% endfor %}
     {% endif %}
   <p class="help-block text-danger"></p>
   </div>
-  </div>
-    <div class="row control-group">
-      <div class="form-group col-xs-5 floating-label-form-group controls">
-        {{ render_field(cadastroform.confirma, class='form-control', placeholder="Repita a senha *", title="Repita a Senha") }}
-        {% if cadastroform.errors.confirma %}
-          <p class="help-block text-danger"></p>
-          <ul>
-          {% for e in cadastroform.errors.confirm %}
-            <!--<li><strong>Campo obrigatorio !</strong></li>-->
-          {% endfor %}
-      {% endif %}
-  <p class="help-block text-danger"></p>
+  <div class="row control-group">
+   <div class="form-group col-xs-2 floating-label-form-group controls">
+      {{ render_field(cadastroform.confirm, class='form-control', placeholder="Repita a senha *", title="Repita a Senha") }}
+      {% if cadastroform.errors.confirm %}
+        <p class="help-block text-danger"></p>
+        {% for e in cadastroform.errors.confirm %}
+          <strong>* senha erra !</strong>
+        {% endfor %}
+    {% endif %}
+<p class="help-block text-danger"></p>
 </div>
-  </div>
-
-
-    <br>
+</div>
+</div>
     <div id="sucess"></div>
     <div class="row">
-      <div class="form-group col-xs-3">
-        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-default">
-        </div>
-
-      <div class="row">
-        <div class="form-group col-xs-1">
-          <button title="Limpar os dados acima!" type="reset" class="btn btn-default"> LIMPAR </butoon>
-          </div>
-        </div>
-
+      <div class="form-group col-xs-6">
+        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-primary">
+        <input title="Editar dados do Usuário! " type="submit" value="Editar" class="btn btn-primary">
+        <input title="Excluir dados do Usuário! " type="submit" value="Excluir" class="btn btn-primary">
+        <!--<input title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">-->
+        <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
       </div>
-
-
-
+    </div>
   </form>
   {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -139,7 +136,27 @@
     </div>
     {% endif %}
   {% endwith %}
-
+  <!-- Confimar ser o usuario deseja sair sem salvar-->
+  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="myModalLabel">Atenção</h4>
+    </div>
+    <div class="modal-body">
+      Certeza que deseja voltar?</p>
+    Os dados não salvos serão perdidos!
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
+      <a class="btn btn-primary" href="{{ url_for('listagemUsuario') }}" value=" /listagemUsuario "> Sim </a>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!--Fim do codigo-->
 </center></div>
 
 </fieldset

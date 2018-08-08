@@ -4,12 +4,15 @@ class User(db.Model):
     __tablename__ = "usuario"
 
     id = db.Column(db.Integer, primary_key=True)
-    nomeUsuario = db.Column(db.String, unique=True)
-    senha = db.Column(db.String)
     nome = db.Column(db.String)
+    #confirma = db.Column(db.String)
+    cpf = db.Column(db.String)
+
     celular = db.Column(db.Integer, unique=True)
     email = db.Column(db.String, unique=True)
+    nomeUsuario = db.Column(db.String, unique=True)
     tipo = db.Column(db.String)
+    senha = db.Column(db.String)
 
     @property
     def is_authenticated(self):
@@ -26,16 +29,17 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
-    def __init__(self, nomeUsuario, senha, nome, celular, email):
-        self.nomeUsuario = nomeUsuario
-        self.senha = senha
+    def __init__(self, nome,cpf, email,celular, tipo,nomeUsuario, senha):
         self.nome = nome
+        self.cpf = cpf
         self.celular = celular
         self.email = email
+        self.nomeUsuario = nomeUsuario
         self.tipo = tipo
+        self.senha = senha
 
     def __repr__(self):
-        return "<User %r>" % self.username
+        return "<User %r>" % self.nomeUsuario
 
 class Periodo(db.Model):
     __tablename__ = "periodo"

@@ -1,0 +1,41 @@
+{% extends 'basePadrao.html' %}
+
+{% block content%}
+
+<div class="jumbotron"><center>
+<fieldset class="fieldset-border">
+<table>
+<colgroup span="5"></colgroup>
+<legend class="legend-border"><h3> Relatórios </h3></legend>
+<tr>
+  <td>
+    <fieldset class="fieldset-border">
+      <legend class="legend-border">Usuários Cadastrados</legend>
+      <center><img src="{{ url_for('static', filename='img/usuarios.png') }}" alt="IFNMG"”/ height="120px" ></a>
+      </fieldset>
+    </td>
+  <td>
+    <fieldset class="fieldset-border">
+      <legend class="legend-border">Alunos com Maior Riscos de Evasão</legend>
+      <center><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="120px" ></a>
+    </fieldset>
+  </td>
+  <td>
+      <fieldset class="fieldset-border">
+        <legend class="legend-border">Disciplinas com Maior Evasão</legend>
+    <center><img src="{{ url_for('static', filename='img/disciplinas.png') }}" alt="IFNMG"”/ height="120px" ></a>
+    </fieldset>
+</td>
+</table>
+</legend>
+</fieldset>
+</div>
+</center></div>
+
+
+
+
+
+
+
+{% endblock %}
