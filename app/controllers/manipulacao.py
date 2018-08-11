@@ -7,14 +7,17 @@ id_Usuario = 1
 
 # funcao responsavel por cadastrar no banco de dados
 def inserirUsuarios():
-    cursor.execute("""
-        INSERT INTO temperature
-        (ususarios)
-        VALUES (?)
-    """, (message,))
-
-    conn.commit()
-    conn.close()
+    adastroform = CadastroUsuarioForm()
+    if request.method == 'POST' and cadastroform.validate():
+        user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+        cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+        #,cadastroform.confirm.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Usuário Cadastro com Sucesso !')
+        return redirect(url_for('listagemUsuario'))
+    return render_template('cadastroUsuarios.html',
+                            cadastroform = cadastroform)
 
 
 

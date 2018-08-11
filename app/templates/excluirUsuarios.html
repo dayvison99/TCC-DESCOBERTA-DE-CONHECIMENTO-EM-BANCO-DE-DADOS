@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content%}
+<div class="jumbotron">
+<center>
+<fieldset class="fieldset-border">
+  <legend class="legend-border"><h4> Excluir Cadastros </h4></legend>
+  <form action="listagemUsuario" method="post">
+<!-- DADOS PESSOAIS-->
+  <table class="table">
+    <thead>
+      <tr class="info">
+        <th>Cód Usuario</th>
+        <th>Nome</th>
+        <th>Celular</th>
+        <th>E-mail</th>
+        <th></th>
+      </tr>
+
+    {%for usuario in usuario %}
+
+      <tr class="success">
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nome }}</td>
+        <td>{{ usuario.celular }}</td>
+        <td>{{ usuario.email }}</td>
+        <td><a href="/excluirUsuario/{{ usuario.id }}"><button title="Excluir dados do Usuário!" class="btn btn-primary" type="button">Excluir</button></a></td>
+      </tr>
+      {% endfor %}
+
+      </tbody>
+  </table>
+
+    </tr>
+      </table>
+  <br />
+    <div id="sucess"></div>
+  <div class="row">
+    <div class="form-group col-xs-9">
+      <a href='{{ url_for('listagemUsuario') }}'/><button title="Voltar Listagem de usuarios!" class="btn btn-primary" type="button">Voltar</button></a></div>
+  </div>
+  </form>
+     </form>
+
+</center></div>
+
+</fieldset>
+</div>
+{% endblock %}

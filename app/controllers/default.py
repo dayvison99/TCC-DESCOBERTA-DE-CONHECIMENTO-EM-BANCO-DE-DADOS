@@ -11,8 +11,6 @@ from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
 
 
-
-
 @lm.user_loader
 def load_user(id):
     return User.query.filter_by(id=id).first()
@@ -23,6 +21,65 @@ lm.session_protection = "strong"
 
 lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 
+#CRUD
+
+
+@app.route("/excluirUsuario/<int:id>")
+@login_required
+def excluirUsuario(id):
+    usuario = User.query.filter_by(id=id).first()
+    #excluirUsuarioform = CadastroUsuarioForm()
+    db.session.delete(usuario)
+    db.session.commit()
+
+    usuarios = User.query.all()
+    flash ("Dados Excluidos com Sucesso!")
+    return redirect(url_for('listagemUsuario'))
+    #return render_template("listagemUsuarios.html",usuario=usuario)
+#    excluirUsuarioform = CadastroUsuarioForm()
+#    if request.method == 'POST' and excluirUsuarioform.validate():
+#        user = User(excluirUsuarioform.nome.data,excluirUsuarioform.cpf.data,excluirUsuarioform.email.data,excluirUsuarioform.celular.data,
+#        excluirUsuarioform.nomeUsuario.data,excluirUsuarioform.tipo.data,excluirUsuarioform.senha.data)
+#        #,cadastroform.confirm.data)
+#        db.session.delete(user)
+#        db.session.commit()
+#        flash('Cadastro Excluido com Sucesso !')
+##    return render_template('cadastroUsuarios.html',
+                            #cadastroform = cadastroform)
+
+
+@app.route("/cadastroUsuario", methods=["GET", "POST"])
+@login_required
+def cadastroUsuario():
+    cadastroform = CadastroUsuarioForm()
+    if request.method == 'POST' and cadastroform.validate():
+        user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+        cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+        #,cadastroform.confirm.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Usuário Cadastro com Sucesso !')
+        return redirect(url_for('listagemUsuario'))
+    return render_template('cadastroUsuarios.html',
+                            cadastroform = cadastroform)
+
+@app.route("/atualizarUsuario", methods=["GET", "POST"])
+@login_required
+def atualizarUsuario(id = id):
+    cadastroform = CadastroUsuarioForm()
+    if request.method == 'POST' and cadastroform.validate():
+        user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+        cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+        #,cadastroform.confirm.data)
+        #db.session.add(user)
+        db.session.commit()
+        flash('Cadastro Atualizado com Sucesso !')
+        return redirect(url_for('listagemUsuario'))
+    return render_template('atualizaUsuarios.html',
+                            cadastroform = cadastroform)
+
+
+#Usuários admin
 @app.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -39,21 +96,6 @@ def login():
     return render_template('login.html',
                             form=form)
 
-@app.route("/cadastroUsuario", methods=["GET", "POST"])
-@login_required
-def cadastroUsuario():
-    cadastroform = CadastroUsuarioForm()
-    if request.method == 'POST' and cadastroform.validate():
-        user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
-        cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
-        #,cadastroform.confirm.data)
-        db.session.add(user)
-        db.commit()
-        flash('Thanks for registering')
-        return redirect(url_for('listagemUsuario'))
-    return render_template('cadastroUsuarios.html',
-                            cadastroform = cadastroform)
-#Usuários admin
 @app.route("/index")
 @login_required
 def index():
@@ -70,6 +112,12 @@ def logout():
 def listagemUsuario():
     usuario = User.query.all()
     return render_template('listagemUsuarios.html',usuario=usuario)
+
+@app.route("/excluir_Usuario")
+@login_required
+def excluir_Usuario():
+    usuario = User.query.all()
+    return render_template('excluirUsuarios.html',usuario=usuario)
 
 @app.route("/inserirSituacoes")
 @login_required

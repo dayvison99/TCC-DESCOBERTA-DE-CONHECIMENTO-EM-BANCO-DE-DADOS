@@ -52,7 +52,7 @@
             <li role="presentation" class="active"><a href="{{ url_for('inserirSituacoes') }}">Situações</a></li>
             <li role="presentation" class="active"><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
             <li role="presentation" class="active"><a href="{{ url_for('ajuda') }}">Ajuda</a></li>
-            {% if current_user.is_authenticated %}
+
 
                   <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Sair</a></li>
                   </li>
@@ -65,9 +65,9 @@
             {% endif %}
           </ul>
         </nav>
-
         </div>
       </div>
+        {% if current_user.is_authenticated %}
       </nav>
 {% endif %}
 

@@ -3,12 +3,10 @@ from app import db
 class User(db.Model):
     __tablename__ = "usuario"
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement = True)
     nome = db.Column(db.String)
-    #confirma = db.Column(db.String)
-    cpf = db.Column(db.String)
-
-    celular = db.Column(db.Integer, unique=True)
+    cpf = db.Column(db.String,unique=True)
+    celular = db.Column(db.String, unique=True)
     email = db.Column(db.String, unique=True)
     nomeUsuario = db.Column(db.String, unique=True)
     tipo = db.Column(db.String)
@@ -29,7 +27,7 @@ class User(db.Model):
     def get_id(self):
         return str(self.id)
 
-    def __init__(self, nome,cpf, email,celular, tipo,nomeUsuario, senha):
+    def __init__(self, nome,cpf, email,celular,nomeUsuario, tipo, senha):
         self.nome = nome
         self.cpf = cpf
         self.celular = celular
@@ -39,7 +37,7 @@ class User(db.Model):
         self.senha = senha
 
     def __repr__(self):
-        return "<User %r>" % self.nomeUsuario
+        return "<User %r>" % self.nome
 
 class Periodo(db.Model):
     __tablename__ = "periodo"

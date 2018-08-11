@@ -106,9 +106,7 @@
       {{ render_field(cadastroform.confirm, class='form-control', placeholder="Repita a senha *", title="Repita a Senha") }}
       {% if cadastroform.errors.confirm %}
         <p class="help-block text-danger"></p>
-        {% for e in cadastroform.errors.confirm %}
-          <strong>* senha erra !</strong>
-        {% endfor %}
+
     {% endif %}
 <p class="help-block text-danger"></p>
 </div>
@@ -116,12 +114,11 @@
 </div>
     <div id="sucess"></div>
     <div class="row">
-      <div class="form-group col-xs-6">
+      <div class="form-group col-xs-3">
         <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-primary">
-        <input title="Editar dados do Usuário! " type="submit" value="Editar" class="btn btn-primary">
-        <input title="Excluir dados do Usuário! " type="submit" value="Excluir" class="btn btn-primary">
-        <!--<input title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">-->
-        <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
+        </div>
+      <div class="form-group col-xs-3">
+         <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
       </div>
     </div>
   </form>

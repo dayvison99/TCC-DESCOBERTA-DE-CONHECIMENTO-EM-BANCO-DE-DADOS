@@ -23,8 +23,9 @@
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.celular }}</td>
         <td>{{ usuario.email }}</td>
-      </tr>
+        </tr>
       {% endfor %}
+
       </tbody>
   </table>
 
@@ -35,11 +36,11 @@
   <div class="row">
     <div class="form-group col-xs-6">
       <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button">Novo</button> </a>
-      <input title="Editar dados do Usuário! " type="submit" value="Editar" class="btn btn-primary">
-      <input title="Excluir dados do Usuário! " type="submit" value="Excluir" class="btn btn-primary">
-      <!--<input title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">-->
-      <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
-    </div>
+      <a href='{{ url_for('atualizarUsuario') }}'/><button title="Editar dados do Usuário!" class="btn btn-primary" type="button">Editar</button></a>
+      <a href='{{ url_for('excluir_Usuario') }}'/><button title="Excluir dados do Usuário!" class="btn btn-primary" type="button">Excluir</button></a>
+      <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-primary" type="button">Voltar</button></a>
+
+      </div>
   </div>
   </form>
      </form>
