@@ -4,8 +4,8 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_login import LoginManager
 from flask.ext.sqlalchemy import SQLAlchemy
-#import numpy as np
-#import pandas as pd
+import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 

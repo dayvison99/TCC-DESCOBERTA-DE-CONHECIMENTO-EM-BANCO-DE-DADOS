@@ -9,7 +9,8 @@ from app.models.tables import User
 from app.models.tables import Periodo
 from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
-
+import numpy as np
+import pandas as pd
 
 @lm.user_loader
 def load_user(id):
@@ -133,3 +134,10 @@ def relatorios():
 @login_required
 def ajuda():
         return render_template('')
+
+@app.route("/analise")
+def analise():
+    dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
+    dados.index.disciplina=None
+    situacao = dados.loc[(dados.situacaoDisciplina=='APROVADO')]
+    return render_template('analise.html',tables=[situacao.to_html()], titles = ['na'])
