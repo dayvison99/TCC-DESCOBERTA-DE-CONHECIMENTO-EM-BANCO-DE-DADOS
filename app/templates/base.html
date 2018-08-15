@@ -38,7 +38,7 @@
     </style>
   </head>
   <body>
-      <div style="float:left;"><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" >
+      <div style="float:left"><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" >
     </div>
     {% if current_user.tipo =="admin" %}
 
@@ -60,9 +60,7 @@
                 </ul>
 
               </div>
-            {% else %}
-              <li role="presentation" class="active"><a href="{{ url_for('login') }}">Login</a></li>
-            {% endif %}
+          {% endif %}
           </ul>
         </nav>
         </div>
@@ -90,8 +88,6 @@
             </ul>
 
           </div>
-        {% else %}
-          <li role="presentation" class="active"><a href="{{ url_for('login') }}">Login</a></li>
         {% endif %}
       </ul>
     </nav>

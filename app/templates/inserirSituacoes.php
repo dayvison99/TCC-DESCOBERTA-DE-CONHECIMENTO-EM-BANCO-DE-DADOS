@@ -28,7 +28,8 @@
     </td>
    </tr>
   </tr>
-  <% String num = request.get
+<?php  <% String num = request.getParameter("periodo");
+  if(num == 1 )){ ?>
    <tr>
     <td>
 
@@ -46,6 +47,10 @@
      </select>
     </td>
    </tr>
+              <?  }
+   else {
+     out.println("teste");
+   }
    <tr>
     <td>
      <label for="status">Status : - </label>

@@ -1,0 +1,29 @@
+<HEAD>
+<script type="text/javascript" src="jquery-1.11.0.min.js"></script>
+</HEAD>
+
+<BODY>
+  <div id="escolha">
+    <input type="radio" name="tipo" value="1">Frutas</input><br>
+    <input type="radio" name="tipo" value="2">Verduras</input>
+  </div>
+  <div id="selectDinamico"></div>
+
+
+<script type="text/javascript">
+  $('#escolha input:radio').change(function() {
+      var selectedVal = $("#escolha input:radio:checked").val();
+      if(1 == selectedVal){
+          var frutasList = '<select name="Frutas"><option>Banana</option><option>Abacaxi</option></select>';
+          $('select').remove();
+          $('#selectDinamico').append(frutasList);
+      }else if(2 == selectedVal){
+          var verdurasList = '<select name="Verduras"><option>Alface</option><option>Salsa</option></select>';
+          $('select').remove();
+          $('#selectDinamico').append(verdurasList);
+      }
+  });
+</script>
+
+</BODY>
+

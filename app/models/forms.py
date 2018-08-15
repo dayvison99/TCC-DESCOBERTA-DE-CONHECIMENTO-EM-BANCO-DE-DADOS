@@ -16,6 +16,8 @@ class CadastroUsuarioForm(FlaskForm):
     email = EmailField('email',validators=[DataRequired()])
     celular = TextField('celular',validators=[DataRequired()])
     nomeUsuario = StringField('nome de Usuario',validators=[DataRequired()])
-    senha = PasswordField ('senha', [validators.Required()])
-    confirm = PasswordField('repita a senha' ,[validators.Required(),validators.EqualTo('confirm', message='senha senha')])
-    tipo = StringField("tipo")
+    senha = PasswordField ('senha',[
+        validators.DataRequired(),
+        validators.EqualTo('confirm', message='Passwords must match')])
+    confirm = PasswordField('Repita a senha',validators=[DataRequired()])
+    tipo = StringField("tipo",validators=[DataRequired()])

@@ -29,8 +29,8 @@
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-2 floating-label-form-group controls">
-              {{ render_field(cadastroform.cpf, class='form-control',pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
-              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
+              {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
+              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="idDoInput",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
                   {% for e in cadastroform.errors.cpf %}
@@ -79,7 +79,11 @@
   </div>
   <div class="row control-group">
     <div class="form-group col-xs-2 floating-label-form-group controls">
-        {{ render_field(cadastroform.tipo , class='form-control',placeholder="Tipo Permissões *", title="Tipo Usuário") }}
+      <h4>Tipo de Usuário:</h4>
+      <h6>Administrador</h6>
+        {{ render_field(cadastroform.tipo , placeholder="administrador", title="Usuário Administrador", type="radio", value="admin") }}
+      <h6>Padrão</h6>
+        {{ render_field(cadastroform.tipo , placeholder="Usuario Padrao", title="Usuário Padrao", type="radio", value="padrao") }}
         {% if cadastroform.errors.tipo %}
       <p class="help-block text-danger"></p>
         {% for e in cadastroform.errors.tipo %}
@@ -92,7 +96,7 @@
   </div>
     <div class="row control-group">
       <div class="form-group col-xs-2 floating-label-form-group controls">
-        {{ render_field(cadastroform.senha, class='form-control', placeholder="Senha *", title="Senha") }}
+        {{ render_field(cadastroform.senha, class='form-control', placeholder="Senha *", title="Senha",maxlength="20", minlength="3") }}
         {% if cadastroform.errors.senha %}
         <p class="help-block text-danger"></p>
         {% for e in cadastroform.errors.senha %}
@@ -106,7 +110,9 @@
       {{ render_field(cadastroform.confirm, class='form-control', placeholder="Repita a senha *", title="Repita a Senha") }}
       {% if cadastroform.errors.confirm %}
         <p class="help-block text-danger"></p>
-
+        {% for e in cadastroform.errors.confirm %}
+          <strong> Senhas diferentes !</strong>
+        {% endfor %}
     {% endif %}
 <p class="help-block text-danger"></p>
 </div>

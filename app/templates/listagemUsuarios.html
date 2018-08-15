@@ -5,7 +5,7 @@
 <center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h4> Usuários Cadastrados </h4></legend>
-  <form action="listagemUsuario" method="post">
+  <form action="atualizarUsuario" method="post">
 <!-- DADOS PESSOAIS-->
   <table class="table">
     <thead>
@@ -19,10 +19,12 @@
     {%for usuario in usuario %}
 
       <tr class="success">
-        <td>{{ usuario.id }}</td>
-        <td>{{ usuario.nome }}</td>
-        <td>{{ usuario.celular }}</td>
-        <td>{{ usuario.email }}</td>
+
+        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.id }}</a></td>
+        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
+        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.celular }}</a></td>
+        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.email }}</a></td>
+      </a>
         </tr>
       {% endfor %}
 

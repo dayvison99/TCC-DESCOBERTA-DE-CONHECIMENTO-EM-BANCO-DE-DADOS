@@ -4,8 +4,8 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h4> Cadastro de Usuários </h4></legend>
-  <form action="atualizarUsuario" method="post" class="form">
+  <legend class="legend-border"><h4> Editar Usuários </h4></legend>
+  <form action="cadastroUsuario" method="post" class="form">
 
   {{ cadastroform.csrf_token }}
 <!-- DADOS PESSOAIS-->
@@ -15,9 +15,14 @@
 
     </div>
   </div>
+
+
     <div class="row control-group">
       <div class="form-group col-xs-3 floating-label-form-group controls" >
-            {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *',title="Nome", maxlength="250", minlength="8") }}
+          {%for usuario in usuario %}
+              {{ usuario.id }}
+            {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8", value="{{ usuario.id }}") }}
+
           {% if cadastroform.errors.nome %}
           <p class="help-block text-danger"></p>
              {% for e in cadastroform.errors.nome %}
@@ -25,50 +30,13 @@
               {% endfor %}
             {% endif %}
         <p class="help-block text-danger"></p>
+          {% endfor %}
       </div>
-      <div class="row control-group">
 
-    <div id="sucess"></div>
-    <div class="row">
-      <div class="form-group col-xs-3">
-        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-primary">
-        </div>
-      <div class="form-group col-xs-3">
-         <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
-      </div>
-    </div>
-  </form>
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    <div class="alert alert-warning">
-      <ul class=flashes>
-        {% for message in messages %}
-          <li>{{message}}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endif %}
-  {% endwith %}
-  <!-- Confimar ser o usuario deseja sair sem salvar-->
-  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title" id="myModalLabel">Atenção</h4>
-    </div>
-    <div class="modal-body">
-      Certeza que deseja voltar?</p>
-    Os dados não salvos serão perdidos!
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-      <a class="btn btn-primary" href="{{ url_for('listagemUsuario') }}" value=" /listagemUsuario "> Sim </a>
-    </div>
+
   </div>
-  </div>
-  </div>
+</div>
+
   <!--Fim do codigo-->
 </center></div>
 
