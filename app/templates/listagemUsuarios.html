@@ -5,7 +5,7 @@
 <center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h4> Usuários Cadastrados </h4></legend>
-  <form action="atualizarUsuario" method="post">
+  <form action="listagem" method="post">
 <!-- DADOS PESSOAIS-->
   <table class="table">
     <thead>
@@ -20,10 +20,10 @@
 
       <tr class="success">
 
-        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.id }}</a></td>
-        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
-        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.celular }}</a></td>
-        <td>  <a href='{{ url_for('atualizarUsuario') }}?{{ usuario.id }}'/>{{ usuario.email }}</a></td>
+        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></td>
+        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
+        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></td>
+        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></td>
       </a>
         </tr>
       {% endfor %}
@@ -36,11 +36,11 @@
   <br />
     <div id="sucess"></div>
   <div class="row">
-    <div class="form-group col-xs-6">
+    <div class="form-group col-xs-4">
       <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button">Novo</button> </a>
-      <a href='{{ url_for('atualizarUsuario') }}'/><button title="Editar dados do Usuário!" class="btn btn-primary" type="button">Editar</button></a>
-      <a href='{{ url_for('excluir_Usuario') }}'/><button title="Excluir dados do Usuário!" class="btn btn-primary" type="button">Excluir</button></a>
-      <a href='{{ url_for('analise') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-primary" type="button">Voltar</button></a>
+    </div>
+    <div class="form-group col-xs-1">
+    <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-primary" type="button">Voltar</button></a>
 
       </div>
   </div>

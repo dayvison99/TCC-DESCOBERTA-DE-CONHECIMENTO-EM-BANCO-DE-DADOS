@@ -1,46 +1,123 @@
 {% extends 'base.html' %}
 
-{% block content %}
-
-<div class="jumbotron"><center>
+{% block content%}
+<div class="jumbotron">
+<center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h4> Editar Usuários </h4></legend>
-  <form action="cadastroUsuario" method="post" class="form">
+  <legend class="legend-border"><h4> Usuários Cadastrados </h4></legend>
+  <form action="cadastroUsuario" method="post">
 
-  {{ cadastroform.csrf_token }}
-<!-- DADOS PESSOAIS-->
-  {% from "_macro.html" import render_field %}
+  <!-- DADOS PESSOAIS-->
   <div class="row control-group">
     <div class="form-group col-xs-3 floating-label-form-group controls" >
 
     </div>
-  </div>
+      {%for usuario in usuario %}
+          <div class="row control-group">
+              <div class="form-group col-xs-3 floating-label-form-group controls" >
 
+              </div>
+            </div>
+            <div class="row control-group">
+              <div class="form-group col-xs-3 floating-label-form-group controls" >
+                Cod Usuario: {{ usuario.id }}
+              </div>
+            </div>
+            <div class="row control-group">
+              <div class="form-group col-xs-3 floating-label-form-group controls" >
 
-    <div class="row control-group">
-      <div class="form-group col-xs-3 floating-label-form-group controls" >
-          {%for usuario in usuario %}
-              {{ usuario.id }}
-            {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8", value="{{ usuario.id }}") }}
+                    <input type="text" class="form-control" title="Nome" maxlength="250" minlength="8" placeholder="Nome *" name="nome" value="{{ usuario.nome }}"\>
+                </div>
+                <div class="form-group col-xs-3 floating-label-form-group controls" >
+                    <input type="text" class="form-control" pattern="[0-9]+$" title="000.000.000-00",maxlength="14"
+                    pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" id="idDoInput" placeholder="Cpf *" pattern="[0-9]+$" OnKeyPress="formatar('###.###.###-##', this)" value="{{ usuario.cpf }}"\>
+              </div>
+            </div>
+            <div class="row control-group">
+              <div class="form-group col-xs-3 floating-label-form-group controls">
+                    <input type="text" class='form-control', placeholder="E-mail *",title="E-mail" value="{{ usuario.email }}">
+                    <p class="help-block text-danger"></p>
+          </div>
+          <div class="form-group col-xs-2 floating-label-form-group controls">
+                    <input type="text" class='form-control' placeholder="Celular *" title="DDD+9+Número" maxlength="11",minlength="11" pattern="[0-9]{2}[0-9]{4,6}[0-9]{3,4}" value="{{ usuario.celular}}">
 
-          {% if cadastroform.errors.nome %}
-          <p class="help-block text-danger"></p>
-             {% for e in cadastroform.errors.nome %}
-                <strong>* Campo Obrigatório !</strong>
-              {% endfor %}
-            {% endif %}
         <p class="help-block text-danger"></p>
-          {% endfor %}
+      </div>
+    </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-3 floating-label-form-group controls">
+                    <input type="text"  class='form-control' placeholder="Nome de Usuário *" title="Nome de Usuário" value="{{ usuario.nomeUsuario }}">
+
+      <p class="help-block text-danger"></p>
+      </div>
+      <div class="row control-group">
+        <div class="form-group col-xs-2 floating-label-form-group controls">
+          <h4>Tipo de Usuário:</h4>
+          <h6>Administrador</h6>
+            <input  placeholder="administrador" title="Usuário Administrador" type="radio" value="admin">
+
+          <h6>Padrão</h6>
+            <input placeholder="administrador" title="Usuário Administrador" type="radio" value="padrao">
+          <p class="help-block text-danger"></p>
+    </div>
+    </div>
+      </div>
+        <div class="row control-group">
+          <div class="form-group col-xs-2 floating-label-form-group controls">
+            <input type="password" class='form-control' placeholder="Senha *" title="Senha" maxlength="20" minlength="3" value="{{ usuario.senha}}" >
+
+      <p class="help-block text-danger"></p>
+      </div>
+      <div class="row control-group">
+       <div class="form-group col-xs-2 floating-label-form-group controls">
+         <input type="password" class='form-control', placeholder="Repita a senha *", title="Repita a Senha" maxlength="20", minlength="3" value="{{ usuario.senha}}" >
+        <p class="help-block text-danger"></p>
+    </div>
+    </div>
+        </div>
+        </div>
+
+
+  <br />
+    <div id="sucess"></div>
+  <div class="row">
+    <div class="form-group col-xs-4">
+      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button">Atualizar</button> </a>
+    </div>
+    <div class="form-group col-xs-1">
+   <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="submit" value="Excluir" class="btn btn-primary">Excluir</a>
+
       </div>
 
+      <!-- Confimar ser o usuario deseja EXCLUIRr-->
+      <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Atenção</h4>
+        </div>
+        <div class="modal-body">
+          Deseja relamente excluir ?</p>
+        Os dados não poderão ser reculperados!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
+          <a class="btn btn-primary" href="/excluirUsuario/{{ usuario.id }}" value="/excluirUsuario"> Sim </a>
+        </div>
+      </div>
+      </div>
+      </div>
+      <!--Fim do codigo-->
 
+  {% endfor %}
   </div>
-</div>
+  </form>
+     </form>
 
-  <!--Fim do codigo-->
 </center></div>
 
-</fieldset
-
-
+</fieldset>
+</div>
 {% endblock %}

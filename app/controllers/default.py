@@ -83,22 +83,16 @@ def excluirUsuario(id):
     return redirect(url_for('listagemUsuario'))
 
 #ALTERAR
-@app.route("/atualizarUsuario", methods=["GET", "POST"])
+@app.route("/atualizarUsuario/<int:id>", methods=["GET", "POST"])
 @login_required
-def atualizarUsuario(id = id):
-    usuario = User.query.all()
+def atualizarUsuario(id):
     cadastroform = CadastroUsuarioForm()
-    if request.method == 'POST' and cadastroform.validate():
-        Nome = request.cadastroform['nome']
+    usuario = User.query.filter_by(id=id).first()
+    db.session.commit()
+    usuarios = User.query.all()
+    flash ("Dados Alterados com Sucesso!")
+    return render_template("atualizaUsuarios.html",cadastroform = cadastroform)
 
-
-    #    User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
-    #    cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
-        db.session.commit()
-        flash('Cadastro Atualizado com Sucesso !')
-        return redirect(url_for('listagemUsuario'))
-    return render_template('atualizaUsuarios.html',
-                            cadastroform = cadastroform)
 #PAGINAS
 #PAGINA INICIAL
 @app.route("/index")
@@ -114,6 +108,13 @@ def logout():
     return redirect(url_for("login"))
 
 #PAGINA listagem De Usuarios
+@app.route("/listagem/<int:id>")
+@login_required
+def listagem(id):
+    #usuario = CadastroUsuarioForm()
+    usuario = User.query.filter_by(id=id)
+    return render_template('atualizaUsuarios.html',usuario=usuario)
+
 @app.route("/listagemUsuario")
 @login_required
 def listagemUsuario():
