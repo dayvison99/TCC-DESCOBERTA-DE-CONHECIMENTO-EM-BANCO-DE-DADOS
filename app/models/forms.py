@@ -11,6 +11,7 @@ class LoginForm(FlaskForm):
     tipo = StringField("tipo")
 
 class CadastroUsuarioForm(FlaskForm):
+    id 
     nome = StringField('nome', validators=[DataRequired()])
     cpf = StringField('cpf',validators=[DataRequired()])
     email = EmailField('email',validators=[DataRequired()])

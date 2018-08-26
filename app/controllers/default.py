@@ -66,6 +66,7 @@ def cadastroUsuario():
             return redirect(url_for('listagemUsuario'))
         db.session.add(user)
         db.session.commit()
+
         flash('Usuário Cadastro com Sucesso !')
         return redirect(url_for('listagemUsuario'))
     return render_template('cadastroUsuarios.html',
@@ -88,10 +89,22 @@ def excluirUsuario(id):
 def atualizarUsuario(id):
     cadastroform = CadastroUsuarioForm()
     usuario = User.query.filter_by(id=id).first()
-    db.session.commit()
-    usuarios = User.query.all()
-    flash ("Dados Alterados com Sucesso!")
-    return render_template("atualizaUsuarios.html",cadastroform = cadastroform)
+    user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+    cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+    if cadastroform.nome.data:
+        usuario.nome = cadastroform.nome.data
+        usuario.cpf = cadastroform.cpf.data
+        usuario.email = cadastroform.email.data
+        usuario.celular = cadastroform.celular.data
+        usuario.nomeUsuario = cadastroform.nomeUsuario.data
+        usuario.tipo = cadastroform.tipo.data
+        usuario.senha = cadastroform.senha.data
+        db.session.commit()
+        flash('Usuário Alterado com Sucesso !')
+        return redirect(url_for('listagemUsuario'))
+    flash('Erro ao Alterar !')
+    return render_template('atualizaUsuarios.html',
+                            cadastroform = cadastroform)
 
 #PAGINAS
 #PAGINA INICIAL
@@ -111,9 +124,9 @@ def logout():
 @app.route("/listagem/<int:id>")
 @login_required
 def listagem(id):
-    #usuario = CadastroUsuarioForm()
     usuario = User.query.filter_by(id=id)
-    return render_template('atualizaUsuarios.html',usuario=usuario)
+    cadastroform = CadastroUsuarioForm()
+    return render_template('atualizaUsuarios.html',usuario=usuario, cadastroform=cadastroform)
 
 @app.route("/listagemUsuario")
 @login_required
