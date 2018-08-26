@@ -6,9 +6,7 @@
     <legend class="legend-border"><h3> Inserção de Situações </h3></legend>
   <br/>
   <br/>
-
 <form action="" method="post">
-
 <!-- DADOS DAS SITUAÇOES DAS DISCIPLINAS-->
 <fieldset>
  <table cellspacing="10">
@@ -18,6 +16,7 @@
     </td>
     <td align="left">
      <select name="periodo" id="periodo" onclick="chamar()">
+     <option value="">-----</option>
      <option value="1">1º Período</option>
      <option value="2">2º Período</option>
      <option value="3">3º Período</option>
@@ -28,15 +27,13 @@
     </td>
    </tr>
   </tr>
-<?php  <% String num = request.getParameter("periodo");
-  if(num == 1 )){ ?>
    <tr>
     <td>
-
      <label for="disciplina">Disciplina : -</label>
     </td>
     <td align="left">
      <select name="disciplina">
+      <option value="">-----</option>
      <option value="algoritmo">Algoritmo</option>
      <option value="logicaMatematica">Lógica Matematica</option>
      <option value="matematicaComputacional">Matemática Computacional</option>
@@ -47,10 +44,6 @@
      </select>
     </td>
    </tr>
-              <?  }
-   else {
-     out.println("teste");
-   }
    <tr>
     <td>
      <label for="status">Status : - </label>
@@ -60,22 +53,16 @@
     <option value="nenhum">-----</option>
     <option value="aprovado">Aprovado</option>
     <option value="reprovado">Repovado</option>
+    <option value="matriculado">Matriculado</option>
+    <option value="cancelado">Cancelado</option>
     </select>
    </td>
   </tr>
-
  </table>
 </fieldset>
 <br />
-<input type="submit" value="Salvar">
-<!--<input type="reset" value="Limpar">-->
+<a href="{{ url_for('situacoes') }}"><button title="Inserir! " class="btn btn-primary" type="button">INSERIR</button> </a>
+
 </form>
-
 </center></div>
-
-
-
-
-
-
 {% endblock %}

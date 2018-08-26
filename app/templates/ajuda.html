@@ -1,7 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
+<div class="jumbotron" align="justify">
+  <h4>  Menus :</P> </h4>
+  <h5> 1 - Home: </h5></p>
+  <ul>
+  <li> Menu principal onde o usuário poderá ter acesso ao demoais menus e acesso direto para o site do cajuí e do IFNMG</li>
+</ul>
+  <h5> 2 - Cadastros: </h5></p></p>
+  <ul>
+  <li> Menu disponivel apenas para usuarios administradores do sistema</li>
+  <li>Ao clicar no botão cadastro será direcionado para a tela de
+    listagem de usuários onde irá aparecer todos o usuarios cadastrados</li>
+  <li>Dentro da tela de listagem terá um botão de "Novo" para cadastrar
+    novos usuários e o botão de "Voltar" que será direcionado para a tela principal</li>
+  <li>Ao clicar em quaisquer parte do dados que aparece na tela de listagem,
+    será direcionado para a tela de edição, onde será possível editar e excluir o cadastro do usuario selecionado </li>
+  <li>Todos os dados editados ou excluidos não poderão mais serem recuperados</li>
+  <li>Ao final de cada operação de inserção e alteração nos dados o sistema irá retornar uma mensagem de confimação</li>
+</ul>
+<h5> 3 - Situações: </h5></p></p>
+<ul>
+<li>Menu para inserir as sistuações de cada disciplina de um determinado aluno</li>
+<li>Deverá selecionar a disciplina e depois a situação da mesma</li>
+<li>Para cada disciplina selecionada deverá clicar no botão "Inserir"</li>
+<li>Para finalizar as inserções e gerar as probabilidades deverá clicar no botão "Finalizar"</li>
+</ul>
+</div>
 
 
 {% endblock %}

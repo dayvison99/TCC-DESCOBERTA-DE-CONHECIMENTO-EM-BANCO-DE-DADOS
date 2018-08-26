@@ -11,6 +11,7 @@ from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
 import numpy as np
 import pandas as pd
+from flask.ext.hashing import Hashing
 
 #importando dados das disciplinas com o pandas
 dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
@@ -89,8 +90,8 @@ def excluirUsuario(id):
 def atualizarUsuario(id):
     cadastroform = CadastroUsuarioForm()
     usuario = User.query.filter_by(id=id).first()
-    user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
-    cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
+    #user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
+    #cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
     if cadastroform.nome.data:
         usuario.nome = cadastroform.nome.data
         usuario.cpf = cadastroform.cpf.data
@@ -98,10 +99,14 @@ def atualizarUsuario(id):
         usuario.celular = cadastroform.celular.data
         usuario.nomeUsuario = cadastroform.nomeUsuario.data
         usuario.tipo = cadastroform.tipo.data
-        usuario.senha = cadastroform.senha.data
-        db.session.commit()
-        flash('Usuário Alterado com Sucesso !')
-        return redirect(url_for('listagemUsuario'))
+        if cadastroform.senha.data != cadastroform.confirm.data:
+            flash('Senhas não cofere !')
+            flash('Retorne a pagina anterior para alterar ! !')
+        if cadastroform.senha.data == cadastroform.confirm.data:
+            usuario.senha = cadastroform.senha.data
+            db.session.commit()
+            flash('Usuário Alterado com Sucesso !')
+            return redirect(url_for('listagemUsuario'))
     flash('Erro ao Alterar !')
     return render_template('atualizaUsuarios.html',
                             cadastroform = cadastroform)
@@ -183,3 +188,16 @@ def disciplinasTads():
     titles = ['na', 'Female surfers', 'Male surfers'])
     #disciplina = dados.groupby(['disciplina']).mean(), ('periodo')
     #return render_template('disciplinasTads.html',tables=[disciplina], titles = ['na'])
+
+@app.route("/situacoes")
+@login_required
+def situacoes():
+        disciplina = "TGA"
+        situacaoDisciplina = "Aprovado"
+        def resultados(disciplina,situacaoDisciplina):
+            for i in range(1):
+                probabilidadeTotal = dados.loc[(dados['disciplina']==disciplina)].count()
+                probabilidade = dados.loc[(dados['disciplina']==disciplina) & (dados['situacaoDisciplina']==situacaoDisciplina)].count()
+                a = probabilidade/probabilidadeTotal
+                return "A probabilidaded  aluno ser ",situacaoDisciplina,'em', disciplina, a[i],'%'
+            return render_template('inserirSituacoes.html')
