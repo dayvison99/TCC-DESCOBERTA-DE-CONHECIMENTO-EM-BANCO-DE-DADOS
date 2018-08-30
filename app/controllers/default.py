@@ -200,4 +200,4 @@ def situacoes():
                 probabilidade = dados.loc[(dados['disciplina']==disciplina) & (dados['situacaoDisciplina']==situacaoDisciplina)].count()
                 a = probabilidade/probabilidadeTotal
                 return "A probabilidaded  aluno ser ",situacaoDisciplina,'em', disciplina, a[i],'%'
-            return render_template('inserirSituacoes.html')
+            return render_template('inserirSituacoes.php')

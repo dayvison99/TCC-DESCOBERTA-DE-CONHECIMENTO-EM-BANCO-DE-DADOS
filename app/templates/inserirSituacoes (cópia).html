@@ -28,7 +28,23 @@
     </td>
    </tr>
   </tr>
-  
+  <?php
+    switch ($_POST['periodo']){
+      case '1' :
+            <select name="disciplina">
+              <option value="">-----</option>
+              <option value="algoritmo">Algoritmo</option>
+              <option value="logicaMatematica">Lógica Matematica</option>
+              <option value="matematicaComputacional">Matemática Computacional</option>
+              <option value="linguaPortuguesa">Língua Portuguesa</option>
+              <option value="fundamentosdaComputacao">Fundamentos da Computação</option>
+              <option value="inglesTecnico">Inglês Técnico</option>
+              <option value="teoriaGeraldaAdministracao">Teoria Geral da Administração</option>
+            </select>
+
+      break;
+      }
+      ?>
    <tr>
     <td>
 
