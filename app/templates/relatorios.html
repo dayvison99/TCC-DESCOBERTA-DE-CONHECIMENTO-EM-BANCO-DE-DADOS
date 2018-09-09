@@ -11,21 +11,31 @@
   <td>
     <fieldset class="fieldset-border">
       <legend class="legend-border">Usuários Cadastrados</legend>
-      <center><img src="{{ url_for('static', filename='img/usuarios.png') }}" alt="IFNMG"”/ height="120px" ></a>
+      <center><img src="{{ url_for('static', filename='img/usuarios.png') }}" alt="IFNMG"”/ height="60px"  ></a>
       </fieldset>
     </td>
   <td>
     <fieldset class="fieldset-border">
       <legend class="legend-border">Alunos com Maior Riscos de Evasão</legend>
-      <center><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="120px" ></a>
+      <center><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="60px"  ></a>
     </fieldset>
   </td>
   <td>
-      <fieldset class="fieldset-border">
-        <legend class="legend-border">Disciplinas </legend>
-    <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/disciplinas.png') }}" alt="IFNMG"”/ height="120px" ></a>
-    </fieldset>
-</td>
+    <tr>
+      <td>
+        <fieldset class="fieldset-border">
+          <legend class="legend-border">Disciplinas Cursadas</legend>
+          <center><a href="{{ url_for('disciplinasTads') }}"><img src="{{ url_for('static', filename='img/disciplinas_cursada.png') }}" alt="IFNMG"”/ height="60px" ></a>
+          </fieldset>
+        </td>
+
+      <td>
+        <fieldset class="fieldset-border">
+          <legend class="legend-border">Disciplinas com Maior Reprovação</legend>
+          <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/maiorreprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
+        </fieldset>
+      </td>
+
 </table>
 </legend>
 </fieldset>

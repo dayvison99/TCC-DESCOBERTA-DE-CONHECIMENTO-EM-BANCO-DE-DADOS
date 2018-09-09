@@ -165,39 +165,57 @@ def ajuda():
         return render_template('ajuda.html')
 
 #Analise com Panda e Numpy
-@app.route("/disciplina")
-@login_required
-def disciplina():
-        return render_template('disciplinas.html')
-
 @app.route("/analise")
 @login_required
 def analise():
-    dados.index.disciplina=None
-    situacao = dados.loc[(dados.situacaoDisciplina=='REPROVADO')]
-    return render_template('analise.html',tables=[situacao.to_html()], titles = ['na'])
+    disciplinas = [('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
+    situacaoDisciplina = "Aprovado"
+    def resultados(disciplinas): #disciplina,situacaoDisciplina
+        a = []
+        for d in disciplinas:
+            probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+            probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+            a.append([d[0], d[1], probabilidade/probabilidadeTotal])
+            msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinas:
+            |          Disciplina         |    Situação  |    Probabilidade    |"""
+            for i in a:
+                msg+= '           |           {0}           |   {1}  |    {2}'.format(i[0], i[1], i[2])
+                return msg
+    return render_template('analise.html')
 
 @app.route("/disciplinasTads")
 @login_required
 def disciplinasTads():
-    dados.set_index(['disciplina'])
-    dados.index.disciplina=None
-    Aprovado = dados.loc[dados.situacaoDisciplina=='APROVADO']
-    Reprovado = dados.loc[dados.situacaoDisciplina=='REPROVADO']
-    return render_template('disciplinasTads.html',tables=[Aprovado.to_html(classes='Aprovado'), Reprovado.to_html(classes='reprovado')],
-    titles = ['na', 'Female surfers', 'Male surfers'])
-    #disciplina = dados.groupby(['disciplina']).mean(), ('periodo')
-    #return render_template('disciplinasTads.html',tables=[disciplina], titles = ['na'])
+    resultado = dados.groupby(['disciplina']).describe()
+    resultado = resultado.filter(items=['disciplina'])
+    return render_template('disciplinasTads.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+@app.route("/disciplina")
+@login_required
+def disciplina():
+    resultado = dados.groupby(['disciplina', 'situacaoDisciplina'])
+    resultado = resultado.count()
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+
 
 @app.route("/situacoes")
 @login_required
 def situacoes():
-        disciplina = "TGA"
+        disciplinas = [('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
         situacaoDisciplina = "Aprovado"
-        def resultados(disciplina,situacaoDisciplina):
-            for i in range(1):
-                probabilidadeTotal = dados.loc[(dados['disciplina']==disciplina)].count()
-                probabilidade = dados.loc[(dados['disciplina']==disciplina) & (dados['situacaoDisciplina']==situacaoDisciplina)].count()
-                a = probabilidade/probabilidadeTotal
-                return "A probabilidaded  aluno ser ",situacaoDisciplina,'em', disciplina, a[i],'%'
-            return render_template('inserirSituacoes.php')
+        def resultados(disciplinas): #disciplina,situacaoDisciplina
+            a = []
+            for d in disciplinas:
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                a.append([d[0], d[1], probabilidade/probabilidadeTotal])
+                msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinas:
+                |          Disciplina         |    Situação  |    Probabilidade    |"""
+                for i in a:
+                    msg+= '           |           {0}           |   {1}  |    {2}'.format(i[0], i[1], i[2])
+                    return msg
+                return render_template('inserirSituacoes.php')
+        return render_template('inserirSituacoes.php')

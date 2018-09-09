@@ -1,42 +1,32 @@
 {% extends 'base.html' %}
 
-{% block content%}
+{% block content %}
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-<table>
-<colgroup span="5"></colgroup>
-<legend class="legend-border"><h3> Disciplinas</h3></legend>
-<tr>
-  <td>
-    <fieldset class="fieldset-border">
-      <legend class="legend-border">Disciplinas Cursadas</legend>
-      <center><a href="{{ url_for('disciplinasTads') }}"><img src="{{ url_for('static', filename='img/disciplinas_cursada.png') }}" alt="IFNMG"”/ height="60px" ></a>
-      </fieldset>
-    </td>
+  <legend class="legend-border"><h4> Disciplinas do Curso </h4></legend>
+  <form action="" method="post" class="form">
 
-  <td>
-    <fieldset class="fieldset-border">
-      <legend class="legend-border">Disciplinas com Maior Reprovação</legend>
-      <center><img src="{{ url_for('static', filename='img/maiorreprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
-    </fieldset>
-  </td>
-  <td>
-      <fieldset class="fieldset-border">
-        <legend class="legend-border">Disciplinas </legend>
-    <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/disciplinas.png') }}" alt="IFNMG"”/ height="60px" ></a>
-    </fieldset>
-</td>
-</table>
-</legend>
-</fieldset>
-</div>
+<!--
+ DADOS PESSOAIS
+  -->
+  <table class="table">
+    <thead>
+      <tr >
+          <th>
+          {% for table in tables %}
+            <h2>{{titles[loop.index]}}</h2></p>
+          {{ table|safe }}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+      </div>
+    </div>
+  <!--Fim do codigo-->
 </center></div>
 
-
-
-
-
+</fieldset
 
 
 {% endblock %}
