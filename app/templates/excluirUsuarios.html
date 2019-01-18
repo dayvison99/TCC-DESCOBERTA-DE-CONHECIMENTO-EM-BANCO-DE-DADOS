@@ -17,15 +17,12 @@
         <th></th>
       </tr>
 
-      {%for usuario in usuario %}
+      {%for disciplina in disciplina   %}
 
         <tr class="success">
-          <td>{{ usuario.id }}</td>
-          <td>{{ usuario.nome }}</td>
-          <td>{{ usuario.celular }}</td>
-          <td>{{ usuario.email }}</td>
-          <td><a href="/excluirUsuario/{{ usuario.id }}"><button title="Excluir dados do Usuário!" class="btn btn-primary" type="button">Excluir</button></a></td>
-        </tr>
+          <td>{{ disciplina.nome }}</td>
+
+
         {% endfor %}
 
       </tbody>

@@ -150,7 +150,10 @@ def excluir_Usuario():
 @app.route("/inserirSituacoes")
 @login_required
 def inserirSituacoes():
-    return render_template('inserirSituacoes.php')
+    periodo = Periodo.query.all()
+    disciplina = Disciplina.query.filter_by(periodo=6)
+
+    return render_template('inserirSituacoes.php', disciplina=disciplina, periodo=periodo)
 
 #PAGINA DE RELATORIOS
 @app.route("/relatorios")

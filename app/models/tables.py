@@ -55,16 +55,14 @@ class Periodo(db.Model):
 
 class Disciplina(db.Model):
             __tablename__ = "disciplina"
-
             id = db.Column(db.Integer, primary_key=True)
             nome = db.Column(db.Text)
-            periodo_id = db.Column(db.Integer, db.ForeignKey('periodo.id'))
-
-            periodo = db.relationship('Periodo', foreign_keys=periodo_id)
+            periodo = db.Column(db.Integer, db.ForeignKey('periodo.id'))
+            Periodo = db.relationship('Periodo', foreign_keys=periodo)
 
             def __init__(self, nome, periodo_id):
                 self.nome = nome
-                self.periodo_id = periodo_id
+                self.periodo = periodo
 
             def __repr__(self):
                 return "<Disciplina %r>" % self.id

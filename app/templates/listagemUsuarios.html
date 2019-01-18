@@ -18,15 +18,19 @@
 
     {%for usuario in usuario %}
 
+
       <tr class="success">
 
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></td>
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></td>
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></td>
+
       </a>
         </tr>
-      {% endfor %}
+        {% endfor %}
+
+        
 
       </tbody>
   </table>
