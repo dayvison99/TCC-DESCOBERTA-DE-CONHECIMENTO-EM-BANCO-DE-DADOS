@@ -27,7 +27,7 @@
     <div class="login-box-body login-header text-center">
 
       <div class="login-box-body">
-        <div class ="col-md-3 col-md-offset-4" >
+        <div class ="col-md-4 col-md-offset-4" >
           <div class="jumbotron"><center>
             <form action="" method="POST">
               {{ form.csrf_token }}
@@ -36,7 +36,7 @@
                 <img src="{{ url_for('static', filename='img/tads2.png') }}" alt="IFNMG" height="80px" ></p></p>
                   <br/>
                   <div class="login-box-body">
-                    <p class="login-box-msg" >Sistema de Análise de Situações Acadêmicas<br>
+                    <p class="login-box-msg">Análise de Situações Acadêmicas<br>
                       <span><font color="red"></font></span>
                   </div>
                    </p>
@@ -79,8 +79,7 @@
          </div>
       </div>
       <center>
-          <button title="Entrar no Sistema" type="submit" class="btn btn-primary"> Entrar</button>
-          <a href="/cajui/alterar-senha">Alterar minha senha</a><br>
+          <button title="Entrar no Sistema" type="submit" class=" btn-lg btn-primary btn-block btn-signin"> Entrar</button>
     </form>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
@@ -91,6 +90,10 @@
           {% endfor %}
         </ul>
       </div>
+
+
+
+
       {% endif %}
     {% endwith %}
   </div>

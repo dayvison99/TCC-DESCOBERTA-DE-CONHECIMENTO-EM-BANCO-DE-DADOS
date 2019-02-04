@@ -39,7 +39,8 @@ def login():
             if not is_safe_url('login.html'):
                 return flask.abort(400)
         else:
-            flash("Login ou Senha Incorretos!")
+            flash("Usuário ou Senha Incorretos!")
+            flash("Contate o administrador do sistema caso não lembre a senha!")
     return render_template('login.html',
                             form=form)
 
@@ -133,6 +134,7 @@ def listagem(id):
     cadastroform = CadastroUsuarioForm()
     return render_template('atualizaUsuarios.html',usuario=usuario, cadastroform=cadastroform)
 
+#Listagem dos Usuarios cadastrados no sistema
 @app.route("/listagemUsuario")
 @login_required
 def listagemUsuario():
@@ -147,13 +149,12 @@ def excluir_Usuario():
     return render_template('excluirUsuarios.html',usuario=usuario)
 
 #PAGINA INSERIR SITUAÇOES
-@app.route("/inserirSituacoes")
+@app.route("/inserirSituacoes", methods=["GET", "POST"])
 @login_required
 def inserirSituacoes():
     periodo = Periodo.query.all()
-    disciplina = Disciplina.query.filter_by(periodo=6)
-
-    return render_template('inserirSituacoes.php', disciplina=disciplina, periodo=periodo)
+    disciplina = Disciplina.query.all()
+    return render_template('inserirSituacoes.php', periodo=periodo, disciplina=disciplina)
 
 #PAGINA DE RELATORIOS
 @app.route("/relatorios")
@@ -186,6 +187,7 @@ def analise():
                 return msg
     return render_template('analise.html')
 
+#Disciplinas do curso de Tads
 @app.route("/disciplinasTads")
 @login_required
 def disciplinasTads():
@@ -201,7 +203,6 @@ def disciplina():
     resultado = resultado.count()
     return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
-
 
 
 @app.route("/situacoes")

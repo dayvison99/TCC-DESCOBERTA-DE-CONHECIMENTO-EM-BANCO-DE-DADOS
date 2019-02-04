@@ -38,7 +38,7 @@
     </style>
   </head>
   <body>
-      <div style="float:left"><img src="{{ url_for('static', filename='img/ifnmg.jpg') }}" alt="IFNMG"”/ height="120px" >
+      <div style="float:left"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"”/ height="80px" >
     </div>
     {% if current_user.tipo =="admin" %}
 
@@ -106,7 +106,6 @@
                 <i class="glyphicon glyphicon-user"></i>
                 <span class="hidden-xs">  {% if current_user.is_authenticated %}
                   {{ current_user.nome}}</p>
-                  E-mail: {{ current_user.email}}
                   {% endif %} <i class="caret"></i></span>
             </a>
             <ul class="dropdown-menu">

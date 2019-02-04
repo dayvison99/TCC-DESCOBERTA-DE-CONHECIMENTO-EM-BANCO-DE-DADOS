@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content%}
- <div class="jumbotron"><center>
 
+<div class="jumbotron"><center>
   <fieldset class="fieldset-border">
     <legend class="legend-border"><h3> Inserção de Situações </h3></legend>
   <br/>
   <br/>
-<form action="" method="post">
+<form action="/inserirSituacoes/{{ periodo.id }}" method="post">
 <!-- DADOS DAS SITUAÇOES DAS DISCIPLINAS-->
 <fieldset>
  <table cellspacing="10">
@@ -17,19 +17,19 @@
     </td>
      <td align="left">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-                    <select name="periodo" class="select" id="periodo" input type="submit">
+
+                    <select name="periodo" class="select" id="periodo" input type="submit" >
                         <option value="nenhum" disabled selected>-----</option>
                         {%for periodo in periodo  %}
                          <option value={{ periodo.id }}>{{ periodo.nome }}</option>
                         {% endfor %}
-                      </select>
+                    </select>
+                </td>
+          </tr>
+          </tr>
 
-              </td>
-          </tr>
-          </tr>
               <tr>
               <td>
-
                     <label for="status">Disciplina :   </label>
                 </td>
                     <td align="left">
@@ -37,8 +37,34 @@
                                 {%for disciplina in disciplina   %}
                                   <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
                                 {% endfor %}
-
+                            </select>
+                            <select name="disciplina" class="one input" style="display: none" id="2">
+                                {%for disciplina in disciplina   %}
+                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="disciplina" class="one input" style="display: none" id="3">
+                                {%for disciplina in disciplina   %}
+                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="disciplina" class="one input" style="display: none" id="4">
+                                {%for disciplina in disciplina   %}
+                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="disciplina" class="one input" style="display: none" id="5">
+                                {%for disciplina in disciplina   %}
+                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
+                            <select name="disciplina" class="one input" style="display: none" id="6">
+                                {%for disciplina in disciplina   %}
+                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                {% endfor %}
+                            </select>
            <tr>
+
                 <td>
                     <label for="status">Status :   </label>
                 </td>
@@ -68,15 +94,12 @@ function listChildren(){
   <script languagem="javascript" >
     function chamar(){
      var valor = document.getElementById("periodo").value;
-     var disci = document.getElementById("1").value;
+     var disci = document.getElementById("disciplina").value;
      var status = document.getElementById("status").value;
           alert([valor,disci,status]);
 
       }
     </script>
-
-
-
    </td>
 
   </tr>
@@ -84,7 +107,8 @@ function listChildren(){
 </fieldset>
 <br />
 <!--<a href="{{ url_for('situacoes') }}">-->
-<button title="Inserir! " class="btn btn-primary" type="submit">INSERIR</button>
+<a href='/analise'>aa</a>
+<a href='/analise'><button  title="Inserir! " class="btn btn-primary" type="submit">INSERIR</button></a>
 
 </form>
 </center></div>

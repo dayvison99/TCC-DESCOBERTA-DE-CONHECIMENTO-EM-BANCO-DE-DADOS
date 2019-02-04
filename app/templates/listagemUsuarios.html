@@ -4,22 +4,22 @@
 <div class="jumbotron">
 <center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h4> Usuários Cadastrados </h4></legend>
+  <legend class="scheduler-border" ><h4> Usuários Cadastrados </h4></legend>
   <form action="/atualizarUsuario/{{ usuario.id }}" method="post">
 <!-- DADOS PESSOAIS-->
-  <table class="table">
+  <table class="table" title="Click no cadastro que deseja alterar.">
     <thead>
-      <tr class="info">
-        <th>Cód Usuario</th>
-        <th>Nome</th>
-        <th>Celular</th>
-        <th>E-mail</th>
+      <tr class="table table-dark">
+        <th>CÓD USUÁRIO</th>
+        <th>NOME</th>
+        <th>CELULAR</th>
+        <th>E-MAIL</th>
       </tr>
 
     {%for usuario in usuario %}
 
 
-      <tr class="success">
+      <tr class="table table-dark">
 
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></td>
         <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
@@ -30,7 +30,7 @@
         </tr>
         {% endfor %}
 
-        
+
 
       </tbody>
   </table>
@@ -41,7 +41,7 @@
     <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-4">
-      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button">Novo</button> </a>
+      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button" >Novo</button> </a>
     </div>
     <div class="form-group col-xs-1">
     <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-primary" type="button">Voltar</button></a>
