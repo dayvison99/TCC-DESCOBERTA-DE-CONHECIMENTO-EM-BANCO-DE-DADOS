@@ -61,18 +61,26 @@ def cadastroUsuario():
         user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
         cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
         usuario = User.query.all()
-        if User.query.all() == cadastroform.cpf.data:
-            flash('Cpf já existente !')
+        cpf = User.query.filter_by(cpf=cadastroform.cpf.data).first()
+        if cpf and cpf.cpf == cadastroform.cpf.data:
+            flash('Cpf já cadastrado !')
+            return redirect(url_for('cadastroUsuario'))
+
+        email = User.query.filter_by(email=cadastroform.email.data).first()
+        if email and email.email == cadastroform.email.data:
+            flash('E-mail cadastrado!')
             return redirect(url_for('listagemUsuario'))
-        if User.query.all() == cadastroform.email.data:
-            flash('E-mail já existente !')
+
+        celular = User.query.filter_by(celular=cadastroform.celular.data).first()
+        if celular and celular.celular == cadastroform.celular.data:
+            flash('Celular cadastrado !')
             return redirect(url_for('listagemUsuario'))
-        if User.query.all() == cadastroform.celular.data:
-            flash('Celular já existente !')
+
+        nomeUsuario = User.query.filter_by(nomeUsuario=cadastroform.nomeUsuario.data).first()
+        if nomeUsuario and nomeUsuario.nomeUsuario == cadastroform.nomeUsuario.data:
+            flash('Nome de Usuario já cadastrado!')
             return redirect(url_for('listagemUsuario'))
-        if User.query.all() == cadastroform.nomeUsuario.data:
-            flash('Nome de Usuario já existente !')
-            return redirect(url_for('listagemUsuario'))
+
         db.session.add(user)
         db.session.commit()
 
@@ -116,6 +124,34 @@ def atualizarUsuario(id):
     flash('Erro ao Alterar !')
     return render_template('atualizaUsuarios.html',
                             cadastroform = cadastroform)
+
+#esqueceu a senha
+@app.route("/esqueceuSenha")
+def esqueceuSenha():
+    cadastroform = CadastroUsuarioForm
+    return render_template('alterarSenha.html',
+                            cadastroform = cadastroform)
+
+@app.route("/alterarSenha", methods=["GET", "POST"])
+def alterarSenha():
+    cadastroform = CadastroUsuarioForm()
+    usuario = User.query.all()
+    if cadastroform.nome.data:
+        if cadastroform.cpf.data != usuario.cpf:
+            flash('Usuario não cadastrado')
+            return redirect(url_for('alterarSenha'))
+        if cadastroform.senha.data != cadastroform.confirm.data:
+            flash('Senhas não cofere !')
+            flash('Retorne a pagina anterior para alterar ! !')
+        if cadastroform.senha.data == cadastroform.confirm.data:
+            usuario.senha = cadastroform.senha.data
+            db.session.commit()
+            flash('Usuário Alterado com Sucesso !')
+            return redirect(url_for('alterarSenha'))
+    flash('Erro ao Alterar !')
+    return render_template('login.html',
+                            cadastroform = cadastroform)
+
 
 #PAGINAS
 #PAGINA INICIAL

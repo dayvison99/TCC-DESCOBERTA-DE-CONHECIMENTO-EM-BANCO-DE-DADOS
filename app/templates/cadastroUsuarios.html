@@ -29,8 +29,7 @@
       </div>
       <div class="row control-group">
         <div class="form-group col-xs-2 floating-label-form-group controls">
-              {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",
-              pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="idDoInput",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
+             {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="cpf",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
                   {% for e in cadastroform.errors.cpf %}

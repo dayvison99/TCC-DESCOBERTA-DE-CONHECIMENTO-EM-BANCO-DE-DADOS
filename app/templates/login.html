@@ -24,6 +24,7 @@
   </head>
   <body >
     <a href="https://www.ifnmg.edu.br/"><img src="{{ url_for('static', filename='img/ifnmg.png') }}" alt="IFNMG" height="120px" ></a>
+    <a href="https://cajui.ifnmg.edu.br/cajui/login"><img src="{{ url_for('static', filename='img/cajui.png') }}" alt="CAJUÍ" height="100px" style='float:right'></a>
     <div class="login-box-body login-header text-center">
 
       <div class="login-box-body">
@@ -36,7 +37,9 @@
                 <img src="{{ url_for('static', filename='img/tads2.png') }}" alt="IFNMG" height="80px" ></p></p>
                   <br/>
                   <div class="login-box-body">
-                    <p class="login-box-msg">Análise de Situações Acadêmicas<br>
+                    <p class="login-box-msg"><b>Análise de Situações Acadêmicas</b><br>
+                  </p>
+                    <p class="login-box-msg"><br>
                       <span><font color="red"></font></span>
                   </div>
                    </p>
@@ -80,7 +83,8 @@
       </div>
       <center>
           <button title="Entrar no Sistema" type="submit" class=" btn-lg btn-primary btn-block btn-signin"> Entrar</button>
-    </form>
+          
+
     {% with messages = get_flashed_messages() %}
       {% if messages %}
       <div class="alert alert-warning">
