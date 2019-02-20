@@ -11,11 +11,18 @@ from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
 import numpy as np
 import pandas as pd
-from flask.ext.hashing import Hashing
+#from flask.ext.hashing import Hashing
 
-#importando dados das disciplinas com o pandas
+
+
+#importando banco de dados das disciplinas com o pandas
 dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
+disciplina_curso = pd.read_csv('../TCC/Analise_Pandas/disciplinacurso.csv')
+disciplinamaiorreprovacao = pd.read_csv('../TCC/Analise_Pandas/disciplinamaiorreprovacao.csv')
 
+##Fim importação##
+
+#carregamento dos dados do usuario logado
 @lm.user_loader
 def load_user(id):
     return User.query.filter_by(id=id).first()
@@ -91,8 +98,6 @@ def excluirUsuario(id):
 def atualizarUsuario(id):
     cadastroform = CadastroUsuarioForm()
     usuario = User.query.filter_by(id=id).first()
-    #user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
-    #cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
     if cadastroform.nome.data:
         usuario.nome = cadastroform.nome.data
         usuario.cpf = cadastroform.cpf.data
@@ -119,7 +124,7 @@ def atualizarUsuario(id):
 def index():
     return render_template('index.html')
 
-#PAGINA DE LOGOUL
+#PAGINA DE LOGOULT
 @app.route("/logout")
 @login_required
 def logout():
@@ -168,7 +173,8 @@ def relatorios():
 def ajuda():
         return render_template('ajuda.html')
 
-#Analise com Panda e Numpy
+##Parte da mineração de dados
+#Analise da situaçoes com Panda e Numpy
 @app.route("/analise")
 @login_required
 def analise():
@@ -187,24 +193,7 @@ def analise():
                 return msg
     return render_template('analise.html')
 
-#Disciplinas do curso de Tads
-@app.route("/disciplinasTads")
-@login_required
-def disciplinasTads():
-    resultado = dados.groupby(['disciplina']).describe()
-    resultado = resultado.filter(items=['disciplina'])
-    return render_template('disciplinasTads.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
-
-@app.route("/disciplina")
-@login_required
-def disciplina():
-    resultado = dados.groupby(['disciplina', 'situacaoDisciplina'])
-    resultado = resultado.count()
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
-
-
+#Arvore de decisão sobre as situaçoes das disciplinas
 @app.route("/situacoes")
 @login_required
 def situacoes():
@@ -223,3 +212,69 @@ def situacoes():
                     return msg
                 return render_template('inserirSituacoes.php')
         return render_template('inserirSituacoes.php')
+
+#### Relatorios do Sistema ####
+
+#relatorios de usuarios cadastrados
+@app.route("/usuariosCadastrados")
+@login_required
+def usuariosCadastrados():
+        usuario = User.query.order_by(User.nome).all()
+        cadastroform = CadastroUsuarioForm()
+        return render_template('relatorioUsuarios.html',usuario=usuario, cadastroform=cadastroform)
+
+#Relatorios Disciplinas do curso de Tads
+@app.route("/disciplinasTads")
+@login_required
+def disciplinasTads():
+    #resultado = dados.groupby(['disciplina']).describe()
+    #resultado = resultado.filter(items=['disciplina'])
+    resultado = disciplina_curso.groupby(['disciplina']).max()
+    resultado = resultado = resultado.sort_values(by=['periodo'])
+    resultado = resultado.rename(columns={'periodo' : 'Periodo da Disciplina'})
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+#Situaçoes Das Disciplinas
+@app.route("/disciplinaAprovacao")
+@login_required
+def disciplinaAprovacao():
+    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "APROVADO"')
+    resultado = consulta.groupby(['disciplina']).count()
+    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+#Situaçoes Das Disciplinas
+@app.route("/disciplina")
+@login_required
+def disciplina():
+    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "REPROVADO"')
+    resultado = consulta.groupby(['disciplina']).count()
+    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Reprovações'})
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+#Situaçoes Das Disciplinas
+@app.route("/disciplinaDesistencia")
+@login_required
+def disciplinaDesistencia():
+    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "CANCELADO"')
+    resultado = consulta.groupby(['disciplina']).count()
+    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Desistência'})
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
+
+#Situaçoes Das Disciplinas
+@app.route("/mediaMatricula")
+@login_required
+def mediaMatricula():
+    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "MATRICULADO"')
+    resultado = consulta.groupby(['disciplina']).count()
+    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Média de Matriculas'})
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    titles = ['na'])
