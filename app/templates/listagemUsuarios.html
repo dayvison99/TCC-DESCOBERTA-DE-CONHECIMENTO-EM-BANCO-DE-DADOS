@@ -4,12 +4,14 @@
 <div class="jumbotron">
 <center>
 <fieldset class="fieldset-border">
+    {% if current_user.tipo =="admin" %}
   <legend class="scheduler-border" ><h4> Usuários Cadastrados </h4></legend>
   <form action="/atualizarUsuario/{{ usuario.id }}" method="post">
 <!-- DADOS PESSOAIS-->
+
   <table class="table" title="Click no cadastro que deseja alterar.">
     <thead>
-      <tr class="table table-dark">
+      <tr class="table table-dark" font-family="arial">
         <th>CÓD USUÁRIO</th>
         <th>NOME</th>
         <th>CELULAR</th>
@@ -21,10 +23,10 @@
 
       <tr class="table table-dark">
 
-        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></td>
-        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></td>
-        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></td>
-        <td>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></h4></td>
 
       </a>
         </tr>
@@ -41,15 +43,23 @@
     <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-4">
-      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-primary" type="button" >Novo</button> </a>
+      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-info btn-lg" type="button" >Novo</button> </a>
     </div>
     <div class="form-group col-xs-1">
-    <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-primary" type="button">Voltar</button></a>
+    <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
 
       </div>
   </div>
   </form>
      </form>
+  {% endif %}
+  {% if current_user.tipo =="padrao" %}
+  <legend class="scheduler-border" ><h4> Área restrita</h4></legend>
+  <div class="form-group col-xs-1">
+  <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+    </div>
+    {% endif %}
 
 </center></div>
 

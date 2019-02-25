@@ -12,12 +12,15 @@
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-      <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-      <link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
-      <script src="//code.jquery.com/jquery-2.1.0.min.js" type="text/javascript"></script>
 
-<style id="jsbin-css">
-   header {
+    <!--<link rel="stylesheet" type="text/css" href="estilo.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style id="jsbin-css">
+  header {
   	background-color: rgba(0,0,0,0.05);
   	height: 38px;
   	line-height: 1%;
@@ -44,8 +47,7 @@
 
   body {
       font-family: 'Open Sans Condensed', sans-serif;
-      background: cinza;
-
+      background: white;
   }
 
   /* Styling navigation */
@@ -74,7 +76,7 @@
   }
 
   .nav-list li {
-    float: right;
+    float: left;
     width:12.5%;
   }
 
@@ -123,7 +125,7 @@
     background:#007b9c
   }
 
-/*  #tile7 {
+  #tile7 {
     background:#006e9c
   }
 
@@ -176,7 +178,7 @@
 
     .nav-menu{
   	color: #fff;
-  	float: center;
+  	float: left;
   	display: block;
   	padding: 10px 10px;
   	cursor: pointer;
@@ -186,14 +188,15 @@
       display: none;
      }
 
-     .nav-list{
- 	    float: left;
- 	    width: 100%;
- 	    display: none;
- 	}
- 	.open {
- 	    display:auto;
- 	}
+    .nav-list{
+      float: left;
+      width: 100%;
+      height: 0;
+     }
+
+    .open {
+      height:auto
+     }
 
     .nav-list li {
       width:100%
@@ -225,14 +228,16 @@
                 width: auto;
                 padding: 0 10px;
                 border-bottom: none;
-                font-style: italic;
-                        }
-
+            }
     </style>
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  <link href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-2.1.0.min.js" type="text/javascript"></script>
 
   </head>
   <body>
-    <div style="float:left"><img src="{{ url_for('static', filename='img/ifnmg.png') }}" alt="IFNMG"”/ height="95px" >
+    <div style="float:left"><img src="{{ url_for('static', filename='img/ifnmg.png') }}" alt="IFNMG"”/ height="80px" >
     </div>
     {% if current_user.tipo =="admin" %}
 
@@ -240,43 +245,69 @@
         <div class="nav-container">
             <a id="nav-menu" class="nav-menu">☰ Menu</a>
             <ul class="nav-list " id="nav">
-                <li> <a href="#" id="tile6" data-toggle="modal" data-target="#myModal"><i class="ion-log-out"></i> Sair</a></li>
-                <li> <a href="{{ url_for('ajuda') }}" id="tile5"><i class="ion-help"></i> Ajuda</a></li>
-                <li> <a href="{{ url_for('relatorios') }}" id="tile4"><i class="ion-ios7-monitor-outline"></i> Relatórios</a></li>
-                <li> <a href="{{ url_for('inserirSituacoes') }}" id="tile3"><i class="ion-ios7-paper-outline"></i> Situações</a></li>
-                <li> <a href="{{ url_for('listagemUsuario') }}" id="tile2"><i class="ion-ios7-people-outline"></i> Cadastro</a></li>
-                <li> <a href="{{ url_for('index') }}" id="tile1"><i class="icon ion-ios7-home-outline"></i> Inicio</a></li>
+                <li> <a href="#" id="tile1"><i class="icon ion-ios7-home-outline"></i> Home</a></li>
+                <li> <a href="#" id="tile2"><i class="icon ion-ios7-person-outline"></i> About</a></li>
+                <li> <a href="#" id="tile3"><i class="icon ion-ios7-briefcase-outline"></i> Portfolio</a></li>
+                <li> <a href="#" id="tile4"><i class="ion-ios7-monitor-outline"></i> Services</a></li>
+                <li> <a href="#" id="tile5"><i class="ion-ios7-people-outline"></i> Clients</a></li>
+                <li> <a href="#" id="tile6"><i class="ion-bag"></i> Order</a></li>
+                <li> <a href="#" id="tile7"><i class="ion-ios7-paper-outline"></i> Blog</a></li>
+                <li> <a href="#" id="tile8"><i class="ion-ios7-email-outline"></i> Contact</a></li>
             </ul>
         </div>
     </nav>
+
+
+
+    <div class="container">
+      <div class="header clearfix" style="float:right;">
+
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active" dropzone="move"><a href="{{ url_for('index') }}">Home</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('listagemUsuario') }}">Cadastros</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('inserirSituacoes') }}">Situações</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
+            <li role="presentation" class="active"><a href="{{ url_for('ajuda') }}">Ajuda</a></li>
+            <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Sair</a></li>
+         </ul>
+      </div>
         {% endif %}
+        </ul>
+        </nav>
+        </div>
+      </div>
         {% if current_user.is_authenticated %}
       </nav>
       <script>
-      $(document).ready(function(){
-          $('#nav-menu').click(function(){
-              $('ul.nav-list').addClass('open');
-              $('ul.nav-list').slideToggle('200');
-          });
-      });
-      </script>
+$(document).ready(function(){
+	$('#nav-menu').click(function(){
+		$('ul.nav-list').addClass('open').slideToggle('200');
+	});
+});
+</script>
 {% endif %}
 
 {% if current_user.tipo =="padrao" %}
-<nav class="nav-bar">
-    <div class="nav-container">
-        <a id="nav-menu" class="nav-menu">☰ Menu</a>
-        <ul class="nav-list " id="nav">
-            <li> <a href="#" id="tile6" data-toggle="modal" data-target="#myModal"><i class="ion-log-out"></i> Sair</a></li>
-            <li> <a href="{{ url_for('ajuda') }}" id="tile5"><i class="ion-help"></i> Ajuda</a></li>
-            <li> <a href="{{ url_for('relatorios') }}" id="tile4"><i class="ion-ios7-monitor-outline"></i> Relatórios</a></li>
-            <li> <a href="{{ url_for('inserirSituacoes') }}" id="tile3"><i class="ion-ios7-paper-outline"></i> Situações</a></li>
-            <li> <a href="{{ url_for('index') }}" id="tile1"><i class="icon ion-ios7-home-outline"></i> Inicio</a></li>
-        </ul>
-    </div>
-</nav>
-    {% if current_user.is_authenticated %}
-    {% endif %}
+
+<div class="container">
+  <div class="header clearfix" style="float:right;">
+
+    <nav>
+      <ul class="nav nav-pills pull-right">
+        <li role="presentation" class="active" dropzone="move"><a href="{{ url_for('index') }}">Home</a></li>
+        <li role="presentation" class="active"><a href="{{ url_for('inserirSituacoes') }}">Situações</a></li>
+        <li role="presentation" class="active"><a href="{{ url_for('relatorios') }}">Relatórios</a></li>
+        <li role="presentation" class="active"><a href="{{ url_for('ajuda') }}">Ajuda</a></li>
+        {% if current_user.is_authenticated %}
+
+              <li role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal">Sair</a></li>
+              </li>
+
+            </ul>
+
+          </div>
+        {% endif %}
       </ul>
     </nav>
 
@@ -318,8 +349,8 @@
           Deseja sair do Sistema ?
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-md" data-dismiss="modal"> Não </button>
-          <a class="btn btn-info btn-md" href="{{ url_for('logout') }}" value=" /logout "> Sim </a>
+          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
+          <a class="btn btn-primary" href="{{ url_for('logout') }}" value=" /logout "> Sim </a>
         </div>
       </div>
       </div>

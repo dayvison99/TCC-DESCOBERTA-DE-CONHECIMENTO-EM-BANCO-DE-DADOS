@@ -190,11 +190,18 @@ def excluir_Usuario():
     return render_template('excluirUsuarios.html',usuario=usuario)
 
 #PAGINA INSERIR SITUAÇOES
-@app.route("/inserirSituacoes", methods=["GET", "POST"])
+@app.route("/inserirSituacoes/", methods=["GET", "POST"])
 @login_required
 def inserirSituacoes():
     periodo = Periodo.query.all()
-    disciplina = Disciplina.query.all()
+    #disciplina = Disciplina.query.filter_by(periodo = 1)
+    return render_template('inserirSituacoes.php', periodo=periodo)
+
+@app.route("/inserir/<int:id>", methods=["GET", "POST"])
+@login_required
+def inserir(id):
+    periodo = Periodo.query.all()
+    disciplina = Disciplina.query.filter_by(periodo = id)
     return render_template('inserirSituacoes.php', periodo=periodo, disciplina=disciplina)
 
 #PAGINA DE RELATORIOS
@@ -214,19 +221,20 @@ def ajuda():
 @app.route("/analise")
 @login_required
 def analise():
-    disciplinas = [('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
-    situacaoDisciplina = "Aprovado"
-    def resultados(disciplinas): #disciplina,situacaoDisciplina
-        a = []
-        for d in disciplinas:
+    disciplinas = [('Algoritmo','CANCELADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
+    situacaoDisciplina = 'APROVADO'
+    a = []
+    for d in disciplinas:
             probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
             probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
             a.append([d[0], d[1], probabilidade/probabilidadeTotal])
-            msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinas:
+            msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinasss:\n
             |          Disciplina         |    Situação  |    Probabilidade    |"""
             for i in a:
                 msg+= '           |           {0}           |   {1}  |    {2}'.format(i[0], i[1], i[2])
                 return msg
+                #return render_template('analise.html',tables=[probabilidade.to_html(classes='table table-striped')],
+    #titles = ['na'])
     return render_template('analise.html')
 
 #Arvore de decisão sobre as situaçoes das disciplinas

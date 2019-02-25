@@ -7,7 +7,7 @@
     <legend class="legend-border"><h3> Inserção de Situações </h3></legend>
   <br/>
   <br/>
-<form action="/inserirSituacoes/{{ periodo.id }}" method="post">
+<form action="" method="POST">
 <!-- DADOS DAS SITUAÇOES DAS DISCIPLINAS-->
 <fieldset>
  <table cellspacing="10">
@@ -17,17 +17,15 @@
     </td>
      <td align="left">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-                    <select name="periodo" class="select" id="periodo" input type="submit" >
+                    <select name="periodo" class="select" id="periodo" input type="submit">
                         <option value="nenhum" disabled selected>-----</option>
                         {%for periodo in periodo  %}
-                         <option value={{ periodo.id }}>{{ periodo.nome }}</option>
+                        <option value={{ periodo.id }}><a href='/inserir/3'>{{ periodo.nome }}</a></option>
                         {% endfor %}
                     </select>
                 </td>
           </tr>
           </tr>
-
               <tr>
               <td>
                     <label for="status">Disciplina :   </label>
@@ -64,7 +62,6 @@
                                 {% endfor %}
                             </select>
            <tr>
-
                 <td>
                     <label for="status">Status :   </label>
                 </td>
@@ -79,38 +76,30 @@
                </td>
     <script type="text/javascript">
     $('.select').on({change: listChildren}).trigger('change');
-
 function listChildren(){
-
         if ( $(this).val() != '' ) {
               children = $('option').val();
               $(".input").hide();
               $("#" + $(this).val() ).show();
             }
-
 }
     </script>
-
   <script languagem="javascript" >
     function chamar(){
      var valor = document.getElementById("periodo").value;
-     var disci = document.getElementById("disciplina").value;
+     var disci = document.getElementById("2").value;
      var status = document.getElementById("status").value;
           alert([valor,disci,status]);
-
       }
     </script>
    </td>
-
   </tr>
  </table>
 </fieldset>
 <br />
 <!--<a href="{{ url_for('situacoes') }}">-->
-<a href='/analise'>aa</a>
-<a href='/analise'><button  title="Inserir! " class="btn btn-primary" type="submit">INSERIR</button></a>
-
+<button  title="Inserir! " class="btn btn-info btn-lg" ><a href='/analise'>Finalizar</a></button>
+<button  title="Inserir! " class="btn btn-info btn-lg" type="submit">INSERIR</button></a>
 </form>
 </center></div>
-
 {% endblock %}

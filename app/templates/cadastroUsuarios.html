@@ -4,6 +4,7 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
+  {% if current_user.tipo =="admin" %}
   <legend class="legend-border"><h4> Cadastro de Usuários </h4></legend>
   <form action="cadastroUsuario" method="post" class="form">
 
@@ -120,10 +121,10 @@
     <div id="sucess"></div>
     <div class="row">
       <div class="form-group col-xs-3">
-        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-primary">
+        <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-info btn-lg">
         </div>
       <div class="form-group col-xs-3">
-         <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-primary">Voltar</a>
+         <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Voltar a pesquisa de Usuário! " type="submit" value="Voltar" class="btn btn-info btn-lg">Voltar</a>
       </div>
     </div>
   </form>
@@ -152,14 +153,22 @@
     Os dados não salvos serão perdidos!
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-      <a class="btn btn-primary" href="{{ url_for('listagemUsuario') }}" value=" /listagemUsuario "> Sim </a>
+      <button type="button" class="btn btn-info btn-md" data-dismiss="modal"> Não </button>
+      <a class="btn btn-info btn-md" href="{{ url_for('listagemUsuario') }}" value=" /listagemUsuario "> Sim </a>
     </div>
   </div>
   </div>
   </div>
   <!--Fim do codigo-->
 </center></div>
+{% endif %}
+{% if current_user.tipo =="padrao" %}
+<legend class="scheduler-border" ><h4> Área restrita</h4></legend>
+<div class="form-group col-xs-1">
+<a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+  </div>
+  {% endif %}
 
 </fieldset
 

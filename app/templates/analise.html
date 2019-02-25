@@ -8,6 +8,17 @@
   <form action="" method="post" class="form">
 
 
+    <table class="table">
+      <thead>
+        <tr >
+            <th>
+            {% for table in tables %}
+              <h2>{{titles[loop.index]}}</h2></p>
+            {{ table|safe }}</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+
 </center></div>
 
 </fieldset
