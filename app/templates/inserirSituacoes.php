@@ -17,10 +17,11 @@
     </td>
      <td align="left">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-                    <select name="periodo" class="select" id="periodo" input type="submit">
+                    <select name="periodo" class="select" id="periodo" input type="submit"  onclick="chamar1()">
                         <option value="nenhum" disabled selected>-----</option>
                         {%for periodo in periodo  %}
-                        <option value={{ periodo.id }}><a href='/inserir/3'>{{ periodo.nome }}</a></option>
+                        <option value={{ periodo.id }}>{{ periodo.nome }}</a></option>
+
                         {% endfor %}
                     </select>
                 </td>
@@ -31,12 +32,18 @@
                     <label for="status">Disciplina :   </label>
                 </td>
                     <td align="left">
-                            <select name="disciplina" class="one input" style="display: none" id="1">
+                      <script languagem="javascript" >
+                      function chamar1(){
+                         var a = document.getElementById(periodo.id).value;
+                              alert([a]);
+                      }</script>
+
+                            <select name="disciplina" class="one input" style="display: none" id ="periodo.id">
                                 {%for disciplina in disciplina   %}
-                                  <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
+                                  <option value={{ disciplina.nome }} >{{ disciplina.nome }}</option>
                                 {% endfor %}
                             </select>
-                            <select name="disciplina" class="one input" style="display: none" id="2">
+                          <!--  <select name="disciplina" class="one input" style="display: none" id="2">
                                 {%for disciplina in disciplina   %}
                                   <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
                                 {% endfor %}
@@ -60,7 +67,7 @@
                                 {%for disciplina in disciplina   %}
                                   <option value={{ disciplina.nome }}>{{ disciplina.nome }}</option>
                                 {% endfor %}
-                            </select>
+                            </select>-->
            <tr>
                 <td>
                     <label for="status">Status :   </label>
@@ -87,7 +94,7 @@ function listChildren(){
   <script languagem="javascript" >
     function chamar(){
      var valor = document.getElementById("periodo").value;
-     var disci = document.getElementById("2").value;
+     var disci = document.getElementById(periodo.id).value;
      var status = document.getElementById("status").value;
           alert([valor,disci,status]);
       }
@@ -97,9 +104,8 @@ function listChildren(){
  </table>
 </fieldset>
 <br />
-<!--<a href="{{ url_for('situacoes') }}">-->
-<button  title="Inserir! " class="btn btn-info btn-lg" ><a href='/analise'>Finalizar</a></button>
-<button  title="Inserir! " class="btn btn-info btn-lg" type="submit">INSERIR</button></a>
+<a href='/analise'><button  title="Inserir! " class="btn btn-info btn-lg" type="button">Finalizar</button></a>
+<a href='/listagem/{{ disciplina.nome }}'><button  title="Inserir! " class="btn btn-info btn-lg" type="submit">INSERIR</button></a>
 </form>
 </center></div>
 {% endblock %}

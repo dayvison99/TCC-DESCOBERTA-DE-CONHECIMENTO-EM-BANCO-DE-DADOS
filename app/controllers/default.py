@@ -194,8 +194,8 @@ def excluir_Usuario():
 @login_required
 def inserirSituacoes():
     periodo = Periodo.query.all()
-    #disciplina = Disciplina.query.filter_by(periodo = 1)
-    return render_template('inserirSituacoes.php', periodo=periodo)
+    disciplina = Disciplina.query.all()
+    return render_template('inserirSituacoes.php', periodo=periodo, disciplina=disciplina)
 
 @app.route("/inserir/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -220,21 +220,23 @@ def ajuda():
 #Analise da situaçoes com Panda e Numpy
 @app.route("/analise")
 @login_required
-def analise():
-    disciplinas = [('Algoritmo','CANCELADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
-    situacaoDisciplina = 'APROVADO'
+def analise(disciplinas = [('Qualidade_de_Software','REPROVADO'),('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]):
     a = []
     for d in disciplinas:
             probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
             probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
-            a.append([d[0], d[1], probabilidade/probabilidadeTotal])
+            probabilidade= probabilidade*100
+            a.append([d[0], d[0], probabilidade/probabilidadeTotal])
             msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinasss:\n
-            |          Disciplina         |    Situação  |    Probabilidade    |"""
+            \n|          Disciplina         |    Situação  |    Probabilidade \n   |"""
+
             for i in a:
-                msg+= '           |           {0}           |   {1}  |    {2}'.format(i[0], i[1], i[2])
-                return msg
-                #return render_template('analise.html',tables=[probabilidade.to_html(classes='table table-striped')],
-    #titles = ['na'])
+                msg+= '           |           {0}         |   {1}  |    {2}'.format(i[0], i[1], i[2])
+                #return msg
+    return render_template('analise.html',tables=[a],
+    titles = ['na'])
+            #return render_template('analise.html')
+            #return render_template(msg)
     return render_template('analise.html')
 
 #Arvore de decisão sobre as situaçoes das disciplinas

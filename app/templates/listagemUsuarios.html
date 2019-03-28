@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
-
 {% block content%}
 <div class="jumbotron">
 <center>
-<fieldset class="fieldset-border">
+<fieldset class="fieldset-border" >
     {% if current_user.tipo =="admin" %}
   <legend class="scheduler-border" ><h4> Usuários Cadastrados </h4></legend>
   <form action="/atualizarUsuario/{{ usuario.id }}" method="post">
