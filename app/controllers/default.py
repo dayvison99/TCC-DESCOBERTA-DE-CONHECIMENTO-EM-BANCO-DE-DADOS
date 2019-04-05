@@ -218,21 +218,33 @@ def ajuda():
 
 ##Parte da mineração de dados
 #Analise da situaçoes com Panda e Numpy
-@app.route("/analise")
+@app.route("/analise/",methods=["GET", "POST"])
 @login_required
-def analise(disciplinas = [('Qualidade_de_Software','REPROVADO'),('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]):
+def analise():
+
+    disciplinas = [('Algoritmo','APROVADO'), ('TGA','REPROVADO'),('Lingua_Portuguesa','APROVADO'),('Lingua_Portuguesa','APROVADO')]
+    situacaoDisciplina = 'REPROVADO'
+    b = []
     a = []
+    c = 0
+    cont=0
     for d in disciplinas:
+            cont=cont+1
             probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
             probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
             probabilidade= probabilidade*100
-            a.append([d[0], d[0], probabilidade/probabilidadeTotal])
-            msg = """A probabilidade do aluno obter um determinado resultado para as seguintes disciplinasss:\n
-            \n|          Disciplina         |    Situação  |    Probabilidade \n   |"""
+            a.append([d[0], probabilidade/probabilidadeTotal])
+            prob = dados.loc[(dados['disciplina']==d[0])].count()
+            for i in range(1):
+                    probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                    probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                    b = probabilidade/probabilidadeTotal*100
+                    c = b+c
+    flash(c[0]/cont,"%")
 
-            for i in a:
-                msg+= '           |           {0}         |   {1}  |    {2}'.format(i[0], i[1], i[2])
-                #return msg
+
+
+
     return render_template('analise.html',tables=[a],
     titles = ['na'])
             #return render_template('analise.html')
