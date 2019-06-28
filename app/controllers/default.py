@@ -218,11 +218,13 @@ def ajuda():
 
 ##Parte da mineração de dados
 #Analise da situaçoes com Panda e Numpy
-@app.route("/analise/",methods=["GET", "POST"])
+@app.route("/analise/<int:id>",methods=["GET", "POST"])
 @login_required
-def analise():
-
-    disciplinas = [('Algoritmo','APROVADO'), ('TGA','REPROVADO'),('Lingua_Portuguesa','APROVADO'),('Lingua_Portuguesa','APROVADO')]
+def analise(id):
+    flash(id)
+    materias = Disciplina.query.filter_by(id = id).first()
+    flash(materias.nomeData)
+    disciplinas = [(materias.nomeData,'APROVADO'), ('TGA','REPROVADO'),('Lingua_Portuguesa','APROVADO'),('Lingua_Portuguesa','APROVADO')]
     situacaoDisciplina = 'REPROVADO'
     b = []
     a = []
@@ -241,11 +243,8 @@ def analise():
                     b = probabilidade/probabilidadeTotal*100
                     c = b+c
     flash(c[0]/cont,"%")
-
-
-
-
-    return render_template('analise.html',tables=[a],
+    j=c[0]/cont
+    return render_template('analise.html',tables=[a,a],
     titles = ['na'])
             #return render_template('analise.html')
             #return render_template(msg)

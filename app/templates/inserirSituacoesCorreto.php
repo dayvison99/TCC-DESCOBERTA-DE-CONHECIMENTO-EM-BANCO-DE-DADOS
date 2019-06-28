@@ -14,15 +14,15 @@
             </tr>
               <tr>
               <td><h4>
-                    <label >Disciplinas :   </label>
+                    <label for="status">Disciplina :   </label>
                   <h4>
                 </td>
                     <td align="left" ><h4>
-
+                      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                      <select name="disciplina"class="select" input type="submit"  id ="disciplina">
                           {%for disciplina in disciplina   %}
-                          <tr class="table table-dark">
-                              <td><h4>  <a href='/analise/{{ disciplina.id }}'/>{{ disciplina.nome }}</a></h4></td>
-                          </tr>
+                          <a href='/analise/{{ disciplina.nome }}/'>
+                            <option value={{ disciplina.nome }} >{{ disciplina.nome }}</option></a>
                           {% endfor %}
                    </select>
                     <h4></td>
@@ -39,6 +39,25 @@
                               <option value="CANCELADO">Desistente</option>
                     </select>
                </td>
+    <script type="text/javascript">
+    $('.select').on({change: listChildren}).trigger('change');
+function listChildren(){
+        if ( $(this).val() != '' ) {
+              children = $('option').val();
+              $(".input").hide();
+              $("#" + $(this).val() ).show();
+            }
+}
+    </script>
+    {%for periodo in periodo  %}
+  <script languagem="javascript" >
+    function chamar(){
+     var disci = document.getElementById("disciplina").value;
+     var status = document.getElementById("status").value;
+          alert([disci,status]);
+      }
+    </script>
+      {% endfor %}
    </td>
   </tr>
  </table>

@@ -57,6 +57,7 @@ class Disciplina(db.Model):
             __tablename__ = "disciplina"
             id = db.Column(db.Integer, primary_key=True)
             nome = db.Column(db.Text)
+            nomeData = db.Column(db.Text)
             periodo = db.Column(db.Integer, db.ForeignKey('periodo.id'))
             Periodo = db.relationship('Periodo', foreign_keys=periodo)
 
