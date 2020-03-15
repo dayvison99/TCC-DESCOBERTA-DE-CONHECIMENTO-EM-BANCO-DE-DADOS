@@ -22,3 +22,11 @@ class CadastroUsuarioForm(FlaskForm):
         validators.EqualTo('confirm', message='Passwords must match')])
     confirm = PasswordField('Repita a senha',validators=[DataRequired()])
     tipo = StringField("tipo",validators=[DataRequired()])
+
+class DisciForm(FlaskForm):
+        nome = StringField('nome', validators=[DataRequired()])
+
+class AlunosFrom(FlaskForm):
+        nome = StringField('nome', validators=[DataRequired()])
+        turma = StringField('turma', validators=[DataRequired()])
+        resultado = StringField ('resultado')      

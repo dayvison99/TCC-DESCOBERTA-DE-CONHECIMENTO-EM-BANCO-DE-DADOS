@@ -10,47 +10,57 @@
 <tr>
   <td>
     <fieldset class="fieldset-border">
+      <legend class="legend-border">Alunos com Analise Salva</legend>
+      <center><a href="{{ url_for('alunosAnalise') }}"><img src="{{ url_for('static', filename='img/users_cad.png') }}" alt="IFNMG"”/ height="60px"  ></a>
+      </fieldset>
+  </td>
+  <td>
+    <fieldset class="fieldset-border">
+      <legend class="legend-border">Alunos em Risco</legend>
+      <center><a href="{{ url_for('alunosRisco') }}"><img src="{{ url_for('static', filename='img/alunosRisk.png') }}" alt="IFNMG"”/ height="60px"  ></a>
+      </fieldset>
+  </td>
+  <td>
+    <fieldset class="fieldset-border">
       <legend class="legend-border">Usuários Cadastrados</legend>
       <center><a href="{{ url_for('usuariosCadastrados') }}"><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="60px"  ></a>
       </fieldset>
-    </td>
-    <td>
+  </td>
+</tr>
+<tr>
+  <td>
         <fieldset class="fieldset-border">
           <legend class="legend-border">Disciplinas do Curso</legend>
           <center><a href="{{ url_for('disciplinasTads') }}"><img src="{{ url_for('static', filename='img/disciplinas.png') }}" alt="IFNMG"”/ height="60px" ></a>
           </fieldset>
-        </td>
-  <tr>
-    <td>
+  </td>
+  <td>
       <fieldset class="fieldset-border">
         <legend class="legend-border">Disciplinas com Maior Aprovação</legend>
         <center><a href="{{ url_for('disciplinaAprovacao') }}"><img src="{{ url_for('static', filename='img/aprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
       </fieldset>
-    </td>
-      <td>
+  </td>
+  <td>
         <fieldset class="fieldset-border">
           <legend class="legend-border">Disciplinas com Maior Reprovação</legend>
           <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/reprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
         </fieldset>
-      </td>
-
-    </tr>
-    <tr>
-        <td>
+  </td>
+</tr>
+<tr>
+  <td>
           <fieldset class="fieldset-border">
             <legend class="legend-border">Média de Matriculas por Disciplina</legend>
             <center><a href="{{ url_for('mediaMatricula') }}"><img src="{{ url_for('static', filename='img/mediaMatricula.png') }}" alt="IFNMG"”/ height="60px" ></a>
           </fieldset>
-        </td>
-        <td>
+  </td>
+  <td>
           <fieldset class="fieldset-border">
             <legend class="legend-border">Disciplinas com Maiores Disistências</legend>
             <center><a href="{{ url_for('disciplinaDesistencia') }}"><img src="{{ url_for('static', filename='img/desistencia.ico') }}" alt="IFNMG"”/ height="60px" ></a>
           </fieldset>
-        </td>
-
-      </tr>
-
+  </td>
+</tr>
 </table>
 </legend>
 </fieldset>

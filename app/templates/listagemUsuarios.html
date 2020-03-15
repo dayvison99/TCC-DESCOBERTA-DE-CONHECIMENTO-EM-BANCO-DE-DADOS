@@ -6,28 +6,33 @@
     {% if current_user.tipo =="admin" %}
   <legend class="scheduler-border" ><h4> Usuários Cadastrados </h4></legend>
   <form action="/atualizarUsuario/{{ usuario.id }}" method="post">
+
+<!-- Campo de pesquisa -->
+
+
+
+
 <!-- DADOS PESSOAIS-->
 
-  <table class="table" title="Click no cadastro que deseja alterar.">
-    <thead>
-      <tr class="table table-dark" font-family="arial">
-        <th>CÓD USUÁRIO</th>
-        <th>NOME</th>
-        <th>CELULAR</th>
-        <th>E-MAIL</th>
+  <table class="table table-striped " title="Click no cadastro que deseja alterar!" >
+      <tr  >
+        <th width="11%"><h4> CÓD USUÁRIO </h4></th>
+        <th width="30%"><h4> NOME </h4></th>
+        <th width="20%"><h4> CELULAR </h4></th>
+        <th width="20%"><h4> E-MAIL </h4></th>
       </tr>
 
     {%for usuario in usuario %}
 
 
-      <tr class="table table-dark">
-
-        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></h4></td>
+      <tr>
+        
+        <td ><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></h4></td>
 
-      </a>
+
         </tr>
         {% endfor %}
 

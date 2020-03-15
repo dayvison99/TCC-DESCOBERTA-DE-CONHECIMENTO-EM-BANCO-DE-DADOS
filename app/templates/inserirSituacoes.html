@@ -1,32 +1,107 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block content%}
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 
 <div class="jumbotron"><center>
-<fieldset class="fieldset-border">
-  <legend class="legend-border"><h4> Cadastro de Usuários </h4></legend>
-  <form action="" method="post" class="form">
+  <fieldset class="fieldset-border">
+    <legend class="legend-border"><h3> Inserção de Situações </h3></legend>
+  <br/>
+  <br/>
+<form action="/sessao/" method="POST" >
+
+<fieldset >
+ <table >
+            </tr>
+              <tr>
+              <td><h4>
+                    <label for="status">Disciplina :   </label>
+                  <h4>
+                </td>
+                    <td  ><h4>
+                      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                      <select required  id ="disciplinaselect" name='disciplina' class="selectpicker form-control">
+                          <option value="nenhum" disabled selected>Escolha a Disciplina</option>
+                          {%for disciplina in disciplina  %}
+                          <option value="{{ disciplina.id }}" >{{ disciplina.nome }}</option>
+                          {% endfor %}
+
+                   </select>
+                    <h4></td>
+
+           <tr>
+                <td><h4>
+                    <label for="status">Status :   </label>
+                </td>
+                <td align="left"><h4>
+                    <select name="status"  onchange="chamar()" id="status" required class="selectpicker form-control">
+                              <option value="nenhum" disabled selected>Escolha a Sistuação</option>
+                              <option value="APROVADO">Aprovado</option>
+                              <option value="REPROVADO">Repovado</option>
+                              <option value="MATRICULADO">Matriculado</option>
+                              <option value="CANCELADO">Desistente</option>
+                    </select>
+               </td>
 
 <!--
- DADOS PESSOAIS
-  -->
-  <table class="table">
-    <thead>
-      <tr class="success">
-          <th>
-          {% for table in tables %}
-            <h2>{{titles[loop.index]}}</h2></p>
-          {{ table|safe }}</th>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-      </div>
-    </div>
-  <!--Fim do codigo-->
+    <script type="text/javascript">
+    $('.select').on({change: listChildren}).trigger('change');
+function listChildren(){
+        if ( $(this).val() != '' ) {
+              children = $('option').val();
+              $(".input").hide();
+              $("#" + $(this).val() ).show();
+            }
+}
+    </script>
+
+  <script languagem="javascript" >
+    function chamar(){
+     var disci = document.getElementById("disciplina").value;
+     var status = document.getElementById("status").value;
+          alert([disci,status]);
+    }
+  </script>-->
+  </td>
+  </tr>
+ </table>
+</fieldset>
+
+<fieldset class="fieldset-border">
+  <legend class="legend-border"><h2> Disciplinas Inseridas </h2></legend>
+<br/>
+  <table class="table table-striped">
+      {% for table in tables %}
+
+      <tr >
+        <th><h3>    {{titles[loop.index]}}  </h3></th></tr>
+      <tr>  <td><h4>    {{ table|safe }} </h4> </td>
+      </tr>
+
+      {% endfor %}
+
+  </table>
+</fieldset>
+<br />
+
+<!--<script languagem="javascript" >
+  function chamar(){
+    var disci = document.getElementById("disciplina").value;
+    alert([disci])
+    $('a').empty().append(+ disci +);
+    }
+</script>-->
+
+<div class="form-group col-xs-4">
+<a href='/analise/'><input class="btn btn-info btn-lg" type="button"  value="Finalizar" ></input></a>
+</div>
+<div class="form-group col-xs-1">
+<button class="btn btn-info btn-lg" >Inserir</button>
+</div>
+
+</form>
+
 </center></div>
-
-</fieldset
-
 
 {% endblock %}

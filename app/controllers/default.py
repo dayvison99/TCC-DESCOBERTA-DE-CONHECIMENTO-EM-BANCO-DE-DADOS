@@ -1,5 +1,5 @@
 from app import app, db, lm
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required
 import os
 from flask import Flask, Response, request, abort, render_template_string, send_from_directory
@@ -9,11 +9,13 @@ from app.models.tables import User
 from app.models.tables import Periodo
 from app.models.tables import Disciplina
 from app.models.forms import CadastroUsuarioForm
+from app.models.forms import DisciForm
+from app.models.forms import AlunosFrom
+from app.models.tables import Alunos
 import numpy as np
 import pandas as pd
-#from flask.ext.hashing import Hashing
-
-
+app.SECRET_KEY = "secreta123"
+from flask_session import Session
 
 #importando banco de dados das disciplinas com o pandas
 dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
@@ -153,7 +155,7 @@ def alterarSenha():
                             cadastroform = cadastroform)
 
 
-#PAGINAS
+#PAGINAS( todos os menus)
 #PAGINA INICIAL
 @app.route("/index")
 @login_required
@@ -167,7 +169,7 @@ def logout():
     logout_user()
     return redirect(url_for("login"))
 
-#PAGINA listagem De Usuarios
+#PAGINA listagem De Usuarios selecionaodos
 @app.route("/listagem/<int:id>")
 @login_required
 def listagem(id):
@@ -175,7 +177,7 @@ def listagem(id):
     cadastroform = CadastroUsuarioForm()
     return render_template('atualizaUsuarios.html',usuario=usuario, cadastroform=cadastroform)
 
-#Listagem dos Usuarios cadastrados no sistema
+#Listagem de todos osUsuarios cadastrados no sistema
 @app.route("/listagemUsuario")
 @login_required
 def listagemUsuario():
@@ -195,14 +197,14 @@ def excluir_Usuario():
 def inserirSituacoes():
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
-    return render_template('inserirSituacoes.php', periodo=periodo, disciplina=disciplina)
+    return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
 
 @app.route("/inserir/<int:id>", methods=["GET", "POST"])
 @login_required
 def inserir(id):
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.filter_by(periodo = id)
-    return render_template('inserirSituacoes.php', periodo=periodo, disciplina=disciplina)
+    return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
 
 #PAGINA DE RELATORIOS
 @app.route("/relatorios")
@@ -216,46 +218,139 @@ def relatorios():
 def ajuda():
         return render_template('ajuda.html')
 
-##Parte da mineração de dados
-#Analise da situaçoes com Panda e Numpy
-@app.route("/analise/<int:id>",methods=["GET", "POST"])
+# Salvando alunos apos analise
+@app.route("/listagemAlunos", methods=["GET", "POST"])
 @login_required
-def analise(id):
-    flash(id)
-    materias = Disciplina.query.filter_by(id = id).first()
-    flash(materias.nomeData)
-    disciplinas = [(materias.nomeData,'APROVADO'), ('TGA','REPROVADO'),('Lingua_Portuguesa','APROVADO'),('Lingua_Portuguesa','APROVADO')]
-    situacaoDisciplina = 'REPROVADO'
-    b = []
-    a = []
-    c = 0
-    cont=0
-    for d in disciplinas:
+def listagemAlunos():
+    alunosform = AlunosFrom()
+    if request.method == 'POST' and alunosform.validate():
+        aluno = Alunos(alunosform.nome.data,alunosform.turma.data,alunosform.resultado.data)
+        usuario = Alunos.query.all()
+        nome = Alunos.query.filter_by(nome=alunosform.nome.data).first()
+        turma = Alunos.query.filter_by(turma=alunosform.turma.data).first()
+        resultado = Alunos.query.filter_by(resultado=session['resultados']).first()
+        aluno.resultado = session['resultados']
+        resultado = aluno.resultado
+        db.session.add(aluno)
+        db.session.commit()
+
+        flash('Analise salva com Sucesso !')
+        return redirect(url_for('inserirSituacoes'))
+    return render_template('salvaralunos.html',
+                            alunosform = alunosform)
+
+#listando todos os alunos salvos
+@app.route("/alunosAnalise/",methods=["GET", "POST"])
+@login_required
+def alunosAnalise():
+    alunosform = AlunosFrom()
+    alunos = Alunos.query.all()
+    return render_template('listagemAlunos.html',alunos=alunos, alunosform=alunosform)
+
+#listando todos os alunos com risco de evasão
+@app.route("/alunosRisco/",methods=["GET", "POST"])
+@login_required
+def alunosRisco():
+    alunosform = AlunosFrom()
+    alunos = Alunos.query.all()
+    alunos = Alunos.query.filter(Alunos.resultado >= 60)
+    return render_template('listagemAlunos.html',alunos=alunos, alunosform=alunosform)
+
+#Excluir lista de alunos
+@app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])
+@login_required
+def excluirAlunos(id):
+    alunos = Alunos.query.filter_by(id=id).first()
+    db.session.delete(alunos)
+    db.session.commit()
+    alunos = Alunos.query.all()
+    flash ("Dados Excluidos com Sucesso!")
+    return redirect(url_for('alunosAnalise'))
+
+##Parte da mineração de dados
+
+#armazenado dados
+@app.route("/sessao/",methods=["GET", "POST"])
+@login_required
+def sessao():
+    lista_disciplinas = []
+    periodo = Periodo.query.all()
+    disciplina = Disciplina.query.all()
+
+    if request.form.get("disciplina") and request.form.get("status") is not None:
+        cont=0
+        for d in disciplina:
             cont=cont+1
-            probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
-            probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
-            probabilidade= probabilidade*100
-            a.append([d[0], probabilidade/probabilidadeTotal])
-            prob = dados.loc[(dados['disciplina']==d[0])].count()
-            for i in range(1):
-                    probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
-                    probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
-                    b = probabilidade/probabilidadeTotal*100
-                    c = b+c
-    flash(c[0]/cont,"%")
-    j=c[0]/cont
-    return render_template('analise.html',tables=[a,a],
-    titles = ['na'])
-            #return render_template('analise.html')
-            #return render_template(msg)
-    return render_template('analise.html')
+            id = request.form.get("disciplina")
+            situacaoDisciplina = request.form.get("status")
+            materias = Disciplina.query.filter_by(id = id).first()
+            session["salvardisciplina"] = request.form.get("disciplina")
+            session["salvarstatus"] = request.form.get("status")
+        #    lista_disciplinas[0] = (session["salvardisciplina"],session["salvarstatus"])
+            #flash(lista_disciplinas)
+            return render_template('inserirSituacoes.html',tables=[materias.nome,session["salvarstatus"]],
+            titles = ['na','Disciplinas', 'Situações'],periodo=periodo, disciplina=disciplina)
+
+    if request.form.get("disciplina") is None:
+        flash("Escolha uma Disciplina")
+        return render_template('inserirSituacoes.html',
+        titles = ['na'],periodo=periodo, disciplina=disciplina)
+    if request.form.get("status") is None:
+        flash("Escolha um Status")
+        return render_template('inserirSituacoes.html',
+        titles = ['na'],periodo=periodo, disciplina=disciplina)
+
+
+#Analise da situaçoes com Panda e Numpy
+@app.route("/analise/",methods=["GET", "POST"])
+@login_required
+def analise():
+    if session["salvardisciplina"] and session["salvarstatus"] is not None:
+        id = session["salvardisciplina"]
+        situacaoDisciplina = session["salvarstatus"]
+        materias = Disciplina.query.filter_by(id = id).first()
+        disciplinas = [(materias.nomeData,situacaoDisciplina)]
+        flash(disciplinas)
+        b = []
+        a = []
+        c = 0
+        cont=0
+        for d in disciplinas:
+                cont=cont+1
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                probabilidade= probabilidade*100
+                a.append([d[0], probabilidade/probabilidadeTotal])
+                prob = dados.loc[(dados['disciplina']==d[0])].count()
+                for i in range(1):
+                        probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                        probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                        b = probabilidade/probabilidadeTotal*100
+                        c = b+c
+        flash(round(c[0]/cont, 2))
+        j=round(c[0]/cont, 2)
+        session["resultados"] = j
+        if j > 60:
+            flash("Atenção!!")
+            flash("Aluno com probabilidades de acima de 60 %")
+        session["salvardisciplina"] = None
+        session["salvarstatus"] = None
+        return render_template('analise.html',tables=[a,j],
+        titles = ['na'])
+        return render_template('analise.html')
+    else:
+        periodo = Periodo.query.all()
+        disciplina = Disciplina.query.all()
+        flash("Insira as Diciplinas e as Situaçoes antes de Finalizar")
+        return render_template('inserirSituacoes.html',
+        titles = ['na'],periodo=periodo, disciplina=disciplina)
 
 #Arvore de decisão sobre as situaçoes das disciplinas
-@app.route("/situacoes")
+@app.route("/situacoes/",methods=["GET", "POST"])
 @login_required
 def situacoes():
-        disciplinas = [('Algoritmo','REPROVADO'), ('TGA','APROVADO'),('Lingua_Portuguesa','APROVADO')]
-        situacaoDisciplina = "Aprovado"
+        disciplinas = session["salvardisciplina"]
+        situacaoDisciplina = session["salvarstatus"]
         def resultados(disciplinas): #disciplina,situacaoDisciplina
             a = []
             for d in disciplinas:
@@ -267,8 +362,8 @@ def situacoes():
                 for i in a:
                     msg+= '           |           {0}           |   {1}  |    {2}'.format(i[0], i[1], i[2])
                     return msg
-                return render_template('inserirSituacoes.php')
-        return render_template('inserirSituacoes.php')
+                return render_template('inserirSituacoes.html')
+        return render_template('inserirSituacoes.html')
 
 #### Relatorios do Sistema ####
 
@@ -289,6 +384,7 @@ def disciplinasTads():
     resultado = disciplina_curso.groupby(['disciplina']).max()
     resultado = resultado = resultado.sort_values(by=['periodo'])
     resultado = resultado.rename(columns={'periodo' : 'Periodo da Disciplina'})
+    resultado = resultado.rename(columns={'disciplina' : 'Disciplinas'})
     return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 

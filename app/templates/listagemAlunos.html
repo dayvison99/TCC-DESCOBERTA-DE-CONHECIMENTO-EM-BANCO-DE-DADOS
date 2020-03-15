@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<center>
+  <fieldset class="fieldset-border">
+    <legend class="legend-border"><h4> Alunos em Risco de Evasão </h4></legend>
+
+<!-- DADOS PESSOAIS-->
+<form action="/excluirAlunos/" method="POST" >
+  <table class="table table-striped" title="Alunos em Risco de Evasão!">
+     <tr >
+        <th>Nome</th>
+        <th>Turma</th>
+        <th>Risco de Evasão (%)</th>
+        <th>Excluir</th>
+      </tr>
+
+    {%for aluno in alunos %}
+
+      <tr >
+        <td>  {{ aluno.nome }}</td>
+        <td>  {{ aluno.turma }}</td>
+        <td>  {{ aluno.resultado }}</td>
+        <td>  <a href='/excluirAlunos/{{ aluno.id }}'>  <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Alunos! " type="submit" value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
+
+      </tr>
+
+
+  <!-- Confimar ser o usuario deseja EXCLUIRr-->
+  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+      </button>
+      <h4 class="modal-title" id="myModalLabel">Atenção</h4>
+    </div>
+    <div class="modal-body">
+      Deseja relamente excluir ?</p>
+    Os dados não poderão ser reculperados!
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
+      <a class="btn btn-primary" href="/excluirAlunos/{{ aluno.id }}" value="/excluir"> Sim </a>
+    </div>
+  </div>
+  </div>
+  </div>
+  <!--Fim do codigo-->
+  {% endfor %}
+</tbody>
+</table>
+</form>
+    <div id="sucess"></div>
+  <div class="row">
+    <div class="form-group col-xs-1">
+    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-primary" type="button">Voltar</button></a>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-1">
+    <button title="Imprimir Relatorios!" class="btn btn-primary" type="button">Imprimir</button></a>
+  </div>
+  </div>
+  </form>
+     </form>
+
+</center></div>
+
+</fieldset>
+</div>
+{% endblock %}

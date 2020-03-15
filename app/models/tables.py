@@ -67,3 +67,19 @@ class Disciplina(db.Model):
 
             def __repr__(self):
                 return "<Disciplina %r>" % self.id
+
+class Alunos(db.Model):
+    __tablename__ = "alunos"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.Text)
+    turma = db.Column(db.Text)
+    resultado = db.Column(db.Text)
+
+    def __init__(self, nome,turma,resultado):
+        self.nome = nome
+        self.turma = turma
+        self.resultado = resultado
+
+    def __repr__(self):
+        return "<Alunos %r>" % self.id

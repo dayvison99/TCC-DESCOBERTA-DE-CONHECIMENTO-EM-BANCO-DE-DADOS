@@ -42,6 +42,8 @@
 
   /* Setting body background and font style*/
 
+
+  
   body {
       font-family: 'Open Sans Condensed', sans-serif;
       background: cinza;
@@ -82,8 +84,8 @@
     display: block;
     color: #f9f9f9;
     text-shadow: 1px 1px 3px rgba(150, 150, 150, 1);
-    padding: 30px 30px;
-    font-size: 1.5em;
+    padding: 15px 20px;
+    font-size: 1.4em;
     text-align: center;
     text-decoration: none;
     -webkit-transition:all 0.2s linear;
@@ -94,7 +96,7 @@
 
   .nav-list li a:hover {
     -webkit-filter: brightness(1.3);
-    padding-top: 80px ;
+    padding-top: 10px ;
   }
 
   /* Adding background color to tiles */
@@ -123,7 +125,7 @@
     background:#007b9c
   }
 
-/*  #tile7 {
+  #tile7 {
     background:#006e9c
   }
 
@@ -234,24 +236,19 @@
   </head>
   <body>
     <table height="100%" width="100%">
-      <tr><td>  <!--Logo do IFNMG-->
-        <div border="5"><img src="{{ url_for('static', filename='img/ifnmg.png') }}" alt="IFNMG"”/ height="95px" >
-          <!--saudação ao usuario logado  -->
-            <ul class="dropdown user user-menu" >
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                      <i class="glyphicon glyphicon-user"></i>
-                      <span class="hidden-xs">
-                        {% if current_user.is_authenticated %}
-                        -  {{ current_user.nomeUsuario}} -
-                        {% endif %}
-                  </a>
-                  <ul class="dropdown-menu">
-                      <li class="user-footer">
-                          <div class="pull-left">
-                              <a class="btn btn-info" href="#" data-toggle="modal" data-target="#myModal">Sair</a>                       </div>
-                      </li>
-                  </ul>
-              </ul>
+      <tr><td><!--Logo do IFNMG-->
+     <div >
+          <ul class="dropdown user user-menu" >
+                <a href="{{ url_for('index') }}" >
+                  <img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG"”/ height="75px" >
+                     <!--saudação ao usuario logado  --><p>
+                    <i class="glyphicon glyphicon-user"></i>
+                    <span class="hidden-xs">
+                      {% if current_user.is_authenticated %}
+                        {{ current_user.nomeUsuario}}
+                      {% endif %}
+               </a>
+          </ul>
           </td>
 
           <!-- Menus -->
@@ -266,7 +263,7 @@
                           <li> <a href="{{ url_for('ajuda') }}" id="tile5"><i class="ion-help"></i> Ajuda</a></li>
                           <li> <a href="{{ url_for('relatorios') }}" id="tile4"><i class="ion-ios7-monitor-outline"></i> Relatórios</a></li>
                           <li> <a href="{{ url_for('inserirSituacoes') }}" id="tile3"><i class="ion-ios7-paper-outline"></i> Situações</a></li>
-                          <li> <a href="{{ url_for('listagemUsuario') }}" id="tile2"><i class="ion-ios7-people-outline"></i> Cadastro</a></li>
+                          <li> <a href="{{ url_for('listagemUsuario') }}" id="tile2"><i class="ion-ios7-people-outline"></i> Cadastros</a></li>
                           <li> <a href="{{ url_for('index') }}" id="tile1"><i class="icon ion-ios7-home-outline"></i> Início</a></li>
                       </ul>
                   </div>
@@ -347,8 +344,9 @@
       {% block content%}
       {% endblock %}
     </div> <!-- /container -->
+    <center>
     <div class ="col-md-5 col-md-offset-4">
-      <br/><p>  &copy; 2019 IFNMG-TADS.</p>
+      <br/><p>  &copy; 2020 IFNMG-TADS.</p>
     </footer>
     </div>
 
