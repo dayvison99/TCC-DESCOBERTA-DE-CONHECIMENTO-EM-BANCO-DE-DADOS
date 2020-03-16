@@ -10,7 +10,7 @@ click==6.7
 cryptography==2.3
 cycler==0.10.0
 facebook-sdk==3.0.0a0
-Flask==0.12.2
+Flask==1.0
 Flask-BabelEx==0.9.3
 Flask-Hashing==1.1
 Flask-Login==0.4.1
