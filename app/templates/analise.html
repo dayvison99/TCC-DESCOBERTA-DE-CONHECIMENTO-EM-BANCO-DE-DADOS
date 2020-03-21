@@ -4,21 +4,19 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h4> Resultados das Analises </h4></legend>
+  <legend class="legend-border"><h2> Disciplinas Inseridas </h2></legend>
   <form action="" method="post" class="form">
+    <table class="table table-striped">
+        {% for table in tables %}
 
+        <tr >
+          <th><h3>    {{titles[loop.index]}}  </h3></th></tr>
+        <tr>  <td><h4>    {{ table|safe }} </h4> </td>
+        </tr>
 
-        <table class="table">
-          <thead>
-            <tr >
-                <th>
-                {% for table in tables %}
-                  <h2>{{titles[loop.index]}}</h2></p>
-                {{ table|safe }}</th>
-              </tr>
-              {% endfor %}
-            </tbody>
-        </table>
+        {% endfor %}
+
+    </table>
         <div class="form-group col-xs-1">
             <a href='{{ url_for('inserirSituacoes') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
         </div>

@@ -1,3 +1,4 @@
+#importando bibliotecas do flask
 from app import app, db, lm
 from flask import render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required
@@ -12,10 +13,14 @@ from app.models.forms import CadastroUsuarioForm
 from app.models.forms import DisciForm
 from app.models.forms import AlunosFrom
 from app.models.tables import Alunos
+from flask_session import Session
+
+#importando bibliotecas de manipulação de dados
 import numpy as np
 import pandas as pd
+
+#chave de seguranca
 app.SECRET_KEY = "secreta123"
-from flask_session import Session
 
 #importando banco de dados das disciplinas com o pandas
 dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
@@ -54,7 +59,8 @@ def login():
                             form=form)
 
 #CRUD USUARIO CADASTAR/ALTERAR/EXCLUIR
-#CADASTRO
+
+#Cadastro de USUARIOS
 @app.route("/cadastroUsuario", methods=["GET", "POST"])
 @login_required
 def cadastroUsuario():
@@ -91,7 +97,7 @@ def cadastroUsuario():
     return render_template('cadastroUsuarios.html',
                             cadastroform = cadastroform)
 
-#EXCLUIR
+#EXCLUIR usuarios
 @app.route("/excluirUsuario/<int:id>")
 @login_required
 def excluirUsuario(id):
@@ -102,7 +108,7 @@ def excluirUsuario(id):
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('listagemUsuario'))
 
-#ALTERAR
+#ALTERAR usuarios
 @app.route("/atualizarUsuario/<int:id>", methods=["GET", "POST"])
 @login_required
 def atualizarUsuario(id):
@@ -134,6 +140,7 @@ def esqueceuSenha():
     return render_template('alterarSenha.html',
                             cadastroform = cadastroform)
 
+#alterar senha
 @app.route("/alterarSenha", methods=["GET", "POST"])
 def alterarSenha():
     cadastroform = CadastroUsuarioForm()
@@ -154,8 +161,8 @@ def alterarSenha():
     return render_template('login.html',
                             cadastroform = cadastroform)
 
-
 #PAGINAS( todos os menus)
+
 #PAGINA INICIAL
 @app.route("/index")
 @login_required
@@ -199,6 +206,7 @@ def inserirSituacoes():
     disciplina = Disciplina.query.all()
     return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
 
+#inserir sistuaçoes
 @app.route("/inserir/<int:id>", methods=["GET", "POST"])
 @login_required
 def inserir(id):
@@ -218,7 +226,7 @@ def relatorios():
 def ajuda():
         return render_template('ajuda.html')
 
-# Salvando alunos apos analise
+# Salvando dados alunos apos analise
 @app.route("/listagemAlunos", methods=["GET", "POST"])
 @login_required
 def listagemAlunos():
@@ -316,6 +324,7 @@ def analise():
         c = 0
         cont=0
         for d in disciplinas:
+            if situacaoDisciplina == 'REPROVADO':
                 cont=cont+1
                 probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
                 probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
@@ -327,16 +336,34 @@ def analise():
                         probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
                         b = probabilidade/probabilidadeTotal*100
                         c = b+c
-        flash(round(c[0]/cont, 2))
+                reprovado = round(c[0]/cont, 2)
+                aprovado =  round(100-c[0]/cont, 2)
+            if situacaoDisciplina == 'APROVADO':
+                cont=cont+1
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                probabilidade= probabilidade*100
+                a.append([d[0], probabilidade/probabilidadeTotal])
+                prob = dados.loc[(dados['disciplina']==d[0])].count()
+                for i in range(1):
+                        probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                        probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                        b = probabilidade/probabilidadeTotal*100
+                        c = b+c
+                reprovado = round(c[0]/cont, 2)
+                aprovado =  round(100-c[0]/cont, 2)
         j=round(c[0]/cont, 2)
         session["resultados"] = j
-        if j > 60:
+        flash(aprovado)
+
+        #Alerta de aluno com risco de Reprovação
+        if reprovado > 60:
             flash("Atenção!!")
             flash("Aluno com probabilidades de acima de 60 %")
         session["salvardisciplina"] = None
         session["salvarstatus"] = None
-        return render_template('analise.html',tables=[a,j],
-        titles = ['na'])
+        return render_template('analise.html',tables=[aprovado,reprovado],
+        titles = ['na','Aprovado', 'Reprovado'])
         return render_template('analise.html')
     else:
         periodo = Periodo.query.all()
