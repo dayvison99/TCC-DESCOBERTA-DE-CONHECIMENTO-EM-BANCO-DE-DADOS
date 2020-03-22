@@ -18,7 +18,7 @@
   </div>
     <div class="row control-group">
       <div class="form-group col-xs-3 floating-label-form-group controls" >
-
+          <label><h4>Nome </h4></label>
           {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8") }}
           {% if cadastroform.errors.nome %}
           <p class="help-block text-danger"></p>
@@ -30,7 +30,8 @@
       </div>
 
       <div class="row control-group">
-        <div class="form-group col-xs-2 floating-label-form-group controls">
+        <div class="form-group col-xs-3 floating-label-form-group controls">
+              <label><h4>CPF </h4></label>
              {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="cpf",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
@@ -45,6 +46,7 @@
 
     <div class="row control-group">
       <div class="form-group col-xs-3 floating-label-form-group controls">
+          <label><h4>E-mail </h4></label>
           {{ render_field(cadastroform.email , class='form-control', placeholder="E-mail *",title="E-mail") }}
           {% if cadastroform.errors.email %}
           <p class="help-block text-danger"></p>
@@ -55,7 +57,8 @@
           <p class="help-block text-danger"></p>
   </div>
   <div class="row control-group">
-    <div class="form-group col-xs-2 floating-label-form-group controls">
+    <div class="form-group col-xs-3 floating-label-form-group controls">
+        <label><h4>Celular </h4></label>
         {{ render_field(cadastroform.celular , class='form-control', placeholder="Celular *", title="DDD+9+Número", maxlength="11",minlength="11", pattern="[0-9]{2}[0-9]{4,6}[0-9]{3,4}") }}
         {% if cadastroform.errors.celular %}
       <p class="help-block text-danger"></p>
@@ -69,6 +72,7 @@
 </div>
     <div class="row control-group">
       <div class="form-group col-xs-3 floating-label-form-group controls">
+          <label><h4>Nome de Usuário</h4></label>
           {{ render_field(cadastroform.nomeUsuario , class='form-control',placeholder="Nome de Usuário *", title="Nome de Usuário") }}
           {% if cadastroform.errors.nomeUsuario %}
         <p class="help-block text-danger"></p>
@@ -79,11 +83,11 @@
   <p class="help-block text-danger"></p>
   </div>
   <div class="row control-group">
-    <div class="form-group col-xs-2 floating-label-form-group controls">
-      <h4>Tipo de Usuário:</h4>
-      <h6>Administrador</h6>
+    <div class="form-group col-xs-3 floating-label-form-group controls">
+      <label><h4>Tipo de Usuário</h4></label>
+      <h4>Administrador</h4>
         {{ render_field(cadastroform.tipo , placeholder="administrador", title="Usuário Administrador", type="radio", value="admin") }}
-      <h6>Padrão</h6>
+      <h4>Padrão</h4>
         {{ render_field(cadastroform.tipo , placeholder="Usuario Padrao", title="Usuário Padrao", type="radio", value="padrao") }}
         {% if cadastroform.errors.tipo %}
       <p class="help-block text-danger"></p>
@@ -96,7 +100,8 @@
 </div>
   </div>
     <div class="row control-group">
-      <div class="form-group col-xs-2 floating-label-form-group controls">
+      <div class="form-group col-xs-3 floating-label-form-group controls">
+          <label><h4>Senha</h4></label>
         {{ render_field(cadastroform.senha, class='form-control', placeholder="Senha *", title="Senha",maxlength="20", minlength="3") }}
         {% if cadastroform.errors.senha %}
         <p class="help-block text-danger"></p>
@@ -107,7 +112,8 @@
   <p class="help-block text-danger"></p>
   </div>
   <div class="row control-group">
-   <div class="form-group col-xs-2 floating-label-form-group controls">
+   <div class="form-group col-xs-3 floating-label-form-group controls">
+       <label><h4>Repita a Senha</h4></label>
       {{ render_field(cadastroform.confirm, class='form-control', placeholder="Repita a senha *", title="Repita a Senha") }}
       {% if cadastroform.errors.confirm %}
         <p class="help-block text-danger"></p>

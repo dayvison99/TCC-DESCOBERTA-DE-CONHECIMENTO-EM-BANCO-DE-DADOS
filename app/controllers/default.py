@@ -318,7 +318,6 @@ def analise():
         situacaoDisciplina = session["salvarstatus"]
         materias = Disciplina.query.filter_by(id = id).first()
         disciplinas = [(materias.nomeData,situacaoDisciplina)]
-        flash(disciplinas)
         b = []
         a = []
         c = 0
@@ -352,14 +351,46 @@ def analise():
                         c = b+c
                 reprovado = round(c[0]/cont, 2)
                 aprovado =  round(100-c[0]/cont, 2)
+
+            else:
+                cont=cont+1
+                valorTotal = total=dados['situacaoDisciplina'].count()
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                probabilidade= probabilidade*100
+                a.append([d[0], probabilidade/probabilidadeTotal])
+                prob = dados.loc[(dados['disciplina']==d[0])].count()
+                for i in range(1):
+                        probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                        probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                        b = probabilidade/probabilidadeTotal*100
+                        c = b+c
+                        flash(probabilidade)
+                valorMat = dados[dados.situacaoDisciplina=='MATRICULADO'].count()
+                valorMat = valorMat*100/valorTotal
+                flash(valorMat)
+                valorDes = dados[dados.situacaoDisciplina=='CANCELADO'].count()
+                valorDes = valorDes*100/valorTotal
+                flash(valorDes)
+                valorrep = dados[dados.situacaoDisciplina=='REPROVADO'].count()
+                valorrep = valorrep*100/valorTotal
+                flash(valorrep)
+                reprovado = round(valorrep.situacaoDisciplina,2)
+
+                valorApr = dados[dados.situacaoDisciplina=='APROVADO'].count()
+                valorApr = valorApr*100/valorTotal
+                flash(valorApr)
+                aprovado = round(valorApr.situacaoDisciplina,2)
+
+
+
         j=round(c[0]/cont, 2)
         session["resultados"] = j
-        flash(aprovado)
 
         #Alerta de aluno com risco de Reprovação
         if reprovado > 60:
             flash("Atenção!!")
-            flash("Aluno com probabilidades de acima de 60 %")
+            flash("Aluno com probabilidades de Reprovação acima de 60 %")
         session["salvardisciplina"] = None
         session["salvarstatus"] = None
         return render_template('analise.html',tables=[aprovado,reprovado],
@@ -378,7 +409,7 @@ def analise():
 def situacoes():
         disciplinas = session["salvardisciplina"]
         situacaoDisciplina = session["salvarstatus"]
-        def resultados(disciplinas): #disciplina,situacaoDisciplina
+        def resultados(disciplinas):
             a = []
             for d in disciplinas:
                 probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
@@ -406,8 +437,6 @@ def usuariosCadastrados():
 @app.route("/disciplinasTads")
 @login_required
 def disciplinasTads():
-    #resultado = dados.groupby(['disciplina']).describe()
-    #resultado = resultado.filter(items=['disciplina'])
     resultado = disciplina_curso.groupby(['disciplina']).max()
     resultado = resultado = resultado.sort_values(by=['periodo'])
     resultado = resultado.rename(columns={'periodo' : 'Periodo da Disciplina'})

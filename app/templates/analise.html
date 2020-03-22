@@ -4,13 +4,13 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h2> Disciplinas Inseridas </h2></legend>
+  <legend class="legend-border"><h3> Resultados das Analises </h3></legend>
   <form action="" method="post" class="form">
     <table class="table table-striped">
         {% for table in tables %}
 
         <tr >
-          <th><h3>    {{titles[loop.index]}}  </h3></th></tr>
+          <th><h4>    {{titles[loop.index]}}  </h4></th></tr>
         <tr>  <td><h4>    {{ table|safe }} </h4> </td>
         </tr>
 

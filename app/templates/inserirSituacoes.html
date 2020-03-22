@@ -6,17 +6,17 @@
 
 <div class="jumbotron"><center>
   <fieldset class="fieldset-border">
-    <legend class="legend-border"><h3> Inserção de Situações </h3></legend>
+    <legend class="legend-border"><h4> Inserção de Situações </h4></legend>
   <br/>
   <br/>
 <form action="/sessao/" method="POST" >
 
 <fieldset >
- <table >
+ <table class="table table-striped">
             </tr>
               <tr>
               <td><h4>
-                    <label for="status">Disciplina :   </label>
+                    <label for="status"><h4>Disciplina :   </h4></label>
                   <h4>
                 </td>
                     <td  ><h4>
@@ -32,7 +32,7 @@
 
            <tr>
                 <td><h4>
-                    <label for="status">Status :   </label>
+                    <label for="status"><h4>Status :   </h4></label>
                 </td>
                 <td align="left"><h4>
                     <select name="status"  onchange="chamar()" id="status" required class="selectpicker form-control">
@@ -43,39 +43,18 @@
                               <option value="CANCELADO">Desistente</option>
                     </select>
                </td>
-
-<!--
-    <script type="text/javascript">
-    $('.select').on({change: listChildren}).trigger('change');
-function listChildren(){
-        if ( $(this).val() != '' ) {
-              children = $('option').val();
-              $(".input").hide();
-              $("#" + $(this).val() ).show();
-            }
-}
-    </script>
-
-  <script languagem="javascript" >
-    function chamar(){
-     var disci = document.getElementById("disciplina").value;
-     var status = document.getElementById("status").value;
-          alert([disci,status]);
-    }
-  </script>-->
-  </td>
   </tr>
  </table>
 </fieldset>
 
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h2> Disciplinas Inseridas </h2></legend>
+  <legend class="legend-border"><h3> Disciplinas Inseridas </h3></legend>
 <br/>
   <table class="table table-striped">
       {% for table in tables %}
 
       <tr >
-        <th><h3>    {{titles[loop.index]}}  </h3></th></tr>
+        <th><h4>    {{titles[loop.index]}}  </h4></th></tr>
       <tr>  <td><h4>    {{ table|safe }} </h4> </td>
       </tr>
 

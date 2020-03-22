@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content%}
-<div class="jumbotron" align="justify">
+<div class="jumbotron">
+<fieldset class="fieldset-border">
+<legend class="legend-border"><h4> Ajuda </h4></legend>
+<div class="row control-group">
+  <div class="form-group col-xs-10 floating-label-form-group controls" >
   <h4>  Menus :</P> </h4>
-  <h5> 1 - Início: </h5></p>
+  <h4> 1 - Início: </h4></p>
   <ul>
-  <li> Menu principal onde o usuário poderá ter acesso ao demoais menus e acesso direto para o site do cajuí e do IFNMG</li>
+  <li> Menu principal onde o usuário poderá ter acesso ao demais menus </li>
 </ul>
-  <h5> 2 - Cadastros: </h5></p></p>
+  <h4> 2 - Cadastros: </h4></p></p>
   <ul>
   <li> Menu disponivel apenas para usuarios administradores do sistema</li>
   <li>Ao clicar no botão cadastro será direcionado para a tela de
@@ -19,25 +23,32 @@
   <li>Todos os dados editados ou excluidos não poderão mais serem recuperados</li>
   <li>Ao final de cada operação de inserção e alteração nos dados o sistema irá retornar uma mensagem de confimação</li>
 </ul>
-<h5> 3 - Situações: </h5></p></p>
+<h4> 3 - Situações: </h4></p></p>
 <ul>
 <li>Menu para inserir a situaçõe de cada disciplina de um determinado aluno</li>
 <li>Deverá selecionar a disciplina e depois a situação da mesma</li>
 <li>Para cada disciplina selecionada deverá clicar no botão "Inserir"</li>
 <li>Para finalizar as inserções e gerar as probabilidades deverá clicar no botão "Finalizar"</li>
-<li>Após clicar no botão Finalizar irá carregar uma tela com as probabilidades de cada situação daquele aluno.</li>
+<li>Após clicar no botão Finalizar irá carregar uma tela com os resultados na analise, as probabilidades de Aprovação é Reprovação daquele aluno.</li>
+<li>Na tela de resultados das analise, tem a opção para salvar os dados da análise</li> 
 </ul>
-<h5> 4 - Relatórios: </h5></p></p>
+<h4> 4 - Relatórios: </h4></p></p>
 <ul>
 <li>No menu relatorio é possivel saber as seguintes situações: </li>
-<ul>Relação dos usuarios cadastrados</ul>
-<ul>Relação das diciplinas do curso de TADS</ul>
-<ul>Relação das disciplinas com a maior nivel de aprovação</ul>
-<ul>Relação das disciplinas com a maior nivel de reprovação</ul>
-<ul>Relação da média de matricula por disciplina</ul>
-<ul>Relação das disciplinas com maiores indice de desistência</ul>
+<li>Alunos com análise salva</li>
+<li>Alunos com risco de reprovação igual ou maior de 60% </li>
+<li>Relação dos usuarios cadastrados</li>
+<li>Relação das diciplinas do curso de TADS</li>
+<li>Relação das disciplinas com a maior nivel de aprovação</li>
+<li>Relação das disciplinas com a maior nivel de reprovação</li>
+<li>Relação da média de matricula por disciplina</li>
+<li>Relação das disciplinas com maiores indice de desistência</li>
 </ul>
-<h5> 5 - Ajuda: </h5></p></p>
+<h4> 5 - Ajuda: </h4></p></p>
+</div>
+</div>
+</div>
+</fieldset>
 </div>
 
 
