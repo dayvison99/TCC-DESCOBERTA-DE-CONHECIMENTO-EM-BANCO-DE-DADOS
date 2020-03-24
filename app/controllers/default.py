@@ -261,7 +261,7 @@ def alunosAnalise():
 def alunosRisco():
     alunosform = AlunosFrom()
     alunos = Alunos.query.all()
-    alunos = Alunos.query.filter(Alunos.resultado >= 60)
+    alunos = Alunos.query.filter(Alunos.resultado >= 60).order_by(Alunos.resultado).all()
     return render_template('listagemAlunos.html',alunos=alunos, alunosform=alunosform)
 
 #Excluir lista de alunos
@@ -284,7 +284,6 @@ def sessao():
     lista_disciplinas = []
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
-
     if request.form.get("disciplina") and request.form.get("status") is not None:
         cont=0
         for d in disciplina:
@@ -365,24 +364,9 @@ def analise():
                         probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
                         b = probabilidade/probabilidadeTotal*100
                         c = b+c
-                        flash(probabilidade)
-                valorMat = dados[dados.situacaoDisciplina=='MATRICULADO'].count()
-                valorMat = valorMat*100/valorTotal
-                flash(valorMat)
-                valorDes = dados[dados.situacaoDisciplina=='CANCELADO'].count()
-                valorDes = valorDes*100/valorTotal
-                flash(valorDes)
-                valorrep = dados[dados.situacaoDisciplina=='REPROVADO'].count()
-                valorrep = valorrep*100/valorTotal
-                flash(valorrep)
-                reprovado = round(valorrep.situacaoDisciplina,2)
-
-                valorApr = dados[dados.situacaoDisciplina=='APROVADO'].count()
-                valorApr = valorApr*100/valorTotal
-                flash(valorApr)
-                aprovado = round(valorApr.situacaoDisciplina,2)
-
-
+                flash(b.situacaoDisciplina)
+                reprovado = round(c[0]/cont, 2)
+                aprovado =  round(100-c[0]/cont, 2)
 
         j=round(c[0]/cont, 2)
         session["resultados"] = j
