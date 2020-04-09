@@ -5,50 +5,33 @@
 <center>
   <fieldset class="fieldset-border">
     <legend class="legend-border"><h4> Alunos em Risco de Evasão </h4></legend>
-
 <!-- DADOS PESSOAIS-->
 <form action="/excluirAlunos/" method="POST" >
   <table class="table table-striped" title="Alunos em Risco de Evasão!">
      <tr >
-        <th>Nome</th>
-        <th>Turma</th>
+        <th>Id</th>
+        <th>Nome do Aluno</th>
+        <th>Turma de Ingresso</th>
         <th>Risco de Evasão (%)</th>
-        <th>Excluir</th>
+        <th>Excluir Aluno da Lista</th>
       </tr>
 
-    {%for aluno in alunos %}
+    {%for alunos in alunos %}
 
-      <tr >
-        <td>  {{ aluno.nome }}</td>
-        <td>  {{ aluno.turma }}</td>
-        <td>  {{ aluno.resultado }}</td>
-        <td>  <a href='/excluirAlunos/{{ aluno.id }}'>  <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Alunos! " type="submit" value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
-
+      <tr>
+        <td ><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></h4></td>
+          <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.tipo }}</a></h4></td>
+        <td>  {{ alunos.id }}</td>
+        <td>  {{ alunos.nome }}</td>
+        <td>  {{ alunos.turma }}</td>
+        <td>  {{ alunos.resultado }}</td>
+        <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
       </tr>
+{% endfor %}
 
-
-  <!-- Confimar ser o usuario deseja EXCLUIRr-->
-  <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-sm" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-      </button>
-      <h4 class="modal-title" id="myModalLabel">Atenção</h4>
-    </div>
-    <div class="modal-body">
-      Deseja relamente excluir ?</p>
-    Os dados não poderão ser reculperados!
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-      <a class="btn btn-primary" href="/excluirAlunos/{{ aluno.id }}" value="/excluir"> Sim </a>
-    </div>
-  </div>
-  </div>
-  </div>
-  <!--Fim do codigo-->
-  {% endfor %}
 </tbody>
 </table>
 </form>

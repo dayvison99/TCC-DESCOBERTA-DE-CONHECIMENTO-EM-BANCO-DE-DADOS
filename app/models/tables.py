@@ -1,7 +1,6 @@
 from app import db
 from werkzeug.security import generate_password_hash,check_password_hash
 
-
 class User(db.Model):
     __tablename__ = "usuario"
 
@@ -72,7 +71,7 @@ class Alunos(db.Model):
     __tablename__ = "alunos"
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.Text)
+    nome = db.Column(db.String)
     turma = db.Column(db.Text)
     resultado = db.Column(db.Text)
 
@@ -83,3 +82,19 @@ class Alunos(db.Model):
 
     def __repr__(self):
         return "<Alunos %r>" % self.id
+
+class Disciplina_Alunos(db.Model):
+    __tablename__ = "disciplinas_alunos"
+
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String)
+    id_alunos = db.Column(db.Text)
+    resultado = db.Column(db.Text)
+
+    def __init__(self, nome,id_alunos,resultado):
+        self.nome = nome
+        self.id_alunos = id_alunos
+        self.resultado = resultado
+
+    def __repr__(self):
+        return "<Disciplina_Alunos %r>" % self.id        

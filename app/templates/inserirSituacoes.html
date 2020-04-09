@@ -32,11 +32,11 @@
 
            <tr>
                 <td><h4>
-                    <label for="status"><h4>Status :   </h4></label>
+                    <label for="status"><h4>Situação :   </h4></label>
                 </td>
                 <td align="left"><h4>
                     <select name="status"  onchange="chamar()" id="status" required class="selectpicker form-control">
-                              <option value="nenhum" disabled selected>Escolha a Sistuação</option>
+                              <option value="nenhum" disabled selected>Escolha a Situação</option>
                               <option value="APROVADO">Aprovado</option>
                               <option value="REPROVADO">Repovado</option>
                               <option value="MATRICULADO">Matriculado</option>
@@ -49,28 +49,17 @@
 
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h3> Disciplinas Inseridas </h3></legend>
-<br/>
   <table class="table table-striped">
-      {% for table in tables %}
-
-      <tr >
-        <th><h4>    {{titles[loop.index]}}  </h4></th></tr>
-      <tr>  <td><h4>    {{ table|safe }} </h4> </td>
-      </tr>
-
-      {% endfor %}
+     {% for table in tables %}
+     <tr >
+       <th><h4>    {{titles[loop.index]}}  </h4></th></tr>
+     <tr>  <td><h4>    {{ table|safe }} </h4> </td>
+     </tr>
+       {% endfor %}
 
   </table>
 </fieldset>
 <br />
-
-<!--<script languagem="javascript" >
-  function chamar(){
-    var disci = document.getElementById("disciplina").value;
-    alert([disci])
-    $('a').empty().append(+ disci +);
-    }
-</script>-->
 
 <div class="form-group col-xs-4">
 <a href='/analise/'><input class="btn btn-info btn-lg" type="button"  value="Finalizar" ></input></a>

@@ -20,6 +20,7 @@
         <th width="30%"><h4> NOME </h4></th>
         <th width="20%"><h4> CELULAR </h4></th>
         <th width="20%"><h4> E-MAIL </h4></th>
+        <th width="20%"><h4> TIPO </h4></th>
       </tr>
 
     {%for usuario in usuario %}
@@ -31,6 +32,7 @@
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></h4></td>
+          <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.tipo }}</a></h4></td>
 
 
         </tr>

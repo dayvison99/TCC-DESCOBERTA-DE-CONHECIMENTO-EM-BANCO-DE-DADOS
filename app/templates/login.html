@@ -82,9 +82,22 @@
          </div>
       </div>
       <center>
-          <button title="Entrar no Sistema" type="submit" class=" btn-lg btn btn-info btn-block btn-signin"> Entrar</button>
+      <div class="row">
+        <div class="col-xs-4">
+          <div class="checkbox icheck field-loginform-rememberme">
+            <input type="hidden" name="LoginForm[rememberMe]" value="0"><label><input type="checkbox" id="loginform-rememberme" name="LoginForm[rememberMe]" value="1"> Lembre-Me</label>
+          </div>
+        </div>
+        <div class="col-xs-7">
+            <button title="Entrar no Sistema" type="submit" class=" btn-lg btn btn-info btn-block btn-signin"> Entrar</button>
+        </div>
 
-
+        <div class="col-xs-5">
+          <a href="/esqueceuSenha/">Alterar minha senha</a><br>
+        </div>
+      </div>
+      </div>
+</form>
     {% with messages = get_flashed_messages() %}
       {% if messages %}
       <div class="alert alert-warning">
