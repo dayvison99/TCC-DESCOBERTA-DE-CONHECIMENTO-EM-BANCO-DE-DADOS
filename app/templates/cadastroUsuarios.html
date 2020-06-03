@@ -19,7 +19,7 @@
     <div class="row control-group">
       <div class="form-group col-xs-3 floating-label-form-group controls" >
           <label><h4>Nome </h4></label>
-          {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8") }}
+          {{ render_field(cadastroform.nome ,class='form-control', placeholder='Nome *', title="Nome completo", maxlength="250", minlength="8") }}
           {% if cadastroform.errors.nome %}
           <p class="help-block text-danger"></p>
              {% for e in cadastroform.errors.nome %}
@@ -32,7 +32,7 @@
       <div class="row control-group">
         <div class="form-group col-xs-3 floating-label-form-group controls">
               <label><h4>CPF </h4></label>
-             {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="cpf",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
+             {{ render_field(cadastroform.cpf, KeyPress="('###.###.###-##', this)", class="form-control",pattern="[0-9]+$",title="Somente Numeros",minlength="11",maxlength="11",pattern="\d{3}\\d{3}\\d{3}\d{2}",id="cpf",placeholder="Cpf *")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
                   {% for e in cadastroform.errors.cpf %}

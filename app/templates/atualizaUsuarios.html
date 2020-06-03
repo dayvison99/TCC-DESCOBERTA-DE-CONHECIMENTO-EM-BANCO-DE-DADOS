@@ -26,7 +26,7 @@
                 </div>
                <div class="form-group col-xs-3 floating-label-form-group controls" >
                   <label><h4>CPF </h4></label>
-                    <input required type="text" class="form-control"  title="000.000.000-00" maxlength="14" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"  placeholder="Cpf *" pattern="[0-9]+$" OnKeyPress="formatar('###.###.###-##', this)" value="{{ usuario.cpf }}" name="cpf"\>
+                    <input required type="text" class="form-control"  title="Somente Numeros" maxlength="11"  placeholder="Cpf *" pattern="[0-9]+$" OnKeyPress="formatar('###########', this)" value="{{ usuario.cpf }}" name="cpf"\>
               </div>
             </div>
             <div class="row control-group">
@@ -132,6 +132,8 @@
       </div>
       </div>
       <!--Fim do codigo-->
+
+
       <!-- Confimar ser o usuario deseja sair sem salva-->
       <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog modal-sm" role="document">

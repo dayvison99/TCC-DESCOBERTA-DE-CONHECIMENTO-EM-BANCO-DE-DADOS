@@ -5,35 +5,25 @@
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
   <legend class="legend-border"><h4> Salvar Analise </h4></legend>
-  <form action="listagemAlunos" method="post" class="form">
+  <form action="/listagemAlunos" method="post" class="form">
 
   {{ alunosform.csrf_token }}
 <!-- DADOS PESSOAIS-->
   {% from "_macro.html" import render_field %}
   <div class="row control-group">
-    <div class="form-group col-xs-3 floating-label-form-group controls" >
+    <div class="form-group col-xs-4 floating-label-form-group controls" >
 
     </div>
   </div>
     <div class="row control-group">
-      <div class="form-group col-xs-3 floating-label-form-group controls" >
+        <div class="row control-group">
 
-          {{ render_field(alunosform.nome ,class='form-control', placeholder='Nome *', title="Nome", maxlength="250", minlength="8" ) }}
-          {% if alunosform.errors.nome %}
+        <div class="form-group col-xs-3 floating-label-form-group controls">
+        <label><h4>CPF do Aluno: </h4></label>
+        {{ render_field(alunosform.cpf ,class='form-control', placeholder='CPF *', title="CPF", maxlength="11", minlength="11") }}
+          {% if alunosform.errors.cpf %}
           <p class="help-block text-danger"></p>
-             {% for e in alunosform.errors.nome %}
-                <strong>* Campo Obrigatório !</strong>
-              {% endfor %}
-            {% endif %}
-        <p class="help-block text-danger"></p>
-      </div>
-
-      <div class="row control-group">
-        <div class="form-group col-xs-2 floating-label-form-group controls">
-          {{ render_field(alunosform.turma ,class='form-control', placeholder='Turma *', title="Turma", maxlength="3", minlength="3") }}
-          {% if alunosform.errors.turma %}
-          <p class="help-block text-danger"></p>
-                  {% for e in alunosform.errors.turma %}
+                  {% for e in alunosform.errors.cpf %}
                     <strong>* Campo Obrigatório ! </strong>
                   {% endfor %}
               {% endif %}
@@ -41,12 +31,14 @@
       </div>
 
 
+
+
   </div>
 
   <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-2">
-      <input title="Salvar dados do Usuário! " type="submit" value="Cadastar" class="btn btn-info btn-lg">
+      <input title="Salvar dados do Usuário! " type="submit" value="Salvar" class="btn btn-info btn-lg">
       </div>
     <div class="form-group col-xs-1">
        <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Analise de dados! " type="submit" value="Voltar" class="btn btn-info btn-lg">Voltar</a>

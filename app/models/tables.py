@@ -72,22 +72,22 @@ class Alunos(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String)
-    turma = db.Column(db.Text)
+    cpf = db.Column(db.Text)
     resultado = db.Column(db.Text)
 
-    def __init__(self, nome,turma,resultado):
+    def __init__(self,nome,cpf,resultado):
         self.nome = nome
-        self.turma = turma
+        self.cpf = cpf
         self.resultado = resultado
 
     def __repr__(self):
         return "<Alunos %r>" % self.id
 
-class Disciplina_Alunos(db.Model):
+class Disciplinas_Alunos(db.Model):
     __tablename__ = "disciplinas_alunos"
 
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String)
+    id_disciplinas= db.Column(db.Text)
     id_alunos = db.Column(db.Text)
     resultado = db.Column(db.Text)
 
@@ -97,4 +97,4 @@ class Disciplina_Alunos(db.Model):
         self.resultado = resultado
 
     def __repr__(self):
-        return "<Disciplina_Alunos %r>" % self.id        
+        return "<Disciplina_Alunos %r>" % self.id

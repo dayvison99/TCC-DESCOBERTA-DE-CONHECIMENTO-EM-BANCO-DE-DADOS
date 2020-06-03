@@ -23,7 +23,7 @@
       <div class="row control-group">
         <div class="form-group col-xs-3 floating-label-form-group controls">
               <label><h4>Digite o CPF cadastrado</h4></label>
-             {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="000.000.000-00",maxlength="14",pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="cpf",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
+             {{ render_field(cadastroform.cpf, class="form-control",pattern="[0-9]+$",title="Somente Numeros",maxlength="14",pattern="\d{3}\\d{3}\\d{3}\d{2}",id="cpf",placeholder="Cpf *", OnKeyPress="formatar('###.###.###-##', this)")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
                   {% for e in cadastroform.errors.cpf %}
