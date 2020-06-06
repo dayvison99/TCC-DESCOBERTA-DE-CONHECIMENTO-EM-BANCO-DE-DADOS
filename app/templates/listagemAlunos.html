@@ -1,17 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content%}
-
+<div class="jumbotron">
 <center>
   <fieldset class="fieldset-border">
-    <legend class="legend-border"><h4> Alunos em Risco de Evasão </h4></legend>
+    <legend class="scheduler-border" ><h4> Alunos em Risco de Evasão </h4></legend>
 <!-- DADOS PESSOAIS-->
 <form action="/excluirAlunos/" method="POST" >
   <table class="table table-striped" title="Alunos em Risco de Evasão!">
      <tr >
-        <th>Id</th>
+        <th>Id Aluno</th>
         <th>Nome do Aluno</th>
-        <th>Turma de Ingresso</th>
         <th>Risco de Evasão (%)</th>
         <th>Excluir Aluno da Lista</th>
       </tr>
@@ -21,7 +20,6 @@
       <tr>
         <td>  {{ alunos.id }}</td>
         <td>  {{ alunos.nome }}</td>
-        <td>  {{ alunos.turma }}</td>
         <td>  {{ alunos.resultado }}</td>
         <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
       </tr>

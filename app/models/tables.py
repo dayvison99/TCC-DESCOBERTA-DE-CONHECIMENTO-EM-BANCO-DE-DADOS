@@ -60,7 +60,7 @@ class Disciplina(db.Model):
             periodo = db.Column(db.Integer, db.ForeignKey('periodo.id'))
             Periodo = db.relationship('Periodo', foreign_keys=periodo)
 
-            def __init__(self, nome, periodo_id):
+            def __init__(self, nome, periodo):
                 self.nome = nome
                 self.periodo = periodo
 

@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content%}
+<div class="jumbotron">
+<center>
+<fieldset class="fieldset-border" >
+
+  <legend class="scheduler-border" ><h4> Percentual(%) Por Disciplinas </h4></legend>
+  <form action="/percentualdisci/" method="post">
+
+<!-- Campo de pesquisa -->
+<table class="table table-striped " title="Click no cadastro que deseja alterar!" >
+  <tr  >
+    <th><label><h4>CPF do Aluno: </h4></label></th>
+    <th><input required type="text" class="form-control"  title="Somente Numeros" maxlength="11"  placeholder="" pattern="[0-9]+$" OnKeyPress="formatar('###########', this)" value="" name="cpf"\></th>
+    <th><input title="Buscar! " type="submit" value="Buscar" class="btn btn-info btn-lg"></th>
+</tr>
+  </table>
+<!-- DADOS PESSOAIS-->
+
+  <table class="table table-striped " title="Nome do Aluno" >
+      <tr  >
+        <th width="11%"><h4> Aluno :</h4></th>
+      {%for alunos in alunos %}
+
+          <th><h4> {{ alunos.nome }} </h4></th>
+          <th><h4> {{ alunos.id}} </h4></th>
+      {% endfor %}
+      </tr>
+  </table>
+  <table class="table table-striped " title="Resultado das disciplinas" >
+      <tr>
+
+      <tr  >
+        <th><h4> Disciplinas :</h4></th>
+        {%for disciplina in disciplina  %}  <td>   {{ disciplina.nome}} </td> {% endfor %}
+      </tr>
+      <tr>
+        <td><h4> Resultados (%) : </h4></td>
+        {%for disAlunos in disAlunos %}<td>  {{ disAlunos.resultado}}</td> {% endfor %}
+
+      </tr>
+      <tr>
+           </tr>
+
+
+
+
+
+
+      </tbody>
+  </table>
+
+    </tr>
+      </table>
+  <br />
+    <div id="sucess"></div>
+  <div class="row">
+    <div class="form-group col-xs-4">
+      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-info btn-lg" type="button" >Novo</button> </a>
+    </div>
+    <div class="form-group col-xs-1">
+    <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+      </div>
+  </div>
+  </form>
+     </form>
+
+  {% if current_user.tipo =="padrao" %}
+  <legend class="scheduler-border" ><h4> Área restrita</h4></legend>
+  <div class="form-group col-xs-1">
+  <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+    </div>
+    {% endif %}
+
+</center></div>
+
+</fieldset>
+</div>
+{% endblock %}

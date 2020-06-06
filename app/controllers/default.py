@@ -3,7 +3,7 @@ from app import app, db, lm
 from flask import Flask, Response, request, abort, render_template_string, send_from_directory,render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required
 from wtforms import Form,SelectMultipleField,StringField, HiddenField, SelectField, FormField, BooleanField, FieldList, PasswordField
-from app.models.forms import Disciplinas_AlunosFrom,LoginForm,CadastroUsuarioForm,AlunosFrom,DisciForm
+from app.models.forms import Disciplinas_AlunosForm,LoginForm,CadastroUsuarioForm,AlunosForm,DisciForm
 from app.models.tables import User,Periodo,Disciplina,Alunos,Disciplinas_Alunos
 from flask_session import Session
 import hashlib
@@ -233,11 +233,19 @@ def ajuda():
 @app.route("/listagemAlunos", methods=["GET", "POST"])
 @login_required
 def listagemAlunos():
-    alunosform = AlunosFrom()
+    alunosform = AlunosForm()
     alunos = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
     if alunos:
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
+        disAlunos = Disciplinas_AlunosForm()
+        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
+        disciplinas_alunos.id_alunos = alunos.id
+        disciplinas_alunos.id_disciplinas = session["disciplinas_id"]
+        disciplinas_alunos.resultado=alunos.resultado
+        resultado = alunos.resultado
+        alunos.nome=alunos.nome.upper()
+        db.session.add(disciplinas_alunos)
         db.session.commit()
         flash('DADOS DE '+alunos.nome+' SALVOS COM SUCESSO!','danger')
         return redirect(url_for('inserirSituacoes'))
@@ -284,16 +292,46 @@ def listagemAlunosTeste():
 @app.route("/alunosAnalise/",methods=["GET", "POST"])
 @login_required
 def alunosAnalise():
-    alunosform = AlunosFrom()
+    alunosform = AlunosForm()
     alunos = Alunos.query.all()
     alunos= Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
     return render_template('listagemAlunos.html',alunos=alunos)
+
+
+
+
+#listando qual o risco em cada disciplina
+@app.route("/percentualdisci1/",methods=["GET", "POST"])
+@login_required
+def percentualdisci1():
+    return render_template('listAlunosDisci.html')
+
+@app.route("/percentualdisci/",methods=["GET", "POST"])
+@login_required
+def percentualdisci():
+    alunosform = AlunosForm()
+    alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
+    daform = Disciplinas_AlunosForm()
+    disForm = DisciForm()
+
+    alunos = Alunos.query.all()
+    alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
+    disAlunos = Disciplinas_Alunos.query.all()
+    disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==97)
+
+    disciplina = Disciplina.query.all()
+    disciplina = Disciplina.query.filter(Disciplina.id==disAlunos.id_disciplinas)
+    #discip= Disciplina(disForm.nome.data,disForm.periodo.data)
+
+
+
+    return render_template('listAlunosDisci.html',disAlunos=disAlunos,alunos=alunos,disciplina=disciplina)
 
 #listando todos os alunos com risco de evasão
 @app.route("/alunosRisco/",methods=["GET", "POST"])
 @login_required
 def alunosRisco():
-    alunosform = AlunosFrom()
+    alunosform = AlunosForm()
     alunos = Alunos.query.all()
     alunos = Alunos.query.filter(Alunos.resultado >= 60).order_by(Alunos.resultado.desc())
     return render_template('listagemAlunos.html',alunos=alunos)
@@ -319,6 +357,7 @@ def sessao():
     id = request.form.get("disciplina")
     session["salvardisciplina"] = request.form.get("disciplina")
     session["salvarstatus"] = request.form.get("status")
+    session["disciplinas_id"]= id
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
     amazenamento = []

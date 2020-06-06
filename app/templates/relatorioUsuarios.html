@@ -7,33 +7,25 @@
   <legend class="scheduler-border" ><h4> Relação dos Usuários Cadastrados </h4></legend>
   <form action="" method="post">
 <!-- DADOS PESSOAIS-->
-  <table class="table" title="Usuários cadastrados!" border="1">
-    <thead>
-      <tr class="table table-dark">
-        <th>Código</th>
-        <th>Nome</th>
-        <th>Usuário</th>
-        <th>E-mail</th>
-        <th>Celular</th>
-        <th>Permissões</th>
+  <table class="table table-striped" title="Usuários cadastrados!">
+
+      <tr>
+        <th width="11%"><h4> Id Usuário </h4></th>
+        <th width="30%"><h4> Nome </h4></th>
+        <th width="20%"><h4> Celular </h4></th>
+        <th width="20%"><h4> E-mail </h4></th>
       </tr>
 
     {%for usuario in usuario %}
 
 
-      <tr class="table table-dark">
-
+      <tr>
         <td>  {{ usuario.id }}</td>
         <td>  {{ usuario.nome }}</td>
-        <td>  {{ usuario.nomeUsuario }}</td>
         <td>  {{ usuario.email }}</td>
         <td>  {{ usuario.celular }}</td>
-        <td>  {{ usuario.tipo }}</td>
-
-
-
-      </a>
-        </tr>
+        </a>
+      </tr>
         {% endfor %}
 
 

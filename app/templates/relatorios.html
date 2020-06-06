@@ -22,12 +22,18 @@
   </td>
   <td>
     <fieldset class="fieldset-border">
-      <legend class="legend-border"><h4>Usuários Cadastrados</h4></legend>
-      <center><a href="{{ url_for('usuariosCadastrados') }}"><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="60px"  ></a>
+      <legend class="legend-border"><h4>Percentual(%) Por Disciplinas</h4></legend>
+      <center><a href="{{ url_for('percentualdisci1') }}"><img src="{{ url_for('static', filename='img/alunosRisk.png') }}" alt="IFNMG"”/ height="60px"  ></a>
       </fieldset>
   </td>
 </tr>
 <tr>
+  <td>
+    <fieldset class="fieldset-border">
+      <legend class="legend-border"><h4>Usuários Cadastrados</h4></legend>
+      <center><a href="{{ url_for('usuariosCadastrados') }}"><img src="{{ url_for('static', filename='img/alunos.png') }}" alt="IFNMG"”/ height="60px"  ></a>
+      </fieldset>
+  </td>
   <td>
         <fieldset class="fieldset-border">
           <legend class="legend-border"><h4>Disciplinas do Curso</h4></legend>
@@ -40,14 +46,15 @@
         <center><a href="{{ url_for('disciplinaAprovacao') }}"><img src="{{ url_for('static', filename='img/aprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
       </fieldset>
   </td>
+</tr>
+<tr>
   <td>
         <fieldset class="fieldset-border">
           <legend class="legend-border"><h4>Disciplinas com Maior Reprovação</h4></legend>
           <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/reprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
         </fieldset>
   </td>
-</tr>
-<tr>
+
   <td>
           <fieldset class="fieldset-border">
             <legend class="legend-border"><h4>Média de Matriculas por Disciplina</h4></legend>
