@@ -23,7 +23,7 @@
       {%for alunos in alunos %}
 
           <th><h4> {{ alunos.nome }} </h4></th>
-          <th><h4> {{ alunos.id}} </h4></th>
+
       {% endfor %}
       </tr>
   </table>
@@ -55,9 +55,7 @@
   <br />
     <div id="sucess"></div>
   <div class="row">
-    <div class="form-group col-xs-4">
-      <a href='{{ url_for('cadastroUsuario') }}'/> <button title="Novo Usuário! " class="btn btn-info btn-lg" type="button" >Novo</button> </a>
-    </div>
+
     <div class="form-group col-xs-1">
     <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
 

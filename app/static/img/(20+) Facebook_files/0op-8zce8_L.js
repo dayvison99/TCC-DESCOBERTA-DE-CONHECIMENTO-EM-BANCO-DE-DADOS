@@ -1,0 +1,7 @@
+if (self.CavalryLogger) { CavalryLogger.start_js(["GLJTy"]); }
+
+__d("squareTransparentGif",[],function(a,b,c,d,e,f){"use strict";e.exports="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"},null);
+__d("CrisisClickUnitFalcoEvent",["FalcoLoggerInternal","getSamplingPolicyConfig_DO_NOT_USE"],function(a,b,c,d,e,f){"use strict";a=b("getSamplingPolicyConfig_DO_NOT_USE")("falco","crisis_click_unit");c=b("FalcoLoggerInternal").create(a);e.exports=c},null);
+__d("CrisisToolViewPageFalcoEvent",["FalcoLoggerInternal","getSamplingPolicyConfig_DO_NOT_USE"],function(a,b,c,d,e,f){"use strict";a=b("getSamplingPolicyConfig_DO_NOT_USE")("falco","crisis_tool_view_page");c=b("FalcoLoggerInternal").create(a);e.exports=c},null);
+__d("CrisisViewModuleFalcoEvent",["FalcoLoggerInternal","getSamplingPolicyConfig_DO_NOT_USE"],function(a,b,c,d,e,f){"use strict";a=b("getSamplingPolicyConfig_DO_NOT_USE")("falco","crisis_view_module");c=b("FalcoLoggerInternal").create(a);e.exports=c},null);
+__d("CrisisViewUnitFalcoEvent",["FalcoLoggerInternal","getSamplingPolicyConfig_DO_NOT_USE"],function(a,b,c,d,e,f){"use strict";a=b("getSamplingPolicyConfig_DO_NOT_USE")("falco","crisis_view_unit");c=b("FalcoLoggerInternal").create(a);e.exports=c},null);

@@ -272,6 +272,8 @@ def listagemAlunosTeste():
         alunos.resultado = session['resultados']
         disciplinas_alunos.resultado = session['resultados']
         disciplinas_alunos.id_disciplinas = session["auxDisciplina"]
+        materias = Disciplina.query.filter_by(id = session["auxDisciplina"]).first()
+        flash(materias)
         if alunos.id is None:
             cont=1
             disciplinas_alunos.id_alunos = cont
@@ -297,9 +299,6 @@ def alunosAnalise():
     alunos= Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
     return render_template('listagemAlunos.html',alunos=alunos)
 
-
-
-
 #listando qual o risco em cada disciplina
 @app.route("/percentualdisci1/",methods=["GET", "POST"])
 @login_required
@@ -310,22 +309,24 @@ def percentualdisci1():
 @login_required
 def percentualdisci():
     alunosform = AlunosForm()
-    alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
     daform = Disciplinas_AlunosForm()
     disForm = DisciForm()
-
-    alunos = Alunos.query.all()
+    flash(session['disciplina_aux'])
+    flash(session['disciplina_aux'])
+    alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
     alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
-    disAlunos = Disciplinas_Alunos.query.all()
-    disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==97)
+    aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
 
+    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.resultado.data,daform.id_alunos.data)
+    disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=aluno.id)
+    #(Disciplinas_Alunos.id.data)
+
+    disciplina = Disciplina(disForm.nome.data,disForm.periodo.data,disForm.nomeData.data)
     disciplina = Disciplina.query.all()
-    disciplina = Disciplina.query.filter(Disciplina.id==disAlunos.id_disciplinas)
-    #discip= Disciplina(disForm.nome.data,disForm.periodo.data)
 
-
-
-    return render_template('listAlunosDisci.html',disAlunos=disAlunos,alunos=alunos,disciplina=disciplina)
+    #flash(disciplina)
+    return render_template('listAlunosDisci.html',disciplina = disciplina,
+    alunos=alunos,disAlunos=disAlunos)
 
 #listando todos os alunos com risco de evasão
 @app.route("/alunosRisco/",methods=["GET", "POST"])
@@ -341,15 +342,18 @@ def alunosRisco():
 @login_required
 def excluirAlunos(id):
     alunos = Alunos.query.filter_by(id=id).first()
-    alunosform = AlunosFrom()
+    alunosform = AlunosForm()
+    daform = Disciplinas_AlunosForm()
+    disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
     alunos.resultado = 0
+    flash(disAlunos.id_disciplinas)
+    db.session.delete(disAlunos)
     db.session.commit()
     alunos = Alunos.query.all()
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
 
 ##Parte da mineração de dados
-
 #armazenado dados
 @app.route("/sessao/",methods=["GET", "POST"])
 @login_required
@@ -358,6 +362,7 @@ def sessao():
     session["salvardisciplina"] = request.form.get("disciplina")
     session["salvarstatus"] = request.form.get("status")
     session["disciplinas_id"]= id
+    session['disciplina_aux'] = request.form.get("disciplina")
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
     amazenamento = []
@@ -367,15 +372,14 @@ def sessao():
         disciplinas = [(materias.nomeData,situacaoDisciplina)]
         amazenamento.append(disciplinas)
         session["aux"] = amazenamento
-        flash(session["aux"])
         return render_template('inserirSituacoes.html',tables=[materias.nome,session["salvarstatus"]],
         titles = ['na','Disciplinas', 'Situações'],periodo=periodo, disciplina=disciplina)
-
 
     if request.form.get("disciplina") is None:
         flash("Escolha uma Disciplina")
         return render_template('inserirSituacoes.html',
         titles = ['na'],periodo=periodo, disciplina=disciplina)
+
     if request.form.get("status") is None:
         flash("Escolha uma Situação")
         return render_template('inserirSituacoes.html',
@@ -485,7 +489,6 @@ def situacoes():
         return render_template('inserirSituacoes.html')
 
 #### Relatorios do Sistema ####
-
 #relatorios de usuarios cadastrados
 @app.route("/usuariosCadastrados")
 @login_required

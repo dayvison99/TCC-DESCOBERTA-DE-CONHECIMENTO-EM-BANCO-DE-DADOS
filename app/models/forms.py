@@ -26,6 +26,7 @@ class CadastroUsuarioForm(FlaskForm):
 class DisciForm(FlaskForm):
         nome = StringField('nome', validators=[DataRequired()])
         periodo = StringField('periodo', validators=[DataRequired()])
+        nomeData = StringField('nomeData', validators=[DataRequired()])
 
 class AlunosForm(FlaskForm):
         nome = StringField('nome', validators=[DataRequired()])
