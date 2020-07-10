@@ -89,11 +89,13 @@ class Disciplinas_Alunos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_disciplinas= db.Column(db.Text)
     id_alunos = db.Column(db.Text)
+    nomeDisciplina = db.Column(db.Text)
     resultado = db.Column(db.Text)
 
-    def __init__(self, nome,id_alunos,resultado):
-        self.nome = nome
+    def __init__(self, id_disciplinas,nomeDisciplina,id_alunos,resultado):
+        self.id_disciplinas = id_disciplinas
         self.id_alunos = id_alunos
+        self.nomeDisciplina = nomeDisciplina
         self.resultado = resultado
 
     def __repr__(self):

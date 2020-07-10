@@ -239,11 +239,12 @@ def listagemAlunos():
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
         disAlunos = Disciplinas_AlunosForm()
-        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
+        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.nomeDisciplina.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
         disciplinas_alunos.id_alunos = alunos.id
         disciplinas_alunos.id_disciplinas = session["disciplinas_id"]
         disciplinas_alunos.resultado=alunos.resultado
         resultado = alunos.resultado
+        disciplinas_alunos.nomeDisciplina = session['disciplina_aux']
         alunos.nome=alunos.nome.upper()
         db.session.add(disciplinas_alunos)
         db.session.commit()
@@ -312,20 +313,14 @@ def percentualdisci():
     daform = Disciplinas_AlunosForm()
     disForm = DisciForm()
     flash(session['disciplina_aux'])
-    flash(session['disciplina_aux'])
     alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
     alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
     aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
 
-    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.resultado.data,daform.id_alunos.data)
+    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
     disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=aluno.id)
-    #(Disciplinas_Alunos.id.data)
 
-    disciplina = Disciplina(disForm.nome.data,disForm.periodo.data,disForm.nomeData.data)
-    disciplina = Disciplina.query.all()
-
-    #flash(disciplina)
-    return render_template('listAlunosDisci.html',disciplina = disciplina,
+    return render_template('listAlunosDisci.html',
     alunos=alunos,disAlunos=disAlunos)
 
 #listando todos os alunos com risco de evasão
@@ -344,12 +339,15 @@ def excluirAlunos(id):
     alunos = Alunos.query.filter_by(id=id).first()
     alunosform = AlunosForm()
     daform = Disciplinas_AlunosForm()
+
+    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
     disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
     alunos.resultado = 0
-    flash(disAlunos.id_disciplinas)
+
     db.session.delete(disAlunos)
     db.session.commit()
     alunos = Alunos.query.all()
+    disAlunos = Disciplinas_Alunos.query.all()
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
 

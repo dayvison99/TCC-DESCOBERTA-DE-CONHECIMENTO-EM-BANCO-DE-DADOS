@@ -24,7 +24,7 @@
                       <select required  id ="disciplinaselect" name='disciplina' class="selectpicker form-control">
                           <option value="nenhum" disabled selected>Escolha a Disciplina</option>
                           {%for disciplina in disciplina  %}
-                          <option value="{{ disciplina.id }}: {disciplina.nome}" >{{ disciplina.nome }}</option>
+                          <option value="{{ disciplina.id }}  {{disciplina.nome}}" >{{ disciplina.nome }}</option>
                           {% endfor %}
 
                    </select>
