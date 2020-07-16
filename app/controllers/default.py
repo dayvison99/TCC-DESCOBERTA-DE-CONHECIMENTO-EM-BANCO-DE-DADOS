@@ -312,7 +312,6 @@ def percentualdisci():
     alunosform = AlunosForm()
     daform = Disciplinas_AlunosForm()
     disForm = DisciForm()
-    flash(session['disciplina_aux'])
     alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
     alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
     aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
@@ -336,20 +335,22 @@ def alunosRisco():
 @app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])
 @login_required
 def excluirAlunos(id):
-    alunos = Alunos.query.filter_by(id=id).first()
-    alunosform = AlunosForm()
-    daform = Disciplinas_AlunosForm()
-
-    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
-    disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
-    alunos.resultado = 0
-
-    db.session.delete(disAlunos)
-    db.session.commit()
+    cont = 0
+    while cont < 10:
+        alunosform = AlunosForm()
+        daform = Disciplinas_AlunosForm()
+        cont = cont+1
+        alunos = Alunos.query.filter_by(id=id).first()
+        disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
+        disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
+        db.session.delete(disAlunos)
+        alunos.resultado = 0
+        db.session.commit()
     alunos = Alunos.query.all()
     disAlunos = Disciplinas_Alunos.query.all()
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
+
 
 ##Parte da mineração de dados
 #armazenado dados
