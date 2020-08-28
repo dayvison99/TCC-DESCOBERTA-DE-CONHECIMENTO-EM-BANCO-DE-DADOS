@@ -1,4 +1,6 @@
 from sqlalchemy import create_engine
+from sqlalchemy import func
+
 import os.path
 
 basedir = os.path.abspath(os.path.dirname(__file__))

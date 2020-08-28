@@ -52,8 +52,8 @@
   <table class="table table-striped">
      {% for table in tables %}
      <tr >
-       <th><h4>    {{titles[loop.index]}}  </h4></th></tr>
-     <tr>  <td><h4>    {{ table|safe }} </h4> </td>
+       <td><h4>    {{titles[loop.index]}}  </h4></td>
+       <td><h4>    {{ table|safe }} </h4> </td>
      </tr>
        {% endfor %}
 

@@ -6,6 +6,7 @@ from wtforms import Form,SelectMultipleField,StringField, HiddenField, SelectFie
 from app.models.forms import Disciplinas_AlunosForm,LoginForm,CadastroUsuarioForm,AlunosForm,DisciForm
 from app.models.tables import User,Periodo,Disciplina,Alunos,Disciplinas_Alunos
 from flask_session import Session
+from sqlalchemy.sql import func
 import hashlib
 import os
 
@@ -295,10 +296,14 @@ def listagemAlunosTeste():
 @app.route("/alunosAnalise/",methods=["GET", "POST"])
 @login_required
 def alunosAnalise():
+    dAluno = Disciplinas_AlunosForm()
     alunosform = AlunosForm()
+    dialuno = Disciplinas_Alunos.query.all()
     alunos = Alunos.query.all()
+    dialuno = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos== 97)
+    media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).group_by(Disciplinas_Alunos.id_alunos)
     alunos= Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
-    return render_template('listagemAlunos.html',alunos=alunos)
+    return render_template('listagemAlunos.html',alunos=alunos,dialuno=dialuno, media=media)
 
 #listando qual o risco em cada disciplina
 @app.route("/percentualdisci1/",methods=["GET", "POST"])
@@ -317,7 +322,7 @@ def percentualdisci():
     aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
 
     disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
-    disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=aluno.id)
+    disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
 
     return render_template('listAlunosDisci.html',
     alunos=alunos,disAlunos=disAlunos)
@@ -329,7 +334,8 @@ def alunosRisco():
     alunosform = AlunosForm()
     alunos = Alunos.query.all()
     alunos = Alunos.query.filter(Alunos.resultado >= 60).order_by(Alunos.resultado.desc())
-    return render_template('listagemAlunos.html',alunos=alunos)
+    media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).group_by(Disciplinas_Alunos.id_alunos)
+    return render_template('listagemAlunos.html',alunos=alunos,media=media)
 
 #Excluir lista de alunos
 @app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])

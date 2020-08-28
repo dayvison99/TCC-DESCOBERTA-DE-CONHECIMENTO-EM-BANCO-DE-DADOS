@@ -32,20 +32,12 @@
 
       <tr  >
         <th><h4> ID : Disciplinas :</h4></th>
-        {%for disAlunos in disAlunos  %}  <td>   {{ disAlunos.nomeDisciplina}} </td> {% endfor %}
+        <td><h4> Risco de Reprovação (%) : </h4></td>
+        {%for disAlunos in disAlunos  %}
+        <tr><td>   {{ disAlunos.nomeDisciplina}} </td>
+            <td>  {{ disAlunos.resultado}}</td>{% endfor %}
+        </tr>
       </tr>
-      <tr>
-        <td><h4> Resultados (%) : </h4></td>
-        {%for disAlunos in disAlunos %}<td>  {{ disAlunos.resultado}}</td> {% endfor %}
-
-      </tr>
-      <tr>
-           </tr>
-
-
-
-
-
 
       </tbody>
   </table>
@@ -57,7 +49,12 @@
   <div class="row">
 
     <div class="form-group col-xs-1">
-    <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+      </div>
+
+        <div class="form-group col-xs-1">
+        <button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" onclick="window.print();">Imprimir</button></a>
 
       </div>
   </div>
@@ -67,9 +64,13 @@
   {% if current_user.tipo =="padrao" %}
   <legend class="scheduler-border" ><h4> Área restrita</h4></legend>
   <div class="form-group col-xs-1">
-  <a href='{{ url_for('index') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+  </div>
+  <div class="row">
+    <div class="form-group col-xs-1">
+    <button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" onclick="window.print();">Imprimir</button></a>
 
-    </div>
+  </div>
     {% endif %}
 
 </center></div>

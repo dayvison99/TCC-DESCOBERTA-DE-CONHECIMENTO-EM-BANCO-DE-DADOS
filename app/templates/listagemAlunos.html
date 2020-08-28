@@ -20,10 +20,14 @@
       <tr>
         <td>  {{ alunos.id }}</td>
         <td>  {{ alunos.nome }}</td>
-        <td>  {{ alunos.resultado }}</td>
         <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
       </tr>
-{% endfor %}
+      {% endfor %}
+      {% for media in media %}
+      <tr>
+        <td>  {{ media }}</td>
+      </tr>
+      {% endfor %}
 
 </tbody>
 </table>
