@@ -32,6 +32,7 @@ class AlunosForm(FlaskForm):
         nome = StringField('nome', validators=[DataRequired()])
         cpf = StringField('cpf', validators=[DataRequired()])
         resultado = StringField ('resultado')
+        media = StringField ('media')
 
 class Disciplinas_AlunosForm(FlaskForm):
         id_disciplinas = StringField('id_disciplinas', validators=[DataRequired()])

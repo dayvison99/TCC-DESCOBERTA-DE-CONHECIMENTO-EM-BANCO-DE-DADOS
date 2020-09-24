@@ -74,11 +74,14 @@ class Alunos(db.Model):
     nome = db.Column(db.String)
     cpf = db.Column(db.Text)
     resultado = db.Column(db.Text)
+    media = db.Column(db.Text)
 
-    def __init__(self,nome,cpf,resultado):
+
+    def __init__(self,nome,cpf,resultado,media):
         self.nome = nome
         self.cpf = cpf
         self.resultado = resultado
+        self.media = media
 
     def __repr__(self):
         return "<Alunos %r>" % self.id

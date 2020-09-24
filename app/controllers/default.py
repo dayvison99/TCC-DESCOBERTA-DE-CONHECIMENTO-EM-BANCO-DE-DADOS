@@ -237,6 +237,7 @@ def listagemAlunos():
     alunosform = AlunosForm()
     alunos = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
     if alunos:
+        alunos.media = 0
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
         disAlunos = Disciplinas_AlunosForm()
@@ -245,6 +246,8 @@ def listagemAlunos():
         disciplinas_alunos.id_disciplinas = session["disciplinas_id"]
         disciplinas_alunos.resultado=alunos.resultado
         resultado = alunos.resultado
+        media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).filter(Disciplinas_Alunos.id_alunos==alunos.id).group_by(Disciplinas_Alunos.id_alunos)
+        alunos.media = media
         disciplinas_alunos.nomeDisciplina = session['disciplina_aux']
         alunos.nome=alunos.nome.upper()
         db.session.add(disciplinas_alunos)
@@ -257,41 +260,6 @@ def listagemAlunos():
                             alunosform=alunosform)
 
 
-# Salvando dados alunos apos analise TESTE
-@app.route("/listagemAlunosTESTE/", methods=["GET", "POST"])
-@login_required
-def listagemAlunosTeste():
-    alunosform = AlunosFrom()
-    disAlunos = Disciplinas_AlunosFrom()
-    if request.method == 'POST' and alunosform.validate():
-        alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
-        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
-        usuario = Alunos.query.all()
-        nome = Alunos.query.filter_by(nome=alunosform.nome.data).first()
-        #turma = Alunos.query.filter_by(turma=alunosform.turma.data).first()
-        #matricula = Alunos.query.filter_by(matricula=alunosform.matricula.data).first()
-        resultado = Alunos.query.filter_by(resultado=session['resultados']).first()
-        alunos.resultado = session['resultados']
-        disciplinas_alunos.resultado = session['resultados']
-        disciplinas_alunos.id_disciplinas = session["auxDisciplina"]
-        materias = Disciplina.query.filter_by(id = session["auxDisciplina"]).first()
-        flash(materias)
-        if alunos.id is None:
-            cont=1
-            disciplinas_alunos.id_alunos = cont
-        else:
-            cont = cont+1
-            disciplinas_alunos.id_alunos = cont
-        resultado = alunos.resultado
-        alunos.nome=alunos.nome.upper()
-        db.session.add(disciplinas_alunos)
-        db.session.add(alunos)
-        db.session.commit()
-        flash('Analise salva com Sucesso !')
-        return redirect(url_for('inserirSituacoes'))
-    return render_template('salvaralunos.html',
-                            alunosform=alunosform)
-
 #listando todos os alunos com analise salvas
 @app.route("/alunosAnalise/",methods=["GET", "POST"])
 @login_required
@@ -300,10 +268,8 @@ def alunosAnalise():
     alunosform = AlunosForm()
     dialuno = Disciplinas_Alunos.query.all()
     alunos = Alunos.query.all()
-    dialuno = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos== 97)
-    media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).group_by(Disciplinas_Alunos.id_alunos)
     alunos= Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
-    return render_template('listagemAlunos.html',alunos=alunos,dialuno=dialuno, media=media)
+    return render_template('listagemAlunos.html',alunos=alunos,dialuno=dialuno)
 
 #listando qual o risco em cada disciplina
 @app.route("/percentualdisci1/",methods=["GET", "POST"])
@@ -317,13 +283,12 @@ def percentualdisci():
     alunosform = AlunosForm()
     daform = Disciplinas_AlunosForm()
     disForm = DisciForm()
-    alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data)
+    alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data,alunosform.media.data)
     alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
     aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
 
     disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
     disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
-
     return render_template('listAlunosDisci.html',
     alunos=alunos,disAlunos=disAlunos)
 
@@ -333,9 +298,8 @@ def percentualdisci():
 def alunosRisco():
     alunosform = AlunosForm()
     alunos = Alunos.query.all()
-    alunos = Alunos.query.filter(Alunos.resultado >= 60).order_by(Alunos.resultado.desc())
-    media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).group_by(Disciplinas_Alunos.id_alunos)
-    return render_template('listagemAlunos.html',alunos=alunos,media=media)
+    alunos = Alunos.query.filter(Alunos.media >=60 ).order_by(Alunos.media.desc())
+    return render_template('listagemAlunos.html',alunos=alunos)
 
 #Excluir lista de alunos
 @app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])
