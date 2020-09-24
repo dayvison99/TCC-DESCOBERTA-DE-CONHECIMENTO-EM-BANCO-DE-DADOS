@@ -237,7 +237,7 @@ def listagemAlunos():
     alunosform = AlunosForm()
     alunos = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
     if alunos:
-        alunos.media = 0
+        alunos.media = round(0,2)
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
         disAlunos = Disciplinas_AlunosForm()
@@ -299,7 +299,7 @@ def alunosRisco():
     alunosform = AlunosForm()
     alunos = Alunos.query.all()
     alunos = Alunos.query.filter(Alunos.media >=60 ).order_by(Alunos.media.desc())
-    return render_template('listagemAlunos.html',alunos=alunos)
+    return render_template('listagemAlunosrisco.html',alunos=alunos)
 
 #Excluir lista de alunos
 @app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])
@@ -310,14 +310,16 @@ def excluirAlunos(id):
         alunosform = AlunosForm()
         daform = Disciplinas_AlunosForm()
         cont = cont+1
+        flash(id)
+        flash(cont)
         alunos = Alunos.query.filter_by(id=id).first()
-        disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
         disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
         db.session.delete(disAlunos)
         alunos.resultado = 0
+        alunos.media = 0
         db.session.commit()
-    alunos = Alunos.query.all()
-    disAlunos = Disciplinas_Alunos.query.all()
+        alunos = Alunos.query.all()
+        disAlunos = Disciplinas_Alunos.query.all()
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
 
@@ -485,7 +487,7 @@ def disciplinaAprovacao():
     resultado = consulta.groupby(['disciplina']).count()
     resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
     resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
 #Situaçoes Das Disciplinas
@@ -496,7 +498,7 @@ def disciplina():
     resultado = consulta.groupby(['disciplina']).count()
     resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
     resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Reprovações'})
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    return render_template('disciplinasmaiorreprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
 #Situaçoes Das Disciplinas
@@ -507,7 +509,7 @@ def disciplinaDesistencia():
     resultado = consulta.groupby(['disciplina']).count()
     resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
     resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Desistência'})
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    return render_template('disciplinasdesistencia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
 #Situaçoes Das Disciplinas
@@ -518,5 +520,5 @@ def mediaMatricula():
     resultado = consulta.groupby(['disciplina']).count()
     resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
     resultado = resultado.rename(columns={'situacaoDisciplina' : 'Média de Matriculas'})
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
+    return render_template('disciplinasmedia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
