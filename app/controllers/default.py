@@ -151,7 +151,6 @@ def esqueceuSenha():
             if cadastroform.senha.data == cadastroform.confirm.data and cadastroform.senha.data != "" :
                 usuario.senha = cadastroform.senha.data
                 usuario.nome = usuario.nome.upper()
-                #usuario.senha = hashlib(usuario.senha.encode())
                 db.session.commit()
                 flash('Senha Alterada com Sucesso !')
                 return redirect(url_for('login'))
@@ -237,7 +236,7 @@ def listagemAlunos():
     alunosform = AlunosForm()
     alunos = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
     if alunos:
-        alunos.media = round(0,2)
+        alunos.media = 0
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
         disAlunos = Disciplinas_AlunosForm()
@@ -249,10 +248,22 @@ def listagemAlunos():
         media = Disciplinas_Alunos.query.with_entities(func.avg(Disciplinas_Alunos.resultado).label('average')).filter(Disciplinas_Alunos.id_alunos==alunos.id).group_by(Disciplinas_Alunos.id_alunos)
         alunos.media = media
         disciplinas_alunos.nomeDisciplina = session['disciplina_aux']
+
+        dnome = Disciplinas_Alunos.query.filter_by(id_disciplinas=session['disciplina_aux']).first()
+        daluno = Disciplinas_Alunos.query.filter_by(id_alunos=alunos.id).first()
+        #Verificando se a analise ja foi feita para determinado aluno
+        if dnome and daluno :
+            if dnome.nomeDisciplina == session["disciplinas_id"] and daluno.id_alunos == alunos.id :
+                flash("Disciplina Já Analizada para esse aluno!")
+                return redirect(url_for('listagemAlunos'))
+
         alunos.nome=alunos.nome.upper()
         db.session.add(disciplinas_alunos)
         db.session.commit()
         flash('DADOS DE '+alunos.nome+' SALVOS COM SUCESSO!','danger')
+        alunos.media = media
+        db.session.add(disciplinas_alunos)
+        db.session.commit()
         return redirect(url_for('inserirSituacoes'))
     if request.form.get("cpf") != None:
         flash("Aluno não encontrado, por favor verifique o cpf!")
@@ -306,23 +317,22 @@ def alunosRisco():
 @login_required
 def excluirAlunos(id):
     cont = 0
-    while cont < 10:
-        alunosform = AlunosForm()
-        daform = Disciplinas_AlunosForm()
-        cont = cont+1
-        flash(id)
-        flash(cont)
-        alunos = Alunos.query.filter_by(id=id).first()
+    while cont < 1:
         disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
-        db.session.delete(disAlunos)
-        alunos.resultado = 0
-        alunos.media = 0
-        db.session.commit()
-        alunos = Alunos.query.all()
-        disAlunos = Disciplinas_Alunos.query.all()
+        if disAlunos:
+            cont = cont-1
+            alunosform = AlunosForm()
+            daform = Disciplinas_AlunosForm()
+            alunos = Alunos.query.filter_by(id=id).first()
+            alunos.resultado = 0
+            alunos.media = 0
+            db.session.delete(disAlunos)
+            db.session.commit()
+            alunos = Alunos.query.all()
+            disAlunos = Disciplinas_Alunos.query.all()
+        cont = cont+1
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
-
 
 ##Parte da mineração de dados
 #armazenado dados
