@@ -35,15 +35,21 @@ lm.session_protection = "strong"
 
 lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 
-#lOGIN DO USUARIO
+#Manual
 @app.route("/", methods=["GET", "POST"])
+def manual():
+    return redirect(url_for('comousar'))
+
+
+#lOGIN DO USUARIO
+@app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
         usuario = User.query.filter_by(nomeUsuario=form.username.data).first()
         if usuario and usuario.senha == form.password.data:
-            login_user(usuario)
-            flash("Bem Vindo!")
+            login_user(usuario, remember=True)
+            flash("Bem vindo " +usuario.nomeUsuario)
             return redirect(url_for('index'))
             if not is_safe_url('login.html'):
                 return flask.abort(400)
@@ -167,6 +173,10 @@ def esqueceuSenha():
 @login_required
 def index():
     return render_template('index.html')
+
+@app.route("/comousar")
+def comousar():
+    return render_template('comousar.html')
 
 #PAGINA DE LOGOULT
 @app.route("/logout")

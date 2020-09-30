@@ -15,8 +15,8 @@
 <!-- DADOS PESSOAIS-->
 
   <table class="table table-striped " title="Click no cadastro que deseja alterar!" >
-      <tr  >
-        <th width="11%"><h4> Id Usuário </h4></th>
+      <tr  style="color: black">
+        <th width="11%"><h4> ID Usuário </h4></th>
         <th width="30%"><h4> Nome </h4></th>
         <th width="20%"><h4> Celular </h4></th>
         <th width="20%"><h4> E-mail </h4></th>
@@ -26,12 +26,12 @@
     {%for usuario in usuario %}
 
 
-      <tr>
+      <tr >
 
-        <td ><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.id }}</a></h4></td>
-        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.nome }}</a></h4></td>
-        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.celular }}</a></h4></td>
-        <td><h4>  <a href='/listagem/{{ usuario.id }}'/>{{ usuario.email }}</a></h4></td>
+        <td ><h4>  <a href='/listagem/{{ usuario.id }}'style="color: black"/>{{ usuario.id }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.nome }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.celular }}</a></h4></td>
+        <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.email }}</a></h4></td>
 
 
 
