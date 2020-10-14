@@ -268,6 +268,7 @@ def listagemAlunos():
                 return redirect(url_for('listagemAlunos'))
 
         alunos.nome=alunos.nome.upper()
+        db.session.add(alunos)
         db.session.add(disciplinas_alunos)
         db.session.commit()
         flash('DADOS DE '+alunos.nome+' SALVOS COM SUCESSO!','danger')
@@ -307,11 +308,15 @@ def percentualdisci():
     alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data,alunosform.media.data)
     alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
     aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
-
-    disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
-    disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
-    return render_template('listAlunosDisci.html',
-    alunos=alunos,disAlunos=disAlunos)
+    if aluno:
+        if aluno.cpf==request.form.get("cpf"):
+            disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
+            disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
+            return render_template('listAlunosDisci.html',
+            alunos=alunos,disAlunos=disAlunos)
+    else:
+        flash("Aluno não encontrado, por favor verifique o cpf!")
+        return render_template('listAlunosDisci.html')
 
 #listando todos os alunos com risco de evasão
 @app.route("/alunosRisco/",methods=["GET", "POST"])
