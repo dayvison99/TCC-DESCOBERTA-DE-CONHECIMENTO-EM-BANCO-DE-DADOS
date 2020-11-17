@@ -15,11 +15,18 @@
       <tr >
           <th>
           {% for table in tables %}
-            {{titles[loop.index]}}
+
           {{ table|safe }}</th>
         </tr>
         {% endfor %}
       </tbody>
+
+      {% for table in tables %}
+          <tr>
+              <td>{{ table|safe }}</td>
+              
+          </tr>
+      {% endfor %}
 
     </table>
     <div class="row">

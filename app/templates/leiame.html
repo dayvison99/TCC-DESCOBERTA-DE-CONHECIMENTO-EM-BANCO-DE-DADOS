@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+
+
+    <title>Sistema de Analise de Situações Acadêmica</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <center><a href="{{ url_for('login') }}" id="tile1"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG" height="100px"><p>
+    <i class="icon ion-ios7-home-outline"></i> Entrar no Sistema </a></li></center>
+
+    <div class="login-box-body login-header ">
+
+      <div class="login-box-body">
+        <div class ="col-md-10 col-md-offset-1" >
+          <div class="jumbotron">
+            <br/>
+              <div class="login-box-body">
+
+
+                      <p align="center"> O Curso de <b> Tecnologia em Análise e Desenvolvimento de Sistemas (TADS)</b>
+                      <p align="center"> do Instituto Federal do Norte de Minas Gerais (IFNMG)  – Campus Januária
+                      <p align="center">“provê uma formação que capacita o profissional para a automação dos sistemas
+                      <p align="center"> de informação das organizações, com vistas a atender as necessidades do
+                      <p align="center">mercado de trabalho corrente”.Essa formação muitas vezes é interrompida pela
+                      <p align="center">evasão dos alunos. O intuito deste trabalho é desenvolver um sistema que aplicará
+                      <p align="center">técnicas de Mineração de Dados e Inteligência Artificial na geração de padrões
+                      <p align="center">estatísticos que servirão de base para a previsão das probabilidades do aluno
+                      <p align="center">evadir do curso com base no seu aproveitamento atual.
+
+                      <b><p align="center">Na tabela abaixo podemos camparar a evasão dos alunos de
+                      <p align="center">  TADS do IFNMG Campus Januaria x Alunos de Tads de todo Brasil.
+                      </b>
+                      <table  class="table table-striped">
+                        <tr><td colspan="15"><center><h3>Evasão (%)</h3></center></td></tr>
+
+                        <tr >
+                            <th colspan="3">Ano</th>
+                            <th>2010</th>
+                            <th>2011</th>
+                            <th>2012</th>
+                            <th>2013</th>
+                            <th>2014</th>
+                            <th>2015</th>
+                            <th>2016</th>
+                            <th>2017</th>
+                            <th>2018</th>
+                            <th>2019</th>
+                            <th>Média</th></tr>
+                        <tr>
+                            <td colspan="3">IFNMG  Campus Januária </td>
+                            <td >18,81</td>
+                            <td >23,96</td>
+                            <td>30,13</td>
+                            <td>20,13</td>
+                            <td>16,46</td>
+                            <td>24,21</td>
+                            <td>10,20</td>
+                            <td>25,65</td>
+                            <td>17,27</td>
+                            <td>31,19</td>
+                            <td>21,80</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">Brasil</td>
+                            <td>17,72</td>
+                            <td>19,18</td>
+                            <td>20,15</td>
+                            <td>20,94</td>
+                            <td>23,21</td>
+                            <td>22,99</td>
+                            <td>27,45</td>
+                            <td>24,65</td>
+                            <td>25,42</td>
+                            <td>24,94</td>
+                            <td>22,67</td>
+                          </tr>
+                      </table>
+                    </div>
+                   </p>
+              </center>
+              </p>
+              </p>
+      </div>
+      <center>
+        <center><a href="{{ url_for('login') }}" id="tile1"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG" height="100px"><p>
+        <i class="icon ion-ios7-home-outline"></i> Entrar no Sistema </a></li></center>  </body>
+</html>

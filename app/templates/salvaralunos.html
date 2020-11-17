@@ -71,8 +71,10 @@
     Os dados não salvos serão perdidos!
     </div>
     <div class="modal-footer">
+      {% for alunos in alunos %}
       <button type="button" class="btn btn-info btn-md" data-dismiss="modal"> Não </button>
-      <a class="btn btn-info btn-md" href="{{ url_for('inserirSituacoes') }}" value=" /listagemUsuario "> Sim </a>
+      <a class="btn btn-info btn-md" href="{{ url_for('/inserirSituacoes/{{ alunos.id }}') }}" value=" /listagemUsuario "> Sim </a>
+      {% endfor %}
     </div>
   </div>
   </div>

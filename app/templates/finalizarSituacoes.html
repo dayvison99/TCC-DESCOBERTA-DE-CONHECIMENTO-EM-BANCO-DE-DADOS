@@ -48,11 +48,11 @@
 </fieldset>
 
 <fieldset class="fieldset-border">
-  <legend class="legend-border"><h3> Disciplinas Inseridas </h3></legend>
+  <legend class="legend-border"><h3> Disciplina Inserida </h3></legend>
   <table class="table table-striped">
      {% for table in tables %}
-     <tr >
-       <td><h4>    {{titles[loop.index]}}  </h4></td>
+      <tr >
+       <th><h4>    {{titles[loop.index]}}  </h4></th>
        <td><h4>    {{ table|safe }} </h4> </td>
      </tr>
        {% endfor %}
@@ -61,9 +61,11 @@
 </fieldset>
 <br />
 
-
 <div class="form-group col-xs-4">
-<button class="btn btn-info btn-lg" ><i class="glyphicon glyphicon-plus"></i> Inserir</button>
+<a href='/analise/'><input class="btn btn-info btn-lg"  type="button"  value="Finalizar" ></input></a>
+</div>
+<div class="form-group col-xs-1">
+<button class="btn btn-info btn-lg" disabled="disabled">Inserir</button>
 </div>
 
 </form>

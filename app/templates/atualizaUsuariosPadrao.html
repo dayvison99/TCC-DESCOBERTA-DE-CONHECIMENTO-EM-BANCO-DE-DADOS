@@ -10,7 +10,7 @@
   {% from "_macro.html" import render_field %}
 
       {%for usuario in usuario %}
-      <form action="/atualizarUsuario/{{ usuario.id }}" method="POST">
+      <form action="/atualizarUsuarioPadrao/{{ usuario.id }}" method="POST">
 
           <div class="row control-group">
               <div class="form-group col-xs-1 floating-label-form-group controls" >
@@ -88,13 +88,13 @@
     <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-2">
-        <a href="#" data-toggle="modal" data-target="#myModal3" title="Alterar Usuário! " type="button" value="alterar" ><button class="btn btn-info btn-lg" title="Alterar dados do Usuário!" class="active" type="submit" value="Alterar" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Alterar</span></button></a>
+        <input title="Salvar dados do Usuário! " type="submit" value="Alterar" class="btn btn-info btn-lg"></a>
     </div>
     <div class="form-group col-xs-2">
-        <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-info btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
+        <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="submit" value="Excluir" class="btn btn-info btn-lg">Excluir</a>
     </div>
     <div class="form-group col-xs-2">
-        <a href="#" data-toggle="modal" data-target="#myModal2" title="Voltar! " type="butoon" value="voltar" ><button class="btn btn-info btn-lg" role="presentation" class="active" ><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> Voltar</span></button></a>
+        <inpunt role="presentation" class="active"><a href="#" data-toggle="modal" data-target="#myModal2" title="Voltar! " type="butoon" value="voltar" class="btn btn-info btn-lg">Voltar</a>
     </div>
 
       {% with messages = get_flashed_messages() %}
@@ -108,28 +108,6 @@
         </div>
         {% endif %}
       {% endwith %}
-
-      <!-- Confimar ser o usuario deseja Alterar-->
-      <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="myModalLabel">Atenção</h4>
-        </div>
-        <div class="modal-body">
-          Deseja relamente excluir ?</p>
-        Os dados não poderão ser reculperados!
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-          <button class="btn btn-primary" type="submit" value="enviar"> Sim </a>
-        </div>
-      </div>
-      </div>
-      </div>
-      <!--Fim do codigo-->
 
 
 
@@ -171,7 +149,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-          <a class="btn btn-primary" href="{{ url_for('listagemUsuario') }}" value="/excluirUsuario"> Sim </a>
+          <a class="btn btn-primary" href="{{ url_for('listagemPadrao') }}" value="/excluirUsuario"> Sim </a>
         </div>
       </div>
       </div>

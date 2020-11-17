@@ -27,6 +27,7 @@ disciplinamaiorreprovacao = pd.read_csv('../TCC/Analise_Pandas/disciplinamaiorre
 #carregamento dos dados do usuario logado
 @lm.user_loader
 def load_user(id):
+    session["idpadrao"] = id
     return User.query.filter_by(id=id).first()
 
 lm.login_view = "login"
@@ -38,7 +39,7 @@ lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 #Manual
 @app.route("/", methods=["GET", "POST"])
 def manual():
-    return redirect(url_for('comousar'))
+    return redirect(url_for('leiame'))
 
 
 #lOGIN DO USUARIO
@@ -136,6 +137,32 @@ def atualizarUsuario(id):
     return render_template('atualizaUsuarios.html',
                             cadastroform = cadastroform)
 
+#Alterar dados do usuarios Padrao
+@app.route("/atualizarUsuarioPadrao/<int:id>", methods=["GET", "POST"])
+@login_required
+def atualizarUsuarioPadrao(id):
+    cadastroform = CadastroUsuarioForm()
+    usuario = User.query.filter_by(id=id).first()
+    if cadastroform.nome.data:
+        usuario.nome = cadastroform.nome.data
+        usuario.cpf = cadastroform.cpf.data
+        usuario.email = cadastroform.email.data
+        usuario.celular = cadastroform.celular.data
+        usuario.nomeUsuario = cadastroform.nomeUsuario.data
+        usuario.tipo = cadastroform.tipo.data
+        if cadastroform.senha.data != cadastroform.confirm.data:
+            flash('Senhas não cofere !')
+            flash('Retorne a pagina anterior para alterar ! !')
+        if cadastroform.senha.data == cadastroform.confirm.data:
+            usuario.senha = cadastroform.senha.data
+            usuario.nome = usuario.nome.upper()
+            db.session.commit()
+            flash('Usuário Alterado com Sucesso !','danger')
+            return redirect(url_for('listagemPadrao'))
+    flash('Erro ao Alterar !')
+    return render_template('atualizaUsuarios.html',
+                            cadastroform = cadastroform)
+
 #Alterar a senha na tela de login
 @app.route("/esqueceuSenha/",methods=["GET", "POST"])
 def esqueceuSenha():
@@ -174,9 +201,9 @@ def esqueceuSenha():
 def index():
     return render_template('index.html')
 
-@app.route("/comousar")
-def comousar():
-    return render_template('comousar.html')
+@app.route("/leiame")
+def leiame():
+    return render_template('leiame.html')
 
 #PAGINA DE LOGOULT
 @app.route("/logout")
@@ -187,15 +214,28 @@ def logout():
     session["salvarstatus"] = None
     session["cont"] = 0
     session["aux"] = None
+    session["lista"] = None
+    session["listaAux"] = None
+    session["listaMaterias"] = None
+    session["listaAuxMaterias"] = None
     return redirect(url_for("login"))
 
-#Pagina que listao  Usuario selecionaodo
+#Pagina que listagem  Usuario selecionaodo
 @app.route("/listagem/<int:id>")
 @login_required
 def listagem(id):
     usuario = User.query.filter_by(id=id)
     cadastroform = CadastroUsuarioForm()
     return render_template('atualizaUsuarios.html',usuario=usuario, cadastroform=cadastroform)
+
+#Pagina altera  Usuario padrao
+@app.route("/listagemPadrao")
+@login_required
+def listagemPadrao():
+    usuario = User.query.filter_by(id=session["idpadrao"])
+    cadastroform = CadastroUsuarioForm()
+    return render_template('atualizaUsuariosPadrao.html',usuario=usuario, cadastroform=cadastroform)
+
 
 #Listagem de todos os Usuarios cadastrados no sistema
 @app.route("/listagemUsuario")
@@ -211,10 +251,14 @@ def excluir_Usuario():
     usuario = User.query.all()
     return render_template('excluirUsuarios.html',usuario=usuario)
 
+
 #PAGINA INSERIR SITUAÇOES
-@app.route("/inserirSituacoes/", methods=["GET", "POST"])
+@app.route("/inserirSituacoes/<int:id>", methods=["GET", "POST"])
 @login_required
-def inserirSituacoes():
+def inserirSituacoes(id):
+    alunos = Alunos.query.filter_by(id = id).first()
+    flash("ALUNO(A) SELECIONADO   "+alunos.nome)
+    session["idAluno"] = alunos.cpf
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
     return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
@@ -239,12 +283,30 @@ def relatorios():
 def ajuda():
         return render_template('ajuda.html')
 
+#####Alunos
+
+@app.route("/todosAlunos")
+@login_required
+def todosAlunos():
+    alunos = Alunos.query.all()
+    return render_template('buscarAlunos.html',alunos=alunos)
+
+#Buscar alunos
+#@app.route("/buscaAlunos/<int:id>", methods=["GET", "POST"])
+#@login_required
+#def buscaAlunos(id):
+#    id
+#    flash(id)
+#    session["idAluno"] = id
+#    alunos = Alunos.query.filter_by(id = id)
+#    return render_template('buscarAlunos.html',alunos=alunos)
+
 # Salvando dados alunos apos analise
 @app.route("/listagemAlunos", methods=["GET", "POST"])
 @login_required
 def listagemAlunos():
     alunosform = AlunosForm()
-    alunos = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
+    alunos = Alunos.query.filter_by(cpf=session["idAluno"]).first()
     if alunos:
         alunos.media = 0
         alunos.resultado = session['resultados']
@@ -264,23 +326,22 @@ def listagemAlunos():
         #Verificando se a analise ja foi feita para determinado aluno
         if dnome and daluno :
             if dnome.nomeDisciplina == session["disciplinas_id"] and daluno.id_alunos == alunos.id :
-                flash("Disciplina Já Analizada para esse aluno!")
-                return redirect(url_for('listagemAlunos'))
+                flash("Disciplina Já Analizada para o aluno selecionado!")
+                return redirect(url_for('inserirSituacoes',id = alunos.id))
 
         alunos.nome=alunos.nome.upper()
         db.session.add(alunos)
         db.session.add(disciplinas_alunos)
         db.session.commit()
-        flash('DADOS DE '+alunos.nome+' SALVOS COM SUCESSO!','danger')
+        flash('DADOS DO ALUNO SELECIONADO SALVOS COM SUCESSO!','danger')
         alunos.media = media
         db.session.add(disciplinas_alunos)
         db.session.commit()
-        return redirect(url_for('inserirSituacoes'))
+        return redirect(url_for('inserirSituacoes',id = alunos.id))
     if request.form.get("cpf") != None:
         flash("Aluno não encontrado, por favor verifique o cpf!")
     return render_template('salvaralunos.html',
                             alunosform=alunosform)
-
 
 #listando todos os alunos com analise salvas
 @app.route("/alunosAnalise/",methods=["GET", "POST"])
@@ -368,8 +429,9 @@ def sessao():
         disciplinas = [(materias.nomeData,situacaoDisciplina)]
         amazenamento.append(disciplinas)
         session["aux"] = amazenamento
-        return render_template('inserirSituacoes.html',tables=[materias.nome,session["salvarstatus"]],
-        titles = ['na','Disciplinas', 'Situações'],periodo=periodo, disciplina=disciplina)
+        return redirect(url_for('analise'))
+        #return render_template('finalizarSituacoes.html',tables=[materias.nome,session["salvarstatus"]],
+        #titles = ['na','Disciplinas', 'Situações'],periodo=periodo, disciplina=disciplina)
 
     if request.form.get("disciplina") is None:
         flash("Escolha uma Disciplina")
@@ -378,7 +440,7 @@ def sessao():
 
     if request.form.get("status") is None:
         flash("Escolha uma Situação")
-        return render_template('inserirSituacoes.html',
+        return render_template('salvaralunos.html',
         titles = ['na'],periodo=periodo, disciplina=disciplina)
 
 #Analise da situaçoes com Panda e Numpy
@@ -389,6 +451,7 @@ def analise():
         id = session["salvardisciplina"]
         situacaoDisciplina = session["salvarstatus"]
         materias = Disciplina.query.filter_by(id = id).first()
+        flash("Probabilidades para a disciplina " + materias.nome)
         disciplinas = [(materias.nomeData,situacaoDisciplina)]
         b = []
         a = []
@@ -444,7 +507,7 @@ def analise():
         j=round(c[0]/cont, 2)
         session["resultados"] = j
 
-        #Alerta de aluno com risco de Reprovação
+         #Alerta de aluno com risco de Reprovação
         if reprovado > 60:
             flash("Atenção!!")
             flash("Aluno com probabilidades de Reprovação acima de 60 %")
@@ -463,6 +526,7 @@ def analise():
         flash("Insira as Disciplinas e as Situaçoes antes de Finalizar")
         return render_template('inserirSituacoes.html',
         titles = ['na'],periodo=periodo, disciplina=disciplina)
+
 
 #Arvore de decisão sobre as situaçoes das disciplinas
 @app.route("/situacoes/",methods=["GET", "POST"])
@@ -497,12 +561,14 @@ def usuariosCadastrados():
 @app.route("/disciplinasTads")
 @login_required
 def disciplinasTads():
-    resultado = disciplina_curso.groupby(['disciplina']).max()
-    resultado = resultado = resultado.sort_values(by=['periodo'])
-    resultado = resultado.rename(columns={'periodo' : 'Periodo da Disciplina'})
-    resultado = resultado.rename(columns={'disciplina' : 'Disciplinas'})
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
+    resultado = disciplina_curso.all()
+    resultado = disciplina_curso.groupby(['Disciplina']).max()
+
+    resultado = resultado.sort_values(by=['Periodo'])
+    # = disciplina_curso(columns={'Disciplina' : 'Disciplinas tads', 'Periodo' : 'Periodo da Disciplina',  })
+    #resultado = resultado.rename(columns={'Disciplina' : 'Disciplinas tads'})
+
+    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')])
 
 #Situaçoes Das Disciplinas
 @app.route("/disciplinaAprovacao")
