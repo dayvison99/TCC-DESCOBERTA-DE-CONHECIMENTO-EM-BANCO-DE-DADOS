@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="/percentualdisci/" method="post" class="form">
+<div class="jumbotron"><center>
+<fieldset class="fieldset-border">
+  <legend class="legend-border"><h4> Percentual(%) Por Disciplinas </h4></legend>
+  <table class="table table-striped" >
+    <tr  style="color: black">
+      <th width="30%"><h4> Nome </h4></th>
+      <th width="20%"><h4> Curso </h4></th>
+    </tr>
+    {% for alunos in alunos %}
+   <tr>
+      <td>  {{ alunos.nome }}</td>
+      <td>  {{ alunos.curso}}</td>
+
+    {% endfor %}
+
+</table>
+<fieldset class="fieldset-border">
+    <legend class="legend-border"><h3> Lista das Disciplinas </h3></legend>
+
+ <table class="table table-striped " title="Resultado das disciplinas" >
+      <tr>
+
+      <tr  >
+        <th><h4> ID : Disciplinas :</h4></th>
+        <td><h4> Risco de Reprovação (%) : </h4></td>
+        {%for disAlunos in disAlunos  %}
+        <tr><td>   {{ disAlunos.nomeDisciplina}} </td>
+            <td>  {{ disAlunos.resultado}}</td>{% endfor %}
+        </tr>
+      </tr>
+
+      </tbody>
+  </table>
+
+    </table>
+
+  </fieldset>
+  <div class="row">
+
+     <div class="form-group col-xs-1">
+     <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Inicial!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+
+       </div>
+
+         <div class="form-group col-xs-1">
+         <button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" onclick="window.print();">Imprimir</button></a>
+
+       </div>
+   </div>
+   </form>
+      </form>
+
+  
+
+ </center></div>
+  </div>
+  </div>
+  </div>
+  <!--Fim do codigo-->
+
+
+
+</center></div>
+
+</fieldset>
+  </form>
+{% endblock %}

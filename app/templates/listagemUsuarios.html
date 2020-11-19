@@ -8,15 +8,20 @@
   <form action="/atualizarUsuario/{{ usuario.id }}" method="post">
 
 <!-- Campo de pesquisa -->
-
-
+<div class="form-group input-group col-xs-7">
+   <span class="input-group-addon">
+       <i class="glyphicon glyphicon-search"></i>
+   </span>
+   <table id="tabela">
+     <th width="20%"><input name="cpf" id="cpf" placeholder="Nome do Usuário" type="text" class="form-control"></th>
+    </table>
+</div>
 
 
 <!-- DADOS PESSOAIS-->
 
-  <table class="table table-striped " title="Click no cadastro que deseja alterar!" >
+  <table id="tabela" class="table table-striped " title="Click no cadastro que deseja alterar!" >
       <tr  style="color: black">
-        <th width="11%"><h4> ID Usuário </h4></th>
         <th width="30%"><h4> Nome </h4></th>
         <th width="20%"><h4> Celular </h4></th>
         <th width="20%"><h4> E-mail </h4></th>
@@ -27,8 +32,6 @@
 
 
       <tr >
-
-        <td ><h4>  <a href='/listagem/{{ usuario.id }}'style="color: black"/>{{ usuario.id }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.nome }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.celular }}</a></h4></td>
         <td><h4>  <a href='/listagem/{{ usuario.id }}' style="color: black"/>{{ usuario.email }}</a></h4></td>

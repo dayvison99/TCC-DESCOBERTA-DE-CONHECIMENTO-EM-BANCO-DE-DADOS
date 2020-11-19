@@ -67,6 +67,25 @@ class Disciplina(db.Model):
             def __repr__(self):
                 return "<Disciplina %r>" % self.id
 
+class SituacaoDisciplinas(db.Model):
+            __tablename__ = "situacaoDisciplinas"
+            id = db.Column(db.Integer, primary_key=True)
+            disciplina = db.Column(db.Text)
+            situacaoDisciplina = db.Column(db.Text)
+            data = db.Column(db.Text)
+            periodo = db.Column(db.Integer, db.ForeignKey('periodo.id'))
+            Periodo = db.relationship('Periodo', foreign_keys=periodo)
+
+            def __init__(self,disciplina,situacaoDisciplina,data, periodo):
+                self.disciplina = disciplina
+                self.situacaoDisciplina = situacaoDisciplina
+                self.data = data
+                self.periodo = periodo
+
+            def __repr__(self):
+                return "<SituacaoDisciplina %r>" % self.id
+
+
 class Alunos(db.Model):
     __tablename__ = "alunos"
 
@@ -75,6 +94,7 @@ class Alunos(db.Model):
     cpf = db.Column(db.Text)
     resultado = db.Column(db.Text)
     media = db.Column(db.Text)
+    curso = db.Column(db.Text)
 
 
     def __init__(self,nome,cpf,resultado,media):

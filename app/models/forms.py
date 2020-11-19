@@ -28,11 +28,18 @@ class DisciForm(FlaskForm):
         periodo = StringField('periodo', validators=[DataRequired()])
         nomeData = StringField('nomeData', validators=[DataRequired()])
 
+class SituacaoDisciplinaForm(FlaskForm):
+        disciplina = StringField('disciplina', validators=[DataRequired()])
+        situacaoDisciplina = StringField('situacaoDisciplina', validators=[DataRequired()])
+        periodo = StringField('periodo', validators=[DataRequired()])
+        data = StringField('data', validators=[DataRequired()])
+
 class AlunosForm(FlaskForm):
         nome = StringField('nome', validators=[DataRequired()])
         cpf = StringField('cpf', validators=[DataRequired()])
         resultado = StringField ('resultado')
         media = StringField ('media')
+        curso = StringField('curso', validators=[DataRequired()])
 
 class Disciplinas_AlunosForm(FlaskForm):
         id_disciplinas = StringField('id_disciplinas', validators=[DataRequired()])

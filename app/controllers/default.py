@@ -4,7 +4,7 @@ from flask import Flask, Response, request, abort, render_template_string, send_
 from flask_login import login_user, logout_user, login_required
 from wtforms import Form,SelectMultipleField,StringField, HiddenField, SelectField, FormField, BooleanField, FieldList, PasswordField
 from app.models.forms import Disciplinas_AlunosForm,LoginForm,CadastroUsuarioForm,AlunosForm,DisciForm
-from app.models.tables import User,Periodo,Disciplina,Alunos,Disciplinas_Alunos
+from app.models.tables import User,Periodo,Disciplina,Alunos,Disciplinas_Alunos, SituacaoDisciplinas
 from flask_session import Session
 from sqlalchemy.sql import func
 import hashlib
@@ -257,7 +257,7 @@ def excluir_Usuario():
 @login_required
 def inserirSituacoes(id):
     alunos = Alunos.query.filter_by(id = id).first()
-    flash("ALUNO(A) SELECIONADO   "+alunos.nome)
+    flash("ALUNO(A) SELECIONADO " + alunos.nome)
     session["idAluno"] = alunos.cpf
     periodo = Periodo.query.all()
     disciplina = Disciplina.query.all()
@@ -358,22 +358,23 @@ def alunosAnalise():
 @app.route("/percentualdisci1/",methods=["GET", "POST"])
 @login_required
 def percentualdisci1():
-    return render_template('listAlunosDisci.html')
+    alunos = Alunos.query.all()
+    return render_template('listAlunosDisci.html',alunos=alunos)
 
-@app.route("/percentualdisci/",methods=["GET", "POST"])
+@app.route("/percentualdisci/<int:id>",methods=["GET", "POST"])
 @login_required
-def percentualdisci():
+def percentualdisci(id):
     alunosform = AlunosForm()
     daform = Disciplinas_AlunosForm()
     disForm = DisciForm()
     alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data,alunosform.media.data)
-    alunos = Alunos.query.filter(Alunos.cpf==request.form.get("cpf"))
-    aluno = Alunos.query.filter_by(cpf=request.form.get("cpf")).first()
+    alunos = Alunos.query.filter(Alunos.id==id)
+    aluno = Alunos.query.filter_by(id=id).first()
     if aluno:
-        if aluno.cpf==request.form.get("cpf"):
+        if aluno.id==id:
             disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
             disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
-            return render_template('listAlunosDisci.html',
+            return render_template('listAlunosDisciRelatorio.html',
             alunos=alunos,disAlunos=disAlunos)
     else:
         flash("Aluno não encontrado, por favor verifique o cpf!")
@@ -517,8 +518,12 @@ def analise():
         session["salvarstatus"] = None
         session["cont"] = 0
         session["aux"] = None
-        return render_template('analise.html',tables=[aprovado,reprovado],
-        titles = ['na','Aprovado', 'Reprovado'])
+        if situacaoDisciplina == 'REPROVADO':
+            return render_template('analise.html',tables=[reprovado],
+            titles = ['na','Probabilidade de Reprovação Para o Aluno'])
+        if situacaoDisciplina == 'APROVADO':
+            return render_template('analise.html',tables=[aprovado],
+            titles = ['na',' Probabilidade de Aprovação Para o Aluno,'])
         return render_template('analise.html')
     else:
         periodo = Periodo.query.all()
@@ -558,28 +563,32 @@ def usuariosCadastrados():
         return render_template('relatorioUsuarios.html',usuario=usuario, cadastroform=cadastroform)
 
 #Relatorios Disciplinas do curso de Tads
+
 @app.route("/disciplinasTads")
 @login_required
 def disciplinasTads():
-    resultado = disciplina_curso.all()
-    resultado = disciplina_curso.groupby(['Disciplina']).max()
+    resultado = Disciplina.query.filter().group_by(Disciplina.nome).order_by(Disciplina.periodo)
+    return render_template('disciplinas.html',resultado = resultado)
 
-    resultado = resultado.sort_values(by=['Periodo'])
-    # = disciplina_curso(columns={'Disciplina' : 'Disciplinas tads', 'Periodo' : 'Periodo da Disciplina',  })
-    #resultado = resultado.rename(columns={'Disciplina' : 'Disciplinas tads'})
-
-    return render_template('disciplinas.html',tables=[resultado.to_html(classes='table table-striped')])
 
 #Situaçoes Das Disciplinas
-@app.route("/disciplinaAprovacao")
+@app.route("/disciplinaAprovacao",methods=["GET", "POST"])
 @login_required
 def disciplinaAprovacao():
-    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "APROVADO"')
-    resultado = consulta.groupby(['disciplina']).count()
-    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
-    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
-    return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
+    flash(request.form.get("datai"))
+    flash(request.form.get("dataf"))
+    resul = SituacaoDisciplinas.query.filter(SituacaoDisciplinas.situacaoDisciplina == "APROVADO").group_by(SituacaoDisciplinas.disciplina)
+    return render_template('disciplinasmaioraprovacao.html',resul = resul)
+
+#@app.route("/disciplinaAprovacao")
+#@login_required
+#def disciplinaAprovacao():
+##    resultado = consulta.groupby(['disciplina']).count()
+#    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+#    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
+#    return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
+#    titles = ['na'])
+
 
 #Situaçoes Das Disciplinas
 @app.route("/disciplina")
