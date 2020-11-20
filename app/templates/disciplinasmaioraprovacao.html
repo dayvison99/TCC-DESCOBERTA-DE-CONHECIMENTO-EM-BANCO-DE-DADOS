@@ -7,36 +7,39 @@
   <legend class="legend-border"><h4> Disciplinas Com Mais Aprovações </h4></legend>
   <form action="/disciplinaAprovacao" method="post" class="form">
 
-    <div style="float:left;">  <div class="form-group input-group col-xs-7">
-         <span class="input-group-addon">
-             <i class="glyphicon glyphicon-search"></i>
-         </span>
+    <div class="form-group input-group col-xs-7">
+       <span class="input-group-addon">
+           <i class="glyphicon glyphicon-search"></i>
+       </span>
+       <table id="tabela">
+         <th width="20%"><input autofocus name="cpf" id="cpf" placeholder="Nome da disciplina" type="text" class="form-control"></th>
+        </table>
+    </div>
 
-         <table id="tabela">
-           <th width="20%"><input name="cpf" id="cpf" placeholder="Nome do Aluno" type="text" class="form-control"></th>
-          </table>
-
-      </div></div>
-	  <div style="float:left;"><div class="form-group input-group col-xs-7">
-
-
-       <table class="table table-striped table-bordered table-condensed table-hover">
-         <tr>
-           <th width="10%">Período Inicial</th>
-           <th width="10%">Período Final</th>
-         </tr>
-         <span class="input-group-addon">
-             <i class="glyphicon glyphicon-calendar"></i>
-         </span>
-         <tr>
-         <td width="10%"><input id="datei" type="date" class="form-control"></td>
-         <td width="10%"><input id="datef" type="date" class="form-control"></td>
-          <button name="button" type="submit">Click me</button>
-       </tr>
-
+    <div class="form-group input-group col-xs-7">
+     <table class="table table-striped table-bordered table-condensed table-hover">
+       <tr>
+         <th width="10%"><center>Data Inicial</center></th>
+         <th width="10%"><center>Data Final</center></th>
+          <th width="10%"><center>Pesquisar</center></th>
+      </tr>
+       <span class="input-group-addon">
+           <i class="glyphicon glyphicon-calendar"></i>
+       </span>
+       <form>
+         <div>
+           <tr>
+             <td width="10%"><input type="date" id="datai" name="datai" class="form-control" min="2006-01-01"  required ></td>
+             <td width="10%"><input type="date" id="dataf" name="dataf" class="form-control" min="2006-01-01"  required ></td>
+             <td width="10%"> <button class="btn btn-info btn-sm" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button></td>
+         </th>
+             <span class="validity"></span>
+        </div>
+       </form>
       </table>
 
-    </div></div>
+    </div>
+
 
 
     <div class="form-group input-group col-xs-7" >

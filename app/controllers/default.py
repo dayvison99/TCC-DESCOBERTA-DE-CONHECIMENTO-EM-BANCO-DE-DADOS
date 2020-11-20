@@ -3,7 +3,7 @@ from app import app, db, lm
 from flask import Flask, Response, request, abort, render_template_string, send_from_directory,render_template, flash, redirect, url_for, request, session
 from flask_login import login_user, logout_user, login_required
 from wtforms import Form,SelectMultipleField,StringField, HiddenField, SelectField, FormField, BooleanField, FieldList, PasswordField
-from app.models.forms import Disciplinas_AlunosForm,LoginForm,CadastroUsuarioForm,AlunosForm,DisciForm
+from app.models.forms import Disciplinas_AlunosForm,LoginForm,CadastroUsuarioForm,AlunosForm,DisciForm, SituacaoDisciplinaForm
 from app.models.tables import User,Periodo,Disciplina,Alunos,Disciplinas_Alunos, SituacaoDisciplinas
 from flask_session import Session
 from sqlalchemy.sql import func
@@ -575,10 +575,24 @@ def disciplinasTads():
 @app.route("/disciplinaAprovacao",methods=["GET", "POST"])
 @login_required
 def disciplinaAprovacao():
-    flash(request.form.get("datai"))
-    flash(request.form.get("dataf"))
-    resul = SituacaoDisciplinas.query.filter(SituacaoDisciplinas.situacaoDisciplina == "APROVADO").group_by(SituacaoDisciplinas.disciplina)
-    return render_template('disciplinasmaioraprovacao.html',resul = resul)
+    datai = request.form.get("datai")
+    dataf = request.form.get("dataf")
+    if datai and dataf is not None:
+        if datai > dataf:
+            flash("Data Inicial Não Pode Ser Maior que Data Final")
+            return render_template('disciplinasmaioraprovacao.html')
+        else:
+            resul = SituacaoDisciplinas.query.filter(count(SituacaoDisciplinas.situacaoDisciplina == "APROVADO")).filter(SituacaoDisciplinas.data <= dataf).filter(SituacaoDisciplinas.data >= datai).group_by(SituacaoDisciplinas.disciplina)
+            return render_template('disciplinasmaioraprovacao.html',resul = resul)
+    else:
+        datai = None
+        dataf = None
+        #SituacaoDisciplinaForm 
+        disciplinas_alunos = SituacaoDisciplinas(disAlunos.id_disciplinas.data,disAlunos.nomeDisciplina.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
+
+        #resul = SituacaoDisciplinas.query.filter(SituacaoDisciplinas.situacaoDisciplina == "APROVADO").group_by(SituacaoDisciplinas.disciplina)
+        resul = SituacaoDisciplinas.query_by.count(situacaoDisciplina)
+        return render_template('disciplinasmaioraprovacao.html',resul = resul)
 
 #@app.route("/disciplinaAprovacao")
 #@login_required
