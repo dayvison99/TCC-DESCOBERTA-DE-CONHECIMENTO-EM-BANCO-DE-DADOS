@@ -24,6 +24,13 @@ disciplinamaiorreprovacao = pd.read_csv('../TCC/Analise_Pandas/disciplinamaiorre
 
 ##Fim importação##
 
+
+
+##conectando bd para relatorios
+import pymysql
+conexao = pymysql.connect(db='data', user='root', passwd='secreta123')
+cursor = conexao.cursor()
+
 #carregamento dos dados do usuario logado
 @lm.user_loader
 def load_user(id):
@@ -524,6 +531,10 @@ def analise():
         if situacaoDisciplina == 'APROVADO':
             return render_template('analise.html',tables=[aprovado],
             titles = ['na',' Probabilidade de Aprovação Para o Aluno,'])
+        if situacaoDisciplina == 'CANCELADO':
+            return render_template('analise.html',tables=[reprovado],
+            titles = ['na',' Probabilidade de Reprovação Para o Aluno,'])
+
         return render_template('analise.html')
     else:
         periodo = Periodo.query.all()
@@ -575,33 +586,36 @@ def disciplinasTads():
 @app.route("/disciplinaAprovacao",methods=["GET", "POST"])
 @login_required
 def disciplinaAprovacao():
-    datai = request.form.get("datai")
-    dataf = request.form.get("dataf")
+    datai = request.form.get('datai')
+    dataf = request.form.get('dataf')
+    session["datai"] = datai
+    session["dataf"] = dataf
+
     if datai and dataf is not None:
         if datai > dataf:
             flash("Data Inicial Não Pode Ser Maior que Data Final")
             return render_template('disciplinasmaioraprovacao.html')
         else:
-            resul = SituacaoDisciplinas.query.filter(count(SituacaoDisciplinas.situacaoDisciplina == "APROVADO")).filter(SituacaoDisciplinas.data <= dataf).filter(SituacaoDisciplinas.data >= datai).group_by(SituacaoDisciplinas.disciplina)
-            return render_template('disciplinasmaioraprovacao.html',resul = resul)
+            cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'APROVADO' and  data between \'"+datai+"\' and \'"+dataf+"\' group by disciplina order by count(situacaoDisciplina) desc ")
+            resultado = cursor.fetchall()
+            return render_template('disciplinasmaioraprovacao.html',resultado = resultado)
     else:
         datai = None
         dataf = None
-        #SituacaoDisciplinaForm 
-        disciplinas_alunos = SituacaoDisciplinas(disAlunos.id_disciplinas.data,disAlunos.nomeDisciplina.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
+        cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'APROVADO' group by disciplina order by count(situacaoDisciplina) desc ")
+        resultado = cursor.fetchall()
+        return render_template('disciplinasmaioraprovacao.html',resultado = resultado  )
 
-        #resul = SituacaoDisciplinas.query.filter(SituacaoDisciplinas.situacaoDisciplina == "APROVADO").group_by(SituacaoDisciplinas.disciplina)
-        resul = SituacaoDisciplinas.query_by.count(situacaoDisciplina)
-        return render_template('disciplinasmaioraprovacao.html',resul = resul)
-
-#@app.route("/disciplinaAprovacao")
-#@login_required
-#def disciplinaAprovacao():
-##    resultado = consulta.groupby(['disciplina']).count()
-#    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
-#    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
-#    return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
-#    titles = ['na'])
+@app.route("/disciplinaAprovacao10")
+@login_required
+def disciplinaAprovacao10():
+    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "APROVADO"')
+    resultado = consulta.groupby(['disciplina']).count()
+    #resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
+    #resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
+    #return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
+    #titles = ['na'])
+    return render_template('disciplinasmaioraprovacao.html',resultado = resultado)
 
 
 #Situaçoes Das Disciplinas
