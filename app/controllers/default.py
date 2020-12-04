@@ -9,6 +9,7 @@ from flask_session import Session
 from sqlalchemy.sql import func
 import hashlib
 import os
+#import pdfkit
 
 #importando bibliotecas de manipulação de dados
 import numpy as np
@@ -22,14 +23,15 @@ dados = pd.read_csv('../TCC/Analise_Pandas/dateset.csv')
 disciplina_curso = pd.read_csv('../TCC/Analise_Pandas/disciplinacurso.csv')
 disciplinamaiorreprovacao = pd.read_csv('../TCC/Analise_Pandas/disciplinamaiorreprovacao.csv')
 
-##Fim importação##
-
-
-
 ##conectando bd para relatorios
 import pymysql
 conexao = pymysql.connect(db='data', user='root', passwd='secreta123')
 cursor = conexao.cursor()
+
+##Fim importação##
+
+
+
 
 #carregamento dos dados do usuario logado
 @lm.user_loader
@@ -74,6 +76,7 @@ def login():
 @login_required
 def cadastroUsuario():
     cadastroform = CadastroUsuarioForm()
+    session['nomeU'] = request.form.get("nome")
     if request.method == 'POST' and cadastroform.validate():
         user = User(cadastroform.nome.data,cadastroform.cpf.data,cadastroform.email.data,cadastroform.celular.data,
         cadastroform.nomeUsuario.data,cadastroform.tipo.data,cadastroform.senha.data)
@@ -82,6 +85,7 @@ def cadastroUsuario():
         if cpf and cpf.cpf == cadastroform.cpf.data:
             flash('Cpf já cadastrado !')
             return redirect(url_for('cadastroUsuario'))
+
 
         email = User.query.filter_by(email=cadastroform.email.data).first()
         if email and email.email == cadastroform.email.data:
@@ -290,6 +294,22 @@ def relatorios():
 def ajuda():
         return render_template('ajuda.html')
 
+#PAGINA DE NOSSAS HISTORIA
+@app.route("/nossahistoriatads")
+@login_required
+def nossahistoriatads():
+        return render_template('nossaHistoria.html')
+
+@app.route("/nossahistoriabsi")
+@login_required
+def nossahistoriabsi():
+        return render_template('nossaHistoriabsi.html')
+
+@app.route("/nossahistoriaifnmg")
+@login_required
+def nossahistoriaifnmg():
+        return render_template('nossaHistoriaifnmg.html')
+
 #####Alunos
 
 @app.route("/todosAlunos")
@@ -297,16 +317,6 @@ def ajuda():
 def todosAlunos():
     alunos = Alunos.query.all()
     return render_template('buscarAlunos.html',alunos=alunos)
-
-#Buscar alunos
-#@app.route("/buscaAlunos/<int:id>", methods=["GET", "POST"])
-#@login_required
-#def buscaAlunos(id):
-#    id
-#    flash(id)
-#    session["idAluno"] = id
-#    alunos = Alunos.query.filter_by(id = id)
-#    return render_template('buscarAlunos.html',alunos=alunos)
 
 # Salvando dados alunos apos analise
 @app.route("/listagemAlunos", methods=["GET", "POST"])
@@ -590,6 +600,7 @@ def disciplinaAprovacao():
     dataf = request.form.get('dataf')
     session["datai"] = datai
     session["dataf"] = dataf
+
 
     if datai and dataf is not None:
         if datai > dataf:
