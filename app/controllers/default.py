@@ -9,7 +9,7 @@ from flask_session import Session
 from sqlalchemy.sql import func
 import hashlib
 import os
-#import pdfkit
+from flask_weasyprint import HTML, render_pdf
 
 #importando bibliotecas de manipulação de dados
 import numpy as np
@@ -30,9 +30,6 @@ cursor = conexao.cursor()
 
 ##Fim importação##
 
-
-
-
 #carregamento dos dados do usuario logado
 @lm.user_loader
 def load_user(id):
@@ -49,7 +46,6 @@ lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 @app.route("/", methods=["GET", "POST"])
 def manual():
     return redirect(url_for('leiame'))
-
 
 #lOGIN DO USUARIO
 @app.route("/login", methods=["GET", "POST"])
@@ -85,7 +81,6 @@ def cadastroUsuario():
         if cpf and cpf.cpf == cadastroform.cpf.data:
             flash('Cpf já cadastrado !')
             return redirect(url_for('cadastroUsuario'))
-
 
         email = User.query.filter_by(email=cadastroform.email.data).first()
         if email and email.email == cadastroform.email.data:
@@ -247,7 +242,6 @@ def listagemPadrao():
     cadastroform = CadastroUsuarioForm()
     return render_template('atualizaUsuariosPadrao.html',usuario=usuario, cadastroform=cadastroform)
 
-
 #Listagem de todos os Usuarios cadastrados no sistema
 @app.route("/listagemUsuario")
 @login_required
@@ -262,7 +256,6 @@ def excluir_Usuario():
     usuario = User.query.all()
     return render_template('excluirUsuarios.html',usuario=usuario)
 
-
 #PAGINA INSERIR SITUAÇOES
 @app.route("/inserirSituacoes/<int:id>", methods=["GET", "POST"])
 @login_required
@@ -274,7 +267,7 @@ def inserirSituacoes(id):
     disciplina = Disciplina.query.all()
     return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
 
-#inserir sistuaçoes
+#inserir situaçoes
 @app.route("/inserir/<int:id>", methods=["GET", "POST"])
 @login_required
 def inserir(id):
@@ -591,17 +584,15 @@ def disciplinasTads():
     resultado = Disciplina.query.filter().group_by(Disciplina.nome).order_by(Disciplina.periodo)
     return render_template('disciplinas.html',resultado = resultado)
 
-
 #Situaçoes Das Disciplinas
 @app.route("/disciplinaAprovacao",methods=["GET", "POST"])
 @login_required
 def disciplinaAprovacao():
+    session["pdfStatus"] = "Aprovações"
     datai = request.form.get('datai')
     dataf = request.form.get('dataf')
     session["datai"] = datai
     session["dataf"] = dataf
-
-
     if datai and dataf is not None:
         if datai > dataf:
             flash("Data Inicial Não Pode Ser Maior que Data Final")
@@ -609,25 +600,15 @@ def disciplinaAprovacao():
         else:
             cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'APROVADO' and  data between \'"+datai+"\' and \'"+dataf+"\' group by disciplina order by count(situacaoDisciplina) desc ")
             resultado = cursor.fetchall()
+            session['pdfAprovado'] = resultado
             return render_template('disciplinasmaioraprovacao.html',resultado = resultado)
     else:
-        datai = None
-        dataf = None
+        session["datai"] = "01-01-2007"
+        session["dataf"] = "31-12-2018"
         cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'APROVADO' group by disciplina order by count(situacaoDisciplina) desc ")
         resultado = cursor.fetchall()
+        session['pdfAprovado'] = resultado
         return render_template('disciplinasmaioraprovacao.html',resultado = resultado  )
-
-@app.route("/disciplinaAprovacao10")
-@login_required
-def disciplinaAprovacao10():
-    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "APROVADO"')
-    resultado = consulta.groupby(['disciplina']).count()
-    #resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
-    #resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Aprovações'})
-    #return render_template('disciplinasmaioraprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
-    #titles = ['na'])
-    return render_template('disciplinasmaioraprovacao.html',resultado = resultado)
-
 
 #Situaçoes Das Disciplinas
 @app.route("/disciplina")
@@ -651,6 +632,7 @@ def disciplinaDesistencia():
     return render_template('disciplinasdesistencia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
+
 #Situaçoes Das Disciplinas
 @app.route("/mediaMatricula")
 @login_required
@@ -661,3 +643,16 @@ def mediaMatricula():
     resultado = resultado.rename(columns={'situacaoDisciplina' : 'Média de Matriculas'})
     return render_template('disciplinasmedia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
+
+#Ralatorios em PDFS
+@app.route('/pdfAprovacao')
+def pdfAprovacao():
+    resultado =session['pdfAprovado']
+    html = render_template('aprovacaoPdf.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+@app.route('/pdfReprovacao')
+def pdfReprovacao():
+    resultado =session['pdfReprovado']
+    html = render_template('aprovacaoPdf.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
