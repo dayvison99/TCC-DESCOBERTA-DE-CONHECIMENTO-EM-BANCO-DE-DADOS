@@ -21,8 +21,9 @@
 
     <table id="tabela" class="table table-striped table-bordered table-condensed table-hover" title="Alunos em Risco de Evasão!">
        <tr >
-          <th>Disciplinas</th>
-          <th>Períodos </th>
+          <th>Disciplinas Do TADS</th>
+          <th>Equivalência Em BSI</th>
+          <th>Período </th>
         </tr>
 
 
@@ -34,18 +35,19 @@
         {% for resultado in resultado %}
             <tr>
               <td>  {{ resultado.nome}}</td>
+              <td>  {{ resultado.equibsi}}</td>
               <td>  {{ resultado.periodo}}</td>
               </tr>
             {% endfor %}
 
     </table>
     <div class="row">
-      <div class="form-group col-xs-1">
+      <div class="form-group col-xs-4">
       <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
     </div>
 
       <div class="form-group col-xs-1">
-      <button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" onclick="window.print();">Imprimir</button></a>
+      <a href='{{ url_for('pdfdisciplinas') }}'/><button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" >Imprimir</button></a>
 
     </div>
       </div>

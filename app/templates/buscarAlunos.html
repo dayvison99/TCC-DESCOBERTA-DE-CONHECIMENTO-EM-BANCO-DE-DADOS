@@ -27,12 +27,14 @@
       <tr  style="color: black">
         <th width="30%"><h4> Nome </h4></th>
         <th width="20%"><h4> CPF </h4></th>
+        <th width="20%"><h4> Curso </h4></th>
         <th width="20%"><h4> Selecionar</h4></th>
      </tr>
       {% for alunos in alunos %}
      <tr>
         <td>  {{ alunos.nome }}</td>
         <td>  {{ alunos.cpf}}</td>
+        <td>  {{ alunos.curso}}</td>
         <td> <a href='/inserirSituacoes/{{ alunos.id }}' style="color: black"/>
             <button title="Selecionar o Usuário! " value="Selecionar" type="button" class="btn btn-info btn-lg" aria-label="Left Align">
               <span class="glyphicon glyphicon-ok" aria-hidden="true"> Selecionar</span>

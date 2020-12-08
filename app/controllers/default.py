@@ -262,9 +262,15 @@ def excluir_Usuario():
 def inserirSituacoes(id):
     alunos = Alunos.query.filter_by(id = id).first()
     flash("ALUNO(A) SELECIONADO " + alunos.nome)
-    session["idAluno"] = alunos.cpf
-    periodo = Periodo.query.all()
-    disciplina = Disciplina.query.all()
+    if alunos.curso == "TADS":
+        session["idAluno"] = alunos.cpf
+        periodo = Periodo.query.all()
+        disciplina = Disciplina.query.all()
+    else:
+        session["idAluno"] = alunos.cpf
+        periodo = Periodo.query.all()
+        disciplina = Disciplina.query.filter(Disciplina.equibsi!="")
+        usuario = User.query.filter_by(id=session["idpadrao"])
     return render_template('inserirSituacoes.html', periodo=periodo, disciplina=disciplina)
 
 #inserir situaçoes
@@ -537,6 +543,9 @@ def analise():
         if situacaoDisciplina == 'CANCELADO':
             return render_template('analise.html',tables=[reprovado],
             titles = ['na',' Probabilidade de Reprovação Para o Aluno,'])
+        if situacaoDisciplina == 'MATRICULADO':
+            return render_template('analise.html',tables=[reprovado],
+            titles = ['na',' Probabilidade de Reprovação Para o Aluno,'])
 
         return render_template('analise.html')
     else:
@@ -611,26 +620,57 @@ def disciplinaAprovacao():
         return render_template('disciplinasmaioraprovacao.html',resultado = resultado  )
 
 #Situaçoes Das Disciplinas
-@app.route("/disciplina")
+@app.route("/disciplina",methods=["GET", "POST"])
 @login_required
 def disciplina():
-    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "REPROVADO"')
-    resultado = consulta.groupby(['disciplina']).count()
-    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
-    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Reprovações'})
-    return render_template('disciplinasmaiorreprovacao.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
+    session["pdfStatus"] = "Reprovações"
+    datai = request.form.get('datai')
+    dataf = request.form.get('dataf')
+    session["datai"] = datai
+    session["dataf"] = dataf
+    if datai and dataf is not None:
+        if datai > dataf:
+            flash("Data Inicial Não Pode Ser Maior que Data Final")
+            return render_template('disciplinasmaiorreprovacao.html')
+        else:
+            cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'REPROVADO' and  data between \'"+datai+"\' and \'"+dataf+"\' group by disciplina order by count(situacaoDisciplina) desc ")
+            resultado = cursor.fetchall()
+            session['pdfAprovado'] = resultado
+            return render_template('disciplinasmaiorreprovacao.html',resultado = resultado)
+    else:
+        session["datai"] = "01-01-2007"
+        session["dataf"] = "31-12-2018"
+        cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'REPROVADO' group by disciplina order by count(situacaoDisciplina) desc ")
+        resultado = cursor.fetchall()
+        session['pdfAprovado'] = resultado
+        return render_template('disciplinasmaiorreprovacao.html',resultado = resultado  )
+
 
 #Situaçoes Das Disciplinas
-@app.route("/disciplinaDesistencia")
+@app.route("/disciplinaDesistencia",methods=["GET", "POST"])
 @login_required
 def disciplinaDesistencia():
-    consulta = disciplinamaiorreprovacao.query('situacaoDisciplina == "CANCELADO"')
-    resultado = consulta.groupby(['disciplina']).count()
-    resultado = resultado.sort_values(by=['situacaoDisciplina'], ascending =False)
-    resultado = resultado.rename(columns={'situacaoDisciplina' : 'Quantidade de Desistência'})
-    return render_template('disciplinasdesistencia.html',tables=[resultado.to_html(classes='table table-striped')],
-    titles = ['na'])
+    session["pdfStatus"] = "Desistências"
+    datai = request.form.get('datai')
+    dataf = request.form.get('dataf')
+    session["datai"] = datai
+    session["dataf"] = dataf
+    if datai and dataf is not None:
+        if datai > dataf:
+            flash("Data Inicial Não Pode Ser Maior que Data Final")
+            return render_template('disciplinasdesistencia.html')
+        else:
+            cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'CANCELADO' and  data between \'"+datai+"\' and \'"+dataf+"\' group by disciplina order by count(situacaoDisciplina) desc ")
+            resultado = cursor.fetchall()
+            session['pdfAprovado'] = resultado
+            return render_template('disciplinasdesistencia.html',resultado = resultado)
+    else:
+        session["datai"] = "01-01-2007"
+        session["dataf"] = "31-12-2018"
+        cursor.execute("SELECT disciplina,COUNT(situacaoDisciplina),data, periodo FROM situacaoDisciplinas WHERE situacaoDisciplina like 'CANCELADO' group by disciplina order by count(situacaoDisciplina) desc ")
+        resultado = cursor.fetchall()
+        session['pdfAprovado'] = resultado
+        return render_template('disciplinasdesistencia.html',resultado = resultado  )
 
 
 #Situaçoes Das Disciplinas
@@ -645,14 +685,15 @@ def mediaMatricula():
     titles = ['na'])
 
 #Ralatorios em PDFS
-@app.route('/pdfAprovacao')
-def pdfAprovacao():
-    resultado =session['pdfAprovado']
-    html = render_template('aprovacaoPdf.html', resultado=resultado)
+@app.route('/pdfdisciplinas')
+def pdfdisciplinas():
+    resultado = cursor.execute("SELECT  * FROM disciplina group by nome order by periodo ")
+    resultado = cursor.fetchall()
+    html = render_template('disciplinasPdf.html', resultado=resultado)
     return render_pdf(HTML(string=html))
 
-@app.route('/pdfReprovacao')
-def pdfReprovacao():
-    resultado =session['pdfReprovado']
+@app.route('/pdf')
+def pdf():
+    resultado =session['pdfAprovado']
     html = render_template('aprovacaoPdf.html', resultado=resultado)
     return render_pdf(HTML(string=html))

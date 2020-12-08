@@ -28,21 +28,21 @@
   <body>
     <img src="{{ url_for('static', filename='img/logo1.png') }}" alt="CAJUÍ" height="10px" style='float:height'></a>
     <label><h3> Sistema de Análise de Situações Acadêmicas </h3></label>
-    <center><label><h5> Relatório das Disciplínas com Maiores {{session["pdfStatus"]}}</h5></label></center>
-    <center><label><h5><i>Disciplinas Cursadas de {{session["datai"]}} á {{session["dataf"]}} </i></h5></label></center>
+    <center><label><h5> Relatório das Disciplínas do Curso</h5></label></center>
+    <center><label><h5><i>Disciplinas TADS e Equivalência em BSI </i></h5></label></center>
 
     <table class="table table-striped table-bordered table-condensed table-hover">
        <tr>
-        <th width="40%" >Disciplinas</th>
-        <th width="40%">Quantidades </th>
+        <th width="40%" >Disciplinas Do TADS</th>
+        <th width="40%">Equivalência Em BSI </th>
         <th width="40%">Período </th>
 
      </tr>
       {% for resultado in resultado %}
       <tr>
-          <td >  {{ resultado[0]}} </td>
-          <td>  {{ resultado[1]}}</td>
-          <td>  {{ resultado[3]}}</td>
+          <td >  {{ resultado[1]}} </td>
+          <td>  {{ resultado[4]}}</td>
+          <td>  {{ resultado[2]}}</td>
       </tr>
       {% endfor %}
 </body>

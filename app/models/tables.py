@@ -57,12 +57,15 @@ class Disciplina(db.Model):
             id = db.Column(db.Integer, primary_key=True)
             nome = db.Column(db.Text)
             nomeData = db.Column(db.Text)
+            equibsi = db.Column(db.Text)
             periodo = db.Column(db.Integer, db.ForeignKey('periodo.id'))
             Periodo = db.relationship('Periodo', foreign_keys=periodo)
 
-            def __init__(self, nome, periodo,nomeData):
+            def __init__(self, nome, periodo,nomeData,equibsi):
                 self.nome = nome
                 self.periodo = periodo
+                self.nomeData = nomeData
+                self.equibsi = equibsi
 
             def __repr__(self):
                 return "<Disciplina %r>" % self.id

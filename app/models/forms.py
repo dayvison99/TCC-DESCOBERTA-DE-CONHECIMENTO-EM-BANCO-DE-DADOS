@@ -27,6 +27,7 @@ class DisciForm(FlaskForm):
         nome = StringField('nome', validators=[DataRequired()])
         periodo = StringField('periodo', validators=[DataRequired()])
         nomeData = StringField('nomeData', validators=[DataRequired()])
+        equibsi = StringField('equibsi', validators=[DataRequired()])
 
 class SituacaoDisciplinaForm(FlaskForm):
         disciplina = StringField('disciplina', validators=[DataRequired()])
