@@ -366,8 +366,10 @@ def alunosAnalise():
     dAluno = Disciplinas_AlunosForm()
     alunosform = AlunosForm()
     dialuno = Disciplinas_Alunos.query.all()
+    #session["dialuno1"]= dialuno
     alunos = Alunos.query.all()
     alunos= Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
+    #session["aluno1"]= alunos
     return render_template('listagemAlunos.html',alunos=alunos,dialuno=dialuno)
 
 #listando qual o risco em cada disciplina
@@ -385,6 +387,7 @@ def percentualdisci(id):
     disForm = DisciForm()
     alunos = Alunos(alunosform.nome.data,alunosform.cpf.data,alunosform.resultado.data,alunosform.media.data)
     alunos = Alunos.query.filter(Alunos.id==id)
+    session["a1"] = id
     aluno = Alunos.query.filter_by(id=id).first()
     if aluno:
         if aluno.id==id:
@@ -696,4 +699,23 @@ def pdfdisciplinas():
 def pdf():
     resultado =session['pdfAprovado']
     html = render_template('aprovacaoPdf.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+@app.route('/pdfAlunos')
+def pdfAlunos():
+    resultado = Alunos.query.filter(Alunos.resultado > 0).order_by(Alunos.nome)
+    html = render_template('listagemAlunosPDF.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+@app.route('/pdfAlunosRiscos')
+def pdfAlunosRiscos():
+    resultado = Alunos.query.filter(Alunos.media >=60 ).order_by(Alunos.media.desc())
+    html = render_template('listagemAlunosPDF.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+@app.route('/pdfAlunosRelatorios')
+def pdfAlunosRelatorios():
+    resultado = Alunos.query.filter(Alunos.id==session["a1"])
+    disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==session["a1"])
+    html = render_template('listagemAlunosDisciplinasPDF.html', resultado=resultado, disAlunos=disAlunos)
     return render_pdf(HTML(string=html))
