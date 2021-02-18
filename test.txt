@@ -26,6 +26,6 @@ PyPDF2==1.26.0
 SQLAlchemy==1.2.5
 WeasyPrint==44
 webencodings==0.5.1
-Werkzeug==0.14.1
+Werkzeug==0.15.3
 WTForms==2.1
 xhtml2pdf==0.2.3
