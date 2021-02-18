@@ -43,12 +43,13 @@ lm.session_protection = "strong"
 lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 
 #Manual
-@app.route("/", methods=["GET", "POST"])
+@app.route("/manual", methods=["GET", "POST"])
+@login_required
 def manual():
     return redirect(url_for('leiame'))
 
 #lOGIN DO USUARIO
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -403,10 +404,17 @@ def percentualdisci(id):
 @app.route("/alunosRisco/",methods=["GET", "POST"])
 @login_required
 def alunosRisco():
-    alunosform = AlunosForm()
-    alunos = Alunos.query.all()
-    alunos = Alunos.query.filter(Alunos.media >=60 ).order_by(Alunos.media.desc())
-    return render_template('listagemAlunosrisco.html',alunos=alunos)
+    id = request.form.get("select")
+    session["riscoid"]= id
+    if id:
+        alunosform = AlunosForm()
+        alunos = Alunos.query.all()
+        alunos = Alunos.query.filter(Alunos.media >=id ).order_by(Alunos.media.desc())
+        return render_template('listagemAlunosrisco.html',alunos=alunos)
+    else:
+        alunosform = AlunosForm()
+        alunos = Alunos.query.filter(Alunos.media >=0.1 ).order_by(Alunos.media.desc())
+        return render_template('listagemAlunosrisco.html',alunos=alunos)
 
 #Excluir lista de alunos
 @app.route("/excluirAlunos/<int:id>",methods=["GET", "POST"])
@@ -493,6 +501,35 @@ def analise():
                 reprovado = round(c[0]/cont, 2)
                 aprovado =  round(100-c[0]/cont, 2)
             if situacaoDisciplina == 'APROVADO':
+                cont=cont+1
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                probabilidade= probabilidade*100
+                a.append([d[0], probabilidade/probabilidadeTotal])
+                prob = dados.loc[(dados['disciplina']==d[0])].count()
+                for i in range(1):
+                        probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                        probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                        b = probabilidade/probabilidadeTotal*100
+                        c = b+c
+                reprovado = round(c[0]/cont, 2)
+                aprovado =  round(100-c[0]/cont, 2)
+
+            if situacaoDisciplina == 'MATRICULADO':
+                cont=cont+1
+                probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                probabilidade= probabilidade*100
+                a.append([d[0], probabilidade/probabilidadeTotal])
+                prob = dados.loc[(dados['disciplina']==d[0])].count()
+                for i in range(1):
+                        probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
+                        probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
+                        b = probabilidade/probabilidadeTotal*100
+                        c = b+c
+                reprovado = round(c[0]/cont, 2)
+                aprovado =  round(100-c[0]/cont, 2)
+            if situacaoDisciplina == 'CANCELADO':
                 cont=cont+1
                 probabilidadeTotal = dados.loc[(dados['disciplina']==d[0])].count()
                 probabilidade = dados.loc[(dados['disciplina']==d[0]) & (dados['situacaoDisciplina']==d[1])].count()
