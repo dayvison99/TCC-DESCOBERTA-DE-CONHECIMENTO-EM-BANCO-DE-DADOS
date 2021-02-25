@@ -8,11 +8,13 @@
 
     <form action="" method="POST" >
     <div class="form-group input-group col-xs-3">
-      <label for="select"><h4> Alunos com risco de evasão maior que: {{ session["riscoid"] }} % </h4></label>
-      <table id="tabela" class="table table-striped table-bordered table-condensed table-hover" title="Alunos em Risco de Evasão!">
+        <table id="tabela" class="table table-striped table-bordered table-condensed table-hover" title="Alunos em Risco de Evasão!">
          <tr >
-            <td>
-                <select required id ="select" name='select' class="selectpicker form-control">
+           <th >
+             <label for="select"><h4> Risco maior que: {{ session["riscoid"] }} % </h4></label>
+           </th>
+           <td >
+              <select required id ="select" name='select' class="selectpicker form-control">
                   <option value="nenhum" disabled selected>Escolha a %</option>
                   <option value="10">10%</option>
                   <option value="20">20%</option>
@@ -24,11 +26,11 @@
                   <option value="80">80%</option>
                   <option value="90">90%</option>
                   <option selected disabled="">{{ session["riscoid"] }}</option>
-                 </select>
-              </td>
-              <td>
+              </select>
+            </td>
+            <td>
                 <button type="submit" class="btn btn-info">Buscar</button>
-              </td>
+            </td>
           </tr>
         </table>
       </div>

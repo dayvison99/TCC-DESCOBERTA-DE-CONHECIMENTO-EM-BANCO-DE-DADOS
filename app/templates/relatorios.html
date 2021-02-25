@@ -46,14 +46,33 @@
         <center><a href="{{ url_for('disciplinaAprovacao') }}"><img src="{{ url_for('static', filename='img/aprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
       </fieldset>
   </td>
-</tr>
-<tr>
   <td>
         <fieldset class="fieldset-border">
           <legend class="legend-border"><h4>Disciplinas com Maiores Reprovações</h4></legend>
           <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/reprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
         </fieldset>
   </td>
+</tr>
+<tr>
+  <td>
+      <fieldset class="fieldset-border">
+        <legend class="legend-border"><h4>Situações por Forma de Ingresso</h4></legend>
+        <center><a href="{{ url_for('formasIngresso') }}"><img src="{{ url_for('static', filename='img/ingresso.png') }}" alt="IFNMG"”/ height="60px" ></a>
+      </fieldset>
+  </td>
+  <td>
+        <fieldset class="fieldset-border">
+          <legend class="legend-border"><h4>Situações por Cidades</h4></legend>
+          <center><a href="{{ url_for('ingressoCidade') }}"><img src="{{ url_for('static', filename='img/cidade.png') }}" alt="IFNMG"”/ height="60px" ></a>
+        </fieldset>
+  </td>
+  <td>
+        <fieldset class="fieldset-border">
+          <legend class="legend-border"><h4>Coeficiente de Rendimento</h4></legend>
+          <center><a href="{{ url_for('rendimento') }}"><img src="{{ url_for('static', filename='img/reprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
+        </fieldset>
+  </td>
+
 <!--
   <td>
           <fieldset class="fieldset-border">

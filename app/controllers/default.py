@@ -412,6 +412,8 @@ def alunosRisco():
         alunos = Alunos.query.filter(Alunos.media >=id ).order_by(Alunos.media.desc())
         return render_template('listagemAlunosrisco.html',alunos=alunos)
     else:
+        id = 0
+        session["riscoid"]= id
         alunosform = AlunosForm()
         alunos = Alunos.query.filter(Alunos.media >=0.1 ).order_by(Alunos.media.desc())
         return render_template('listagemAlunosrisco.html',alunos=alunos)
@@ -724,7 +726,45 @@ def mediaMatricula():
     return render_template('disciplinasmedia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
+@app.route("/ingressoCidade")
+@login_required
+def ingressoCidade():
+    cursor.execute("SELECT matricula.status,matricula.cidade, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status,matricula.cidade order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    return render_template('ingressoCidade.html',resultado = resultado  )
+
+@app.route("/formasIngresso")
+@login_required
+def formasIngresso():
+    cursor.execute("SELECT matricula.status,ingresso.forma_ingresso, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status, ingresso.forma_ingresso order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    return render_template('formasingresso.html',resultado = resultado  )
+
+@app.route("/rendimento")
+@login_required
+def rendimento():
+    cursor.execute("SELECT ingresso.coeficiente_rendimento,matricula.status, turma.nome FROM matricula,ingresso, turma where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id and turma.id =  ingresso.turma_id and turma.nome like '%TL%' order by coeficiente_rendimento desc ")
+    resultado = cursor.fetchall()
+    return render_template('rendimento.html',resultado = resultado  )
+
+
 #Ralatorios em PDFS
+@app.route('/pdfcidade')
+def pdfcidade():
+    cursor.execute("SELECT matricula.status,matricula.cidade, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status,matricula.cidade order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    html = render_template('cidadePdf.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+@app.route('/pdfingresso')
+def pdfingresso():
+    cursor.execute("SELECT matricula.status,ingresso.forma_ingresso, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status, ingresso.forma_ingresso order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    html = render_template('ingressoPdf.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+
+
 @app.route('/pdfdisciplinas')
 def pdfdisciplinas():
     resultado = cursor.execute("SELECT  * FROM disciplina group by nome order by periodo ")
