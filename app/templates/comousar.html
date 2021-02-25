@@ -1,32 +1,8 @@
-'<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+{% extends 'base.html' %}
 
+{% block content%}
 
-    <title>Sistema de Analise de Situações Acadêmica</title>
-
-
-    <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <center><a href="{{ url_for('login') }}" id="tile1"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG" height="100px"><p>
-    <i class="icon ion-ios7-home-outline"></i> Entrar no Sistema </a></li></center>
-
-    <div class="login-box-body login-header ">
+      <div class="login-box-body login-header ">
 
       <div class="login-box-body">
         <div class ="col-md-10 col-md-offset-1" >
@@ -59,6 +35,7 @@
                     <h4> 3 - Situações: </h4></p></p>
                     <ul>
                     <li>Tela para inserir a situaçõe de cada disciplina de um determinado aluno</li>
+                    <li>Deverá selecionar o aluno a ser analisado:</li>
                     <li>Deverá selecionar a disciplina e depois a situação da mesma, sendo:</li>
                     <ul><li>Aprovado - Para Alunos que tenha sido aprovado na disciplina escolhida</li>
                         <li>Reprovado - Para Alunos que tenha sido reprovado na disciplina escolhida</li>
@@ -67,10 +44,9 @@
 
                     </ul>
                     <li>Para cada disciplina selecionada deverá clicar no botão "Inserir"</li>
-                    <li>Para finalizar as inserções e gerar as probabilidades deverá clicar no botão "Finalizar"</li>
-                    <li>Após clicar no botão Finalizar irá carregar uma tela com os resultados na analise, as probabilidades de Aprovação é Reprovação daquele aluno, para de acordo com aquela disciplina.</li>
+                    <li>Após clicar no botão Inserir irá carregar uma tela com a probabilidade de acordo com aquela disciplina.</li>
                     <li>Na tela de resultados das analise, tem a opção para salvar os dados da análise</li>
-                    <li>Para salvar so dados basta inserir o cpf do aluno e clicar em salvar</li>
+                    <li>Após salvar os dados, será direcionado para a tela de inserção para análizar uma nova disciplina</li>
                   <font color="red">
                   </br>* A análise deverá ser feita para cada discilina por vez.
                         </br>* Não sendo permitido fazer a análise de mesma disiciplina para o mesmo aluno.</font>
@@ -78,16 +54,17 @@
                     <h4> 4 - Relatórios: </h4></p></p>
                     <ul>
                     <lo>No menu relatorio é possivel saber as seguintes situações: </li>
-                    <li>Alunos com análise salva: Onde listará todos os alunos que tiveram suas análises salvas na tela de Situações</li>
-                    <li>Alunos com risco de reprovação igual ou maior de 60%: Listará todos os alunos que possui um risco de reprovação no curso. </li>
-                    <li>Percentual por disciplinas: Inserindo o CPF do aluno que podera lista a sistuação de cada disciplina separado  </li>
-                    <li>Relação dos usuarios cadastrados no sistema</li>
-                    <li>Relação das diciplinas do curso de TADS</li>
-                    <li>Relação das disciplinas com a maior nivel de aprovação</li>
-                    <li>Relação das disciplinas com a maior nivel de reprovação</li>
-                    <li>Relação da média de matricula por disciplina</li>
-                    <li>Relação das disciplinas com maiores indice de desistência</li>
-                    </ul>
+
+                      <li>Alunos com análise salva</li>
+                      <li>Alunos com risco de reprovação </li>
+                      <li>Percentual por disciplinas </li>
+                      <li>Relação das diciplinas do curso de TADS</li>
+                      <li>Relação das disciplinas com a maior nivel de aprovação</li>
+                      <li>Relação das disciplinas com a maior nivel de reprovação</li>
+                      <li>Relação das disciplinas com maiores indice de desistência</li>
+                      <li>Relação das situações por forma de ingresso</li>
+                      <li>Relação das situações por cidades</li>
+                      <li>Relação dos coeficiente de rendimento</li>  </ul>
                     <h4> 5 - Ajuda: </h4></p></p>
                     <ul><li>Essa tela explica o conteúdo de cada intem do menu</li>
                     <ul>
@@ -98,8 +75,4 @@
               </p>
               </p>
       </div>
-      <center>
-        <center><a href="{{ url_for('login') }}" id="tile1"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="IFNMG" height="100px"><p>
-        <i class="icon ion-ios7-home-outline"></i> Entrar no Sistema </a></li></center>  </body>
-</html>
-'
+      {% endblock %}

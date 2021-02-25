@@ -42,11 +42,6 @@ lm.session_protection = "strong"
 
 lm.login_message = u"Por favor insira o nome de usuário e senha para acessar !"
 
-#Manual
-@app.route("/manual", methods=["GET", "POST"])
-@login_required
-def manual():
-    return redirect(url_for('leiame'))
 
 #lOGIN DO USUARIO
 @app.route("/", methods=["GET", "POST"])
@@ -209,8 +204,16 @@ def index():
     return render_template('index.html')
 
 @app.route("/leiame")
+@login_required
 def leiame():
     return render_template('leiame.html')
+
+#Manual
+@app.route("/sobre", methods=["GET", "POST"])
+@login_required
+def sobre():
+    return render_template('comousar.html')
+
 
 #PAGINA DE LOGOULT
 @app.route("/logout")
@@ -578,16 +581,16 @@ def analise():
         session["aux"] = None
         if situacaoDisciplina == 'REPROVADO':
             return render_template('analise.html',tables=[reprovado],
-            titles = ['na','Probabilidade de Reprovação Para o Aluno'])
+            titles = ['na',' A Probabilidade de Reprovação No Curso Para Alunos Reprovados Nesta Disciplina: '])
         if situacaoDisciplina == 'APROVADO':
             return render_template('analise.html',tables=[aprovado],
-            titles = ['na',' Probabilidade de Aprovação Para o Aluno,'])
+            titles = ['na',' A Probabilidade de Conclusão No Curso Para Alunos Aprovados Nesta Disciplina:  '])
         if situacaoDisciplina == 'CANCELADO':
             return render_template('analise.html',tables=[reprovado],
-            titles = ['na',' Probabilidade de Reprovação Para o Aluno,'])
+            titles = ['na','A Probabilidade de Conclusão No Curso Para Alunos Cursando Esta Disciplina:  '])
         if situacaoDisciplina == 'MATRICULADO':
             return render_template('analise.html',tables=[reprovado],
-            titles = ['na',' Probabilidade de Reprovação Para o Aluno,'])
+            titles = ['na','A Probabilidade de Conclusão No Curso Para Alunos Desistente desta Disciplina:  '])
 
         return render_template('analise.html')
     else:
