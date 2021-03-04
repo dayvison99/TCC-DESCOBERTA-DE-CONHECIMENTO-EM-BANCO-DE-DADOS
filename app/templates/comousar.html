@@ -9,65 +9,46 @@
           <div class="jumbotron">
             <br/>
               <div class="login-box-body">
-                  <center><p class="login-box-msg"><b>Manual :</b><br></center>
+                  <center><p class="login-box-msg"><b>Metodologia de Desenvolvimento</b><br></center>
                   </p>
-                    <p class="login-box-msg"><br>
-                        <h4>  Login :</P> </h4>
-                        Para Realizar o login, deverar usar o nome de usuário e a senha fornecidos pelo administrador e/ou coondenador do curso.
-                      </br>Caso tenha esquecido a senha a mesma poderar se recuperada no campo esquecir a senha na tela de login.
-                      <h4>  Telas :</P> </h4>
-                      <h4> 1 - Início: </h4></p>
-                      <ul>
-                      <li> Tela principal onde o usuário poderá ter acesso as demais tela e logo do sistema </li>
-                    </ul>
-                      <h4> 2 - Cadastros: </h4></p></p>
-                      <ul>
-                      <li> Tela disponivel apenas para usuarios administradores do sistema</li>
-                      <li>Ao clicar no botão cadastro será direcionado para a tela de
-                        listagem de usuários onde irá aparecer todos o usuarios cadastrados</li>
-                      <li>Dentro da tela de listagem terá um botão de "Novo" para cadastrar
-                        novos usuários e o botão de "Voltar" que será direcionado para a tela principal</li>
-                      <li>Ao clicar em quaisquer parte do dados que aparece na tela de listagem,
-                        será direcionado para a tela de edição, onde será possível editar e excluir o cadastro do usuario selecionado </li>
-                      <li>Todos os dados editados ou excluidos não poderão mais serem recuperados</li>
-                      <li>Ao final de cada operação de inserção e alteração nos dados o sistema irá retornar uma mensagem de confimação</li>
-                    </ul>
-                    <h4> 3 - Situações: </h4></p></p>
-                    <ul>
-                    <li>Tela para inserir a situaçõe de cada disciplina de um determinado aluno</li>
-                    <li>Deverá selecionar o aluno a ser analisado:</li>
-                    <li>Deverá selecionar a disciplina e depois a situação da mesma, sendo:</li>
-                    <ul><li>Aprovado - Para Alunos que tenha sido aprovado na disciplina escolhida</li>
-                        <li>Reprovado - Para Alunos que tenha sido reprovado na disciplina escolhida</li>
-                        <li>Matricula - Para Alunos que ainda estão fazendo a disciplina escolhida</li>
-                        <li>Desistente - Para Alunos que desistiu/trancou a disciplina escolhida</li>
 
-                    </ul>
-                    <li>Para cada disciplina selecionada deverá clicar no botão "Inserir"</li>
-                    <li>Após clicar no botão Inserir irá carregar uma tela com a probabilidade de acordo com aquela disciplina.</li>
-                    <li>Na tela de resultados das analise, tem a opção para salvar os dados da análise</li>
-                    <li>Após salvar os dados, será direcionado para a tela de inserção para análizar uma nova disciplina</li>
-                  <font color="red">
-                  </br>* A análise deverá ser feita para cada discilina por vez.
-                        </br>* Não sendo permitido fazer a análise de mesma disiciplina para o mesmo aluno.</font>
-                    </ul>
-                    <h4> 4 - Relatórios: </h4></p></p>
-                    <ul>
-                    <lo>No menu relatorio é possivel saber as seguintes situações: </li>
 
-                      <li>Alunos com análise salva</li>
-                      <li>Alunos com risco de reprovação </li>
-                      <li>Percentual por disciplinas </li>
-                      <li>Relação das diciplinas do curso de TADS</li>
-                      <li>Relação das disciplinas com a maior nivel de aprovação</li>
-                      <li>Relação das disciplinas com a maior nivel de reprovação</li>
-                      <li>Relação das disciplinas com maiores indice de desistência</li>
-                      <li>Relação das situações por forma de ingresso</li>
-                      <li>Relação das situações por cidades</li>
-                      <li>Relação dos coeficiente de rendimento</li>  </ul>
-                    <h4> 5 - Ajuda: </h4></p></p>
-                    <ul><li>Essa tela explica o conteúdo de cada intem do menu</li>
-                    <ul>
+Sobre esse trabalho mostaremos como foi desenvolvido, mostrando o modelo de evasão utilizado, o processo de levantamento de dados, levantamento de requisitos, o modelo dimensional, a criação da rede bayesiana e a implementação do front end e back end .
+<p>
+<p>1 Modelo de Evasão</p>
+
+Para esse trabalho foi considerado evadido todo aluno que tenha deixado o curso de TADS, ou seja, mesmo que o aluno permaneça na instituição em outro curso, ele será considerado evadido. Portanto, será considerado o <b>conceito de evasão de curso</b>.
+<p>
+<p>2 Levantamento de dados</p>
+Os dados utilizados no sistema foram fornecido pelo <b>Sistema Acadêmico do IFNMG-Januária (Cajuí)</b>. Onde foram contemplados as seguintes dados: Nome das disciplinas, em qual período do curso foi dado aquela disciplinas e quais as situações finais da disciplina, para cada aluno que já se matriculou no curso de Tecnologia em Análise e Desenvolvimento de Sistemas do IFNMG – Campus Januária até no primeiro semestre o ano de 2018.
+<p>
+<p>3 Levantamento de Requisitos</p>
+
+Essa etapa configurou se em analisar quais dados referentes às disciplinas que seriam necessários extrair da base de dados do Cajuí para que os menos  pudessem serem utilizados na etapa de construção da rede bayesiana.
+<p>
+<p>4 Modelagem Dimensional</p>
+
+A etapa seguinte foi a de construção do Data Warehouse dos dados adquiridos do Cajuí, com esses dados foi criado um Dataframe. Foi recebido o banco de dados bruto que tem o PostgreSQL como seu sistema gerenciador de banco de dados, a partir desse dados foram feita a mineração de separado os dados referentes às disciplinas, tais dados já citados acima.
+Com os dados extraídos do banco de dados original criou se um Dataframe no formato de texto Comma-separated values( cvs).
+<p>
+<p>5 Metodologia CRISP-DM</p>
+Como metodologia de estudo aplicamos no decorrer deste trabalho as etapas previstas no CRISP-DM, já abordadas no capítulo 3. CRISP-DM é uma metodologia de mineração de dados em formato cíclico, composto por 6 fases, que direcionam a descoberta do conhecimento para tomada de decisão sobre dados em grande volume.
+CRISP-DM foi concebido no final de 1996 por três “veteranos” do mercado de mineração de dados. A metodologia CRISP-DM é descrita em termos de um modelo de processo hierárquico, consistindo de conjuntos de tarefas.(CHAPMAN, 2000).
+<p>
+<p>6 Criação da Rede Bayesianas</p>
+Foi utilizado o Classificador Naive Bayes, com os dados obtidos na etapa de mineração foi criado um conjunto de dados de treinamento de possíveis situações das disciplinas, foi feita a classificação desses dados em todas as possibilidades.
+O passo seguinte foi gerar a tabela de frequência relativa para cada situação em cada disciplina. Em seguido foi feito a tabela de probabilidades das seguintes situações: Aprovado, Reprovado, Matriculado e Desistente.
+Para calcular a probabilidade foi utilizado o Classificador Naive Bayes, onde o resultado do cálculo será o resultado da classificação.
+Abaixo podemos identificar a função para calcular a probabilidade de um aluno obter uma situação, respondendo a seguinte pergunta: Qual a probabilidade do aluno ser aprovado dado que ele foi reprovado na disciplina de algoritmos?
+
+</br>P(Período = 3, SituacaoDisciplina = Aprovado | Disciplina = "Algoritmos")
+</br>De acordo com a inserção dos dados e a realização dos cálculos a classificador ficar mais rápido é com uma maior nível de confiança uma vez que ele aprende com cada classificação.
+<p>
+<p>7 Implementação do Front End e Back End</p>
+
+Na criação do Front End foi utilizado a linguagem python e html. Para a estilização foi utilizado o bootstrap para os menus e para  que o sistemas possa ser responsivo.
+Já o Back End foi utilizado o Python e Flask, o trabalho foi utilizado  a arquitetura MVC(Model–view–controller) um padrão de arquitetura para organizar a aplicação, dividindo a mesma em 3 camadas, assim facilita a construção e a manutenção da aplicação e por fim foi utilizado a linguagem de programação Java Script para fazer algumas validações de formulários. .
+
                       <span><font color="red"></font></span>
                   </div>
                    </p>

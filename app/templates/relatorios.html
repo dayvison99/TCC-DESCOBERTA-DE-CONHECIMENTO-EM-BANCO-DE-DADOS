@@ -4,7 +4,7 @@
 
 <div class="jumbotron"><center>
 <fieldset class="fieldset-border">
-<table>
+<table class="table table-striped">
 <colgroup span="5"></colgroup>
 <legend class="legend-border"><h4> Relatórios </h4></legend>
 <tr>
@@ -52,8 +52,20 @@
           <center><a href="{{ url_for('disciplina') }}"><img src="{{ url_for('static', filename='img/reprovacao.png') }}" alt="IFNMG"”/ height="60px" ></a>
         </fieldset>
   </td>
+  <td>
+          <fieldset class="fieldset-border">
+            <legend class="legend-border"><h4>Disciplinas com Maiores Disistências</h4></legend>
+            <center><a href="{{ url_for('disciplinaDesistencia') }}"><img src="{{ url_for('static', filename='img/desistencia.ico') }}" alt="IFNMG"”/ height="60px" ></a>
+          </fieldset>
+  </td>
 </tr>
 <tr>
+  <td>
+      <fieldset class="fieldset-border">
+        <legend class="legend-border"><h4>Relatório por Situações</h4></legend>
+        <center><a href="{{ url_for('porsituacoes') }}"><img src="{{ url_for('static', filename='img/situacoes.png') }}" alt="IFNMG"”/ height="60px" ></a>
+      </fieldset>
+  </td>
   <td>
       <fieldset class="fieldset-border">
         <legend class="legend-border"><h4>Situações por Forma de Ingresso</h4></legend>
@@ -80,12 +92,7 @@
             <center><a href="{{ url_for('mediaMatricula') }}"><img src="{{ url_for('static', filename='img/mediaMatricula.png') }}" alt="IFNMG"”/ height="60px" ></a>
           </fieldset>
   </td>-->
-  <td>
-          <fieldset class="fieldset-border">
-            <legend class="legend-border"><h4>Disciplinas com Maiores Disistências</h4></legend>
-            <center><a href="{{ url_for('disciplinaDesistencia') }}"><img src="{{ url_for('static', filename='img/desistencia.ico') }}" alt="IFNMG"”/ height="60px" ></a>
-          </fieldset>
-  </td>
+
 </tr>
 </table>
 </legend>

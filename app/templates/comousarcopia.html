@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+      <div class="login-box-body login-header ">
+
+      <div class="login-box-body">
+        <div class ="col-md-10 col-md-offset-1" >
+          <div class="jumbotron">
+            <br/>
+              <div class="login-box-body">
+                  <center><p class="login-box-msg"><b>Manual :</b><br></center>
+                  </p>
+                    <p class="login-box-msg"><br>
+                        <h4>  Login :</P> </h4>
+                        Para Realizar o login, deverar usar o nome de usuário e a senha fornecidos pelo administrador e/ou coondenador do curso.
+                      </br>Caso tenha esquecido a senha a mesma poderar se recuperada no campo esquecir a senha na tela de login.
+                      <h4>  Telas :</P> </h4>
+                      <h4> 1 - Início: </h4></p>
+                      <ul>
+                      <li> Tela principal onde o usuário poderá ter acesso as demais tela e logo do sistema </li>
+                    </ul>
+                      <h4> 2 - Cadastros: </h4></p></p>
+                      <ul>
+                      <li> Tela disponivel apenas para usuarios administradores do sistema</li>
+                      <li>Ao clicar no botão cadastro será direcionado para a tela de
+                        listagem de usuários onde irá aparecer todos o usuarios cadastrados</li>
+                      <li>Dentro da tela de listagem terá um botão de "Novo" para cadastrar
+                        novos usuários e o botão de "Voltar" que será direcionado para a tela principal</li>
+                      <li>Ao clicar em quaisquer parte do dados que aparece na tela de listagem,
+                        será direcionado para a tela de edição, onde será possível editar e excluir o cadastro do usuario selecionado </li>
+                      <li>Todos os dados editados ou excluidos não poderão mais serem recuperados</li>
+                      <li>Ao final de cada operação de inserção e alteração nos dados o sistema irá retornar uma mensagem de confimação</li>
+                    </ul>
+                    <h4> 3 - Situações: </h4></p></p>
+                    <ul>
+                    <li>Tela para inserir a situaçõe de cada disciplina de um determinado aluno</li>
+                    <li>Deverá selecionar o aluno a ser analisado:</li>
+                    <li>Deverá selecionar a disciplina e depois a situação da mesma, sendo:</li>
+                    <ul><li>Aprovado - Para Alunos que tenha sido aprovado na disciplina escolhida</li>
+                        <li>Reprovado - Para Alunos que tenha sido reprovado na disciplina escolhida</li>
+                        <li>Matricula - Para Alunos que ainda estão fazendo a disciplina escolhida</li>
+                        <li>Desistente - Para Alunos que desistiu/trancou a disciplina escolhida</li>
+
+                    </ul>
+                    <li>Para cada disciplina selecionada deverá clicar no botão "Inserir"</li>
+                    <li>Após clicar no botão Inserir irá carregar uma tela com a probabilidade de acordo com aquela disciplina.</li>
+                    <li>Na tela de resultados das analise, tem a opção para salvar os dados da análise</li>
+                    <li>Após salvar os dados, será direcionado para a tela de inserção para análizar uma nova disciplina</li>
+                  <font color="red">
+                  </br>* A análise deverá ser feita para cada discilina por vez.
+                        </br>* Não sendo permitido fazer a análise de mesma disiciplina para o mesmo aluno.</font>
+                    </ul>
+                    <h4> 4 - Relatórios: </h4></p></p>
+                    <ul>
+                    <lo>No menu relatorio é possivel saber as seguintes situações: </li>
+
+                      <li>Alunos com análise salva</li>
+                      <li>Alunos com risco de reprovação </li>
+                      <li>Percentual por disciplinas </li>
+                      <li>Relação das diciplinas do curso de TADS</li>
+                      <li>Relação das disciplinas com a maior nivel de aprovação</li>
+                      <li>Relação das disciplinas com a maior nivel de reprovação</li>
+                      <li>Relação das disciplinas com maiores indice de desistência</li>
+                      <li>Relação das situações por forma de ingresso</li>
+                      <li>Relação das situações por cidades</li>
+                      <li>Relação dos coeficiente de rendimento</li>  </ul>
+                    <h4> 5 - Ajuda: </h4></p></p>
+                    <ul><li>Essa tela explica o conteúdo de cada intem do menu</li>
+                    <ul>
+                      <span><font color="red"></font></span>
+                  </div>
+                   </p>
+              </center>
+              </p>
+              </p>
+      </div>
+      {% endblock %}

@@ -729,6 +729,13 @@ def mediaMatricula():
     return render_template('disciplinasmedia.html',tables=[resultado.to_html(classes='table table-striped')],
     titles = ['na'])
 
+@app.route("/porsituacoes")
+@login_required
+def porsituacoes():
+    cursor.execute("SELECT matricula.status, Round(count(matricula.status)) as Porcentagem FROM matricula,ingresso where matricula.matricula = ingresso.aluno_id group by matricula.status order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    return render_template('porsituacoes.html',resultado = resultado  )
+
 @app.route("/ingressoCidade")
 @login_required
 def ingressoCidade():
@@ -752,6 +759,14 @@ def rendimento():
 
 
 #Ralatorios em PDFS
+@app.route('/pdfsituacoes')
+def pdfsituacoes():
+    cursor.execute("SELECT matricula.status, Round(count(matricula.status)) as Porcentagem FROM matricula,ingresso where matricula.matricula = ingresso.aluno_id group by matricula.status order by Porcentagem desc")
+    resultado = cursor.fetchall()
+    html = render_template('pdfsituacoes.html', resultado=resultado)
+    return render_pdf(HTML(string=html))
+
+
 @app.route('/pdfcidade')
 def pdfcidade():
     cursor.execute("SELECT matricula.status,matricula.cidade, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status,matricula.cidade order by Porcentagem desc")
