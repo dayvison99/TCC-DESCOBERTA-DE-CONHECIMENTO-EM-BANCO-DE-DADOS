@@ -240,6 +240,20 @@
                         }
     </style>
 
+    <script>
+        var options = { onKeyPress: function (cpf, ev, el, op) {
+        var masks = ['000.000.000-00', '000.000.000-00'];
+        $('.cpfOuCnpj').mask((cpf.length > 14) ? masks[1] : masks[0], op);
+        }
+        }
+
+        $('.cpfOuCnpj').length > 11 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : $('.cpfOuCnpj').mask('000.000.000-00#', options);
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+
   </head>
   <body>
     <table height="100%" width="100%">

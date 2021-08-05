@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content%}
+<script>
+var options = { onKeyPress: function (cpf, ev, el, op) {
+  var masks = ['000.000.000-00', '000.000.000-00'];
+$('.cpfOuCnpj').mask((cpf.length = 15) ? masks[1] : masks[0], op);
+}
+}
+
+$('.cpfOuCnpj').length = 15 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : $('.cpfOuCnpj').mask('000.000.000-00#', options);
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
+
+
+
 <div class="jumbotron">
 <center>
 <fieldset class="fieldset-border">
@@ -34,8 +49,8 @@
               </th>
               <th>
                    <div class="form-group col-xs-4 floating-label-form-group controls" >
-                      <label><h4>CPF </h4></label>
-                        <input required type="text" class="form-control"  title="Somente Numeros" maxlength="11"  placeholder="Cpf *" pattern="[0-9]+$" OnKeyPress="formatar('###########', this)" value="{{ usuario.cpf }}" name="cpf"\>
+                      <label><h4>CPF </h4></label><br/>
+                        <input class="cpfOuCnpj" required type="text" title="ex 111.111.11-11" maxlength="15"  placeholder="Cpf *" value="{{ usuario.cpf }}" name="cpf"\>
                   </div>
             </th>
             </div>

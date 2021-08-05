@@ -31,8 +31,8 @@
         <div class="row control-group">
         <th>
         <div class="form-group col-xs-3 floating-label-form-group controls">
-              <label><h4>CPF </h4></label>
-             {{ render_field(cadastroform.cpf, KeyPress="('###.###.###-##', this)", class="form-control",pattern="[0-9]+$",title="Somente Numeros",minlength="11",maxlength="11",pattern="\d{3}\\d{3}\\d{3}\d{2}",id="cpf",placeholder="Cpf *")}}
+          <label><h4>CPF </h4></label>
+             {{ render_field(cadastroform.cpf, OnKeyPress="('###.###.###-##', this)", class="form-control",pattern="[0-9]+$",title="Somente Numeros",minlength="15",maxlength="15",pattern="\d{3}\.\d{3}\.\d{3}-\d{2}",id="cpf",placeholder="Cpf *")}}
               {% if cadastroform.errors.cpf %}
                 <p class="help-block text-danger"></p>
                   {% for e in cadastroform.errors.cpf %}
