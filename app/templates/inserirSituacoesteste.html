@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content%}
+
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+
+<div class="jumbotron"><center>
+  <fieldset class="fieldset-border">
+    <legend class="legend-border"><h4> Inserção de Situações </h4></legend>
+  <br/>
+  <br/>
+<form action="/sessao/" method="POST" >
+
+<fieldset >
+ <table class="table table-striped">
+            </tr>
+              <tr>
+               <td width="40%"><h4>
+                    <label for="status"><h4> Disciplinas   </h4></label>
+                  <h4>
+                </td>
+                <td width="60%"><h4>
+                     <label for="status"><h4> Situações   </h4></label>
+                   <h4>
+                 </td>
+               </tr>
+                {%for disciplina in disciplina  %}
+                </tr>
+                <td  ><h4>
+                  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+                  <select required  id ="disciplinaselect" name='disciplina' class="selectpicker form-control">
+                      <option value="{{ disciplina.id }}  {{disciplina.nome}}" selected>{{ disciplina.nome }}</option>
+
+
+               </select>
+                <h4></td>
+
+                  <td align="left"><h4>
+                    <select name="status"  onchange="chamar()" id="status" required class="selectpicker form-control">
+                              <option value="nenhum" disabled selected>Escolha a Situação</option>
+                              <option value="APROVADO">Aprovado</option>
+                              <option value="REPROVADO">Reprovado</option>
+                              <option value="MATRICULADO">Matriculado</option>
+                              <option value="CANCELADO">Desistente</option>
+                    </select>
+                  </td>
+                 {% endfor %}
+  </tr>
+ </table>
+</fieldset>
+
+
+<br />
+
+
+<div class="form-group col-xs-4">
+<button class="btn btn-info btn-lg" ><i class="glyphicon glyphicon-plus"></i> Inserir</button>
+</div>
+
+</form>
+
+</center></div>
+
+{% endblock %}

@@ -223,7 +223,7 @@
   </style>
   <style>
     .fieldset-border {
-                border: 1px groove #8B4513 !important;
+                border: 1px groove #ddd !important;
                 padding: 0 1.4em 1.4em 1.4em !important;
                 margin: 0 0 1.5em 0 !important;
                 -webkit-box-shadow: 0px 0px 0px 0px #000;
@@ -258,6 +258,20 @@
   <body>
     <table height="100%" width="100%">
       <tr><td><!--Logo do IFNMG-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#page-top">Start Bootstrap</a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
      <div >
           <ul class="dropdown user user-menu" >
                 <a href="{{ url_for('index') }}" >

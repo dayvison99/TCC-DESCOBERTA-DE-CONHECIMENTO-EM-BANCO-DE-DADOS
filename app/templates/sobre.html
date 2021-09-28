@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Sistema de Analise de Situações Acadêmica</title>
+        <!-- Favicon-->
+          <link rel="icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+        <!-- Bootstrap Icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
+        <!-- SimpleLightbox plugin CSS-->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    </head>
+    <body id="page-top">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top py-3" id="mainNav">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="/index">Entrar no Sistema</a><br>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                         <li class="nav-item">    <a class="navbar-brand" href="{{ url_for('logout') }}">Sair do Sistema</a><br></a></li>
+                </div>
+            </div>
+        </nav>
+        <!-- Masthead-->
+        <header class="masthead">
+            <div class="container px-4 px-lg-5 h-100">
+                <div class="row gx-4 gx-lg-5 h-100 align-items-center justify-content-center text-center">
+                    <div class="col-lg-8 align-self-end">
+                        <h4 class="text-white font-weight-bold">Sistema de Análise de Situações Acadêmicas</h4>
+
+
+                        <hr class="divider" />
+                        <div style="overflow:scroll;height:80px;width:100%;overflow:auto">
+
+   <table width="800" border="0"  class="my-table">
+   <tr>      </tr>
+   </table>
+
+</div>
+                    </div>
+                    <div class="col-lg-8 align-self-baseline">
+
+                                    <div style="overflow:scroll; width:800px; height:400px;">
+
+
+
+
+                     O intuito deste trabalho foi desenvolver um sistema que aplicará técnicas de Mineração de Dados e Inteligência Artificial na geração de padrões estatísticos que servirão de base para a previsão das probabilidades do aluno evadir do curso com base no seu aproveitamento atual.
+                     <br/>No âmbito desse trabalho, utilizaremos o conceito de evasão de curso, pois o propósito é estudar os motivos que levam à evasão no curso de TADS do IFNMG - Campus Januária, ainda que o discente tenha permanecido na instituição fazendo outro curso.
+                     <br/>Neste trabalho foi utilizado o algoritmo de classificação Naive Bayes. Atualmente, o algoritmo se tornou popular na área de Aprendizado de Máquina. Por ser muito simples e rápido, possui um desempenho relativamente maior do que outros classificadores. Além disso, o Naive Bayes só precisa de um pequeno número de dados de teste para concluir as classificações com uma boa precisão.
+                     <br/>Abaixo podemos encontrar a equação do Teorema de Bayes.
+          P(A|B) = P(B|A)P(A)/p(B)              (Equação do Teorema de Bayes)
+
+          <br/>onde:
+          <br/>
+          P(B|A): probabilidade de B acontecer dado que A ocorreu</li>
+          <li>P(A): probabilidade de A ocorrer</li>
+          <li>(B): probabilidade de B ocorrer
+
+            <br/>
+            P(B|A): probabilidade de B acontecer dado que A ocorreu</li>
+            <li>P(A): probabilidade de A ocorrer</li>
+            <li>(B): probabilidade de B ocorrer
+
+
+
+
+          </div>
+          </div>
+
+          <div class="col-xs-7">
+            <br/>
+                        <a class="btn btn-primary btn-xl" href="/index">Entrar no Sistema</a>
+
+                    </div>
+                  </div>
+
+                </div>
+
+
+        </header>
+<br/>        <!-- About-->
+
+        <!-- Footer-->
+        <br/>
+        <footer class="bg-light py-5">
+            <div class="container px-4 px-lg-5"><div class="small text-center text-muted">Copyright &copy; 2021 - IFNMG JANUÁRIA</div></div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- SimpleLightbox plugin JS-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <!-- * *                               SB Forms JS                               * *-->
+        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </body>
+</html>

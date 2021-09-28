@@ -52,7 +52,7 @@ def login():
         if usuario and usuario.senha == form.password.data:
             login_user(usuario, remember=True)
             flash("Bem vindo " +usuario.nomeUsuario)
-            return redirect(url_for('index'))
+            return redirect(url_for('sobresistema'))
             if not is_safe_url('login.html'):
                 return flask.abort(400)
         else:
@@ -60,6 +60,14 @@ def login():
             flash("Contate o administrador do sistema caso não lembre a senha!")
     return render_template('login.html',
                             form=form)
+
+
+#PAGINA SOBRE
+@app.route("/sobresistema/")
+@login_required
+def sobresistema():
+    return render_template('sobre.html')
+
 
 #CRUD USUARIO CADASTAR/ALTERAR/EXCLUIR
 
@@ -198,7 +206,7 @@ def esqueceuSenha():
 #Menus para acessar as paginas
 
 #PAGINA INICIAL
-@app.route("/index")
+@app.route("/index/")
 @login_required
 def index():
     return render_template('index.html')
@@ -269,7 +277,7 @@ def inserirSituacoes(id):
     if alunos.curso == "TADS":
         session["idAluno"] = alunos.cpf
         periodo = Periodo.query.all()
-        disciplina = Disciplina.query.all()
+        disciplina = Disciplina.query.filter(Disciplina.id>=0).order_by("nome")
     else:
         session["idAluno"] = alunos.cpf
         periodo = Periodo.query.all()
@@ -732,28 +740,28 @@ def mediaMatricula():
 @app.route("/porsituacoes")
 @login_required
 def porsituacoes():
-    cursor.execute("SELECT matricula.status, Round(count(matricula.status)) as Porcentagem FROM matricula,ingresso where matricula.matricula = ingresso.aluno_id group by matricula.status order by Porcentagem desc")
+    cursor.execute("SELECT matricula.status, count(matricula.status) as Porcentagem FROM matricula,ingresso where matricula.matricula = ingresso.aluno_id group by matricula.status order by Porcentagem desc")
     resultado = cursor.fetchall()
     return render_template('porsituacoes.html',resultado = resultado  )
 
 @app.route("/ingressoCidade")
 @login_required
 def ingressoCidade():
-    cursor.execute("SELECT matricula.status,matricula.cidade, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status,matricula.cidade order by Porcentagem desc")
+    cursor.execute("SELECT matricula.status,matricula.cidade, Round(count(matricula.status)/274*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id and matricula.cidade != '' group by matricula.status,matricula.cidade order by Porcentagem desc")
     resultado = cursor.fetchall()
     return render_template('ingressoCidade.html',resultado = resultado  )
 
 @app.route("/formasIngresso")
 @login_required
 def formasIngresso():
-    cursor.execute("SELECT matricula.status,ingresso.forma_ingresso, Round(count(matricula.status)/281*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status, ingresso.forma_ingresso order by Porcentagem desc")
+    cursor.execute("SELECT matricula.status,ingresso.forma_ingresso, Round(count(matricula.status)/579*100,2) as Porcentagem FROM matricula,ingresso where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id group by matricula.status, ingresso.forma_ingresso order by Porcentagem desc")
     resultado = cursor.fetchall()
     return render_template('formasingresso.html',resultado = resultado  )
 
 @app.route("/rendimento")
 @login_required
 def rendimento():
-    cursor.execute("SELECT ingresso.coeficiente_rendimento,matricula.status, turma.nome FROM matricula,ingresso, turma where(matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id and turma.id =  ingresso.turma_id and turma.nome like '%TL%' order by coeficiente_rendimento desc ")
+    cursor.execute("SELECT ingresso.coeficiente_rendimento,matricula.status, turma.nome,matricula.nome FROM matricula,ingresso, turma where(matricula.status like '%NÃO RENOVOU%' or matricula.status like '%EM_CURSO%' or matricula.status like '%CONCLU%' or matricula.status like 'ABANDONO' or matricula.status like 'DESLIGADO') and matricula.matricula = ingresso.aluno_id and turma.id =  ingresso.turma_id and turma.nome like '%TL%' order by matricula.status,coeficiente_rendimento desc ")
     resultado = cursor.fetchall()
     return render_template('rendimento.html',resultado = resultado  )
 
