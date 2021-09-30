@@ -37,7 +37,7 @@
            <tr>
              <td width="10%"><input type="date" id="datai" name="datai"  class="form-control" min="2007-01-01" max="2018-12-31" required  value={{ session["datai"] }} ></td>
              <td width="10%"><input type="date" id="dataf" name="dataf" class="form-control" min="2007-01-01" max="2018-12-31"  required  value={{ session["dataf"] }}></td>
-             <td width="10%"> <button class="btn btn-info btn-sm" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button></td>
+             <td width="10%"> <button class="btn btn-warning btn-sm" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button></td>
          </th>
              <span class="validity"></span>
         </div>
@@ -64,10 +64,10 @@
     </table>
     <div class="row">
       <div class="form-group col-xs-4">
-      <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+      <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-warning btn-lg" type="button">Voltar</button></a>
     </div>
       <div class="form-group col-xs-1">
-      <a href='{{ url_for('pdf') }}'/><button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" >Imprimir</button></a>
+      <a href='{{ url_for('pdf') }}'/><button title="Imprimir Relatorios!" class="btn btn-warning btn-lg" type="button" >Imprimir</button></a>
     </div>
       </div>
     </div>

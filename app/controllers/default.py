@@ -211,7 +211,7 @@ def esqueceuSenha():
 def index():
     return render_template('index.html')
 
-@app.route("/leiame")
+@app.route("/leiame", methods=["GET", "POST"])
 @login_required
 def leiame():
     return render_template('leiame.html')

@@ -131,13 +131,13 @@ $('.cpfOuCnpj').length = 15 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : 
             <div id="sucess"></div>
               <div class="row">
               <div class="form-group col-xs-4">
-              <a href="#" data-toggle="modal" data-target="#myModal3" title="Alterar Usuário! " type="button" value="alterar" ><button class="btn btn-info btn-lg" title="Alterar dados do Usuário!" class="active" type="submit" value="Alterar" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Alterar</span></button></a>
+              <a href="#" data-toggle="modal" data-target="#myModal3" title="Alterar Usuário! " type="button" value="alterar" ><button class="btn btn-warning btn-lg" title="Alterar dados do Usuário!" class="active" type="submit" value="Alterar" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"> Alterar</span></button></a>
           </div>
           <div class="form-group col-xs-4">
-              <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-info btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
+              <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-warning btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
           </div>
           <div class="form-group col-xs-2">
-              <a href="#" data-toggle="modal" data-target="#myModal2" title="Voltar! " type="butoon" value="voltar" ><button class="btn btn-info btn-lg" role="presentation" class="active" ><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> Voltar</span></button></a>
+              <a href="#" data-toggle="modal" data-target="#myModal2" title="Voltar! " type="butoon" value="voltar" ><button class="btn btn-warning btn-lg" role="presentation" class="active" ><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> Voltar</span></button></a>
           </div>
         </td>
       </tr>
@@ -169,8 +169,8 @@ $('.cpfOuCnpj').length = 15 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : 
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-          <button class="btn btn-primary" type="submit" value="enviar"> Sim </a>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"> Não </button>
+          <button class="btn btn-warning" type="submit" value="enviar"> Sim </a>
         </div>
       </div>
       </div>
@@ -193,8 +193,8 @@ $('.cpfOuCnpj').length = 15 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : 
         Os dados não poderão ser reculperados!
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-          <a class="btn btn-primary" href="/excluirUsuario/{{ usuario.id }}" value="/excluirUsuario"> Sim </a>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"> Não </button>
+          <a class="btn btn-warning" href="/excluirUsuario/{{ usuario.id }}" value="/excluirUsuario"> Sim </a>
         </div>
       </div>
       </div>
@@ -216,8 +216,8 @@ $('.cpfOuCnpj').length = 15 ? $('.cpfOuCnpj').mask('000.000.000-00', options) : 
         Os dados não salvos serão perdidos!
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"> Não </button>
-          <a class="btn btn-primary" href="{{ url_for('listagemUsuario') }}" value="/excluirUsuario"> Sim </a>
+          <button type="button" class="btn btn-warning" data-dismiss="modal"> Não </button>
+          <a class="btn btn-warning" href="{{ url_for('listagemUsuario') }}" value="/excluirUsuario"> Sim </a>
         </div>
       </div>
       </div>

@@ -29,7 +29,7 @@
               </select>
             </td>
             <td>
-                <button type="submit" class="btn btn-info">Buscar</button>
+                <button type="submit" class="btn btn-warning">Buscar</button>
             </td>
           </tr>
         </table>
@@ -70,7 +70,7 @@
 
         <td>  {{ alunos.nome }}</td>
         <td>  {{ alunos.media}}</td>
-        <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-info btn-lg">Excluir</a></td>
+        <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-warning btn-lg">Excluir</a></td>
       </tr>
       {% endfor %}
 
@@ -81,11 +81,11 @@
     <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-4">
-    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-warning btn-lg" type="button">Voltar</button></a>
   </div>
   <div class="row">
     <div class="form-group col-xs-1">
-    <a href='{{ url_for('pdfAlunosRiscos') }}'/><button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" >Imprimir</button></a>
+    <a href='{{ url_for('pdfAlunosRiscos') }}'/><button title="Imprimir Relatorios!" class="btn btn-warning btn-lg" type="button" >Imprimir</button></a>
     </div>
   </div>
   </form>

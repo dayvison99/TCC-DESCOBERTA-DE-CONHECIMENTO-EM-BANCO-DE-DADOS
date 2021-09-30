@@ -34,12 +34,12 @@
         <td>  {{ alunos.nome }}</td>
         <td>  {{ alunos.media}}</td>
         <td> <div class="form-group col-xs-2">
-                <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-info btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
+                <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-warning btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
              </div>
         </td>
       </tr>
       {% endfor %}
-
+  {% for alunos in alunos %}
 
 </tbody>
 </table>
@@ -47,11 +47,11 @@
     <div id="sucess"></div>
   <div class="row">
     <div class="form-group col-xs-4">
-    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-info btn-lg" type="button">Voltar</button></a>
+    <a href='{{ url_for('relatorios') }}'/><button title="Voltar Pagina Relatorios!" class="btn btn-warning btn-lg" type="button">Voltar</button></a>
   </div>
   <div class="row">
     <div class="form-group col-xs-1">
-    <a href='{{ url_for('pdfAlunos') }}'/><button title="Imprimir Relatorios!" class="btn btn-info btn-lg" type="button" >Imprimir</button></a>
+    <a href='{{ url_for('pdfAlunos') }}'/><button title="Imprimir Relatorios!" class="btn btn-warning btn-lg" type="button" >Imprimir</button></a>
     </div>
   </div>
   </form>
@@ -69,19 +69,20 @@
     <h4 class="modal-title" id="myModalLabel">Atenção</h4>
   </div>
   <div class="modal-body">
-    Certeza que deseja voltar?</p>
-  Os dados não salvos serão perdidos!
+    Certeza que deseja Excluirr?</p>
+  Os dados não poderão ser recuperados!
   </div>
   <div class="modal-footer">
 
-    <button type="button" class="btn btn-info btn-md" data-dismiss="modal"> Não </button>
-    {% for alunos in alunos %}
-    <a class="btn btn-info btn-md" href='/excluirAlunos/{{ alunos.id }}' value="/excluirAlunos"> Sim </a>
-    {% endfor %}
+    <button type="button" class="btn btn-warning btn-md" data-dismiss="modal"> Não </button>
+
+    <a class="btn btn-warning btn-md" href='/excluirAlunos/{{ alunos.id }}' value="/excluirAlunos"> Sim </a>
+
   </div>
 </div>
 </div>
 </div>
+  {% endfor %}
 <!--Fim do codigo-->
 
 </fieldset>
