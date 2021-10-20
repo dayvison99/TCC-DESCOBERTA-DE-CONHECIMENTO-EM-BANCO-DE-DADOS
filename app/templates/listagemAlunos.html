@@ -22,6 +22,7 @@
 
   <table id="tabela" class="table table-striped table-bordered table-condensed table-hover" title="Alunos em Risco de Evasão!">
      <tr >
+       <th>ID do Aluno</th>
         <th>Nome do Aluno</th>
         <th>Risco de Evasão (%)</th>
         <th>Excluir Aluno da Lista</th>
@@ -31,12 +32,11 @@
       {% for alunos in alunos %}
 
       <tr>
+        <td>  {{ alunos.id }}</td>
         <td>  {{ alunos.nome }}</td>
         <td>  {{ alunos.media}}</td>
-        <td> <div class="form-group col-xs-2">
-                <a href="#" data-toggle="modal" data-target="#myModal1" title="Excluir Usuário! " type="button" value="Excluir" ><button class="btn btn-warning btn-lg" role="presentation" class="active"><span class="glyphicon glyphicon-remove" aria-hidden="true"> Excluir</span></button></a>
-             </div>
-        </td>
+        <td> <a href='/excluirAlunos/{{ alunos.id }}'  title="Excluir Alunos! " value="Excluir" class="btn btn-warning btn-lg">Excluir</a></td>       
+
       </tr>
       {% endfor %}
   {% for alunos in alunos %}

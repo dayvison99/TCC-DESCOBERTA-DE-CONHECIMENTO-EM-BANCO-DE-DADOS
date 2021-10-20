@@ -326,7 +326,8 @@ def nossahistoriaifnmg():
 @app.route("/todosAlunos")
 @login_required
 def todosAlunos():
-    alunos = Alunos.query.all()
+
+    alunos = Alunos.query.order_by(Alunos.nome).all()
     return render_template('buscarAlunos.html',alunos=alunos)
 
 # Salvando dados alunos apos analise
@@ -434,8 +435,10 @@ def alunosRisco():
 @login_required
 def excluirAlunos(id):
     cont = 0
-    while cont < 1:
+
+    while cont <=id:
         disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
+
         if disAlunos:
             cont = cont-1
             alunosform = AlunosForm()
@@ -450,6 +453,29 @@ def excluirAlunos(id):
         cont = cont+1
     flash ("Dados Excluidos com Sucesso!")
     return redirect(url_for('alunosAnalise'))
+
+#Excluir lista de alunos
+@app.route("/excluirAlunosrisco/<int:id>",methods=["GET", "POST"])
+@login_required
+def excluirAlunosRisco(id):
+    cont = 0
+    while cont <=id:
+        disAlunos = Disciplinas_Alunos.query.filter_by(id_alunos=id).first()
+
+        if disAlunos:
+            cont = cont-1
+            alunosform = AlunosForm()
+            daform = Disciplinas_AlunosForm()
+            alunos = Alunos.query.filter_by(id=id).first()
+            alunos.resultado = 0
+            alunos.media = 0
+            db.session.delete(disAlunos)
+            db.session.commit()
+            alunos = Alunos.query.all()
+            disAlunos = Disciplinas_Alunos.query.all()
+        cont = cont+1
+    flash ("Dados Excluidos com Sucesso!")
+    return redirect(url_for('alunosRisco'))
 
 ##Parte da mineração de dados
 #armazenado dados

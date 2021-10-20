@@ -72,11 +72,16 @@
 
                      Como base deste estudo, foi decidido utilizar a metodologia CRISP-DM (Cross-Industry Standard Process for Data Mining pois é uma das metodologia utilizadas na análise de dados.
 CRISP-DM é composta por 6 fases, organizadas de maneira cíclica que são:</p>
-<ul><li>Entendimento do negócio: avaliação das situações e recursos, determinação dos objetivos de Data Mining em relação ao domínio e criação de um plano de projeto;</p>
-    <li>Entendimento dos dados: coleta dos dados iniciais, realização da descrição dos dados, bem como sua exploração e análise de qualidade;</p>
-    <li>Preparação dos dados: processos de seleção, etapas de pré-processamento, com limpeza, construção, integração e formatação dos dados;</p>
-    <li>Modelagem: seleção de técnicas de modelagem com a geração de testes para construção de um modelo e posterior revisão;</p>
-    <li>Avaliação: avaliação dos resultados e revisão dos procedimentos;</p>
+<ul><li>Entendimento do negócio: Essa etapa configurou-se em analisar quais eram os objetivos do trabalho. Descobrir quais eram os problemas a serem tratados através da mineração de dados e a criação de uma estratégia de como foi desenvolvido o trabalho. Foi preciso entender os conceito de evasão e como seria empregado.</p>
+    <li>Entendimento dos dados: Os dados utilizados no sistema foram fornecidos pelo Sistema Acadêmico do IFNMG-Januária (Cajuí). Foram utilizados os dados dos alunos do curso de TADS, no período compreendido entre os anos de 2009  até o primeiro semestre do ano de 2018, dando um total de 10496 registros. Onde foram contemplados os seguintes dados: Nome das disciplinas, em qual período do curso foi dado aquela disciplinas e quais as situações finais da disciplina, para cada aluno que já se matriculou no curso de Tecnologia em Análise e Desenvolvimento de Sistemas do IFNMG – Campus Januária. Os demais dados foram descartados levando em conta que não teria relevância para este estudo.</p>
+    <li>Preparação dos dados:  Essa etapa foi a de construção do Data Warehouse dos dados adquiridos do Cajuí. Foi utilizado a biblioteca Pandas para manipulação e análise de dados, Com os dados extraídos do banco de dados original criou-se um Dataframe no formato de texto Comma-separated values (CSV).  Foi recebido o banco de dados bruto que tem o PostgreSQL como seu sistema gerenciador de banco de dados, a partir desse dados foram feita a mineração de separado os dados referentes às disciplinas, tais dados já citados na fase de Entendimento de Dados.
+</p>
+    <li>Modelagem: Foi utilizado o Classificador Naive Bayes, com os dados obtidos na etapa de mineração foi criado um conjunto de dados de treinamento de possíveis situações das disciplinas, foi feita a classificação desses dados em todas as possibilidades. O passo seguinte foi gerar a tabela de frequência relativa para cada situação em cada disciplina. Em seguida foi feito a tabela de probabilidades das seguintes situações: Aprovado, Reprovado, Matriculado e Desistente. Para calcular a probabilidade foi utilizado o Classificador Naive Bayes, onde o resultado do cálculo será o resultado da classificação. <br/>Abaixo podemos identificar a função para calcular a probabilidade de um aluno obter uma situação, respondendo a seguinte pergunta: Qual a probabilidade do aluno ser aprovado dado que ele foi reprovado na disciplina de algoritmos?
+<br/>P(Período = 3, SituacaoDisciplina = Aprovado | Disciplina = "Algoritmos")</p>
+
+De acordo com a inserção dos dados e a realização dos cálculos o classificador fica mais rápido é com uma maior nível de confiança uma vez que ele aprende com cada classificação.
+</p>
+    <li>Avaliação: Nessa etapa foram feitas as análises dos resultados obtidos na fase de modelação. Esta etapa compreende as ações a serem tomadas diante dos resultados obtidos com a mineração de dados.</p>
     <li>Desenvolvimento: distribuição dos resultados, monitoramento, manutenção e produção de relatório final e documentação da experiência.</p>
 </ul>
 
