@@ -10,6 +10,8 @@ from sqlalchemy.sql import func
 import hashlib
 import os
 from flask_weasyprint import HTML, render_pdf
+import tkinter
+from tkinter import messagebox
 
 #importando bibliotecas de manipulação de dados
 import numpy as np
@@ -341,8 +343,9 @@ def listagemAlunos():
         alunos.resultado = session['resultados']
         resultado = alunos.resultado
         disAlunos = Disciplinas_AlunosForm()
-        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.nomeDisciplina.data,disAlunos.id_alunos.data, disAlunos.resultado.data)
+        disciplinas_alunos = Disciplinas_Alunos(disAlunos.id_disciplinas.data,disAlunos.nomeDisciplina.data,disAlunos.id_alunos.data, disAlunos.resultado.data,disAlunos.status.data)
         disciplinas_alunos.id_alunos = alunos.id
+        disciplinas_alunos.status = session["statusdisciplinas"]
         disciplinas_alunos.id_disciplinas = session["disciplinas_id"]
         disciplinas_alunos.resultado=alunos.resultado
         resultado = alunos.resultado
@@ -353,8 +356,9 @@ def listagemAlunos():
         dnome = Disciplinas_Alunos.query.filter_by(id_disciplinas=session['disciplina_aux']).first()
         daluno = Disciplinas_Alunos.query.filter_by(id_alunos=alunos.id).first()
         #Verificando se a analise ja foi feita para determinado aluno
+        verificacao  = Disciplinas_Alunos.query.filter_by(id_disciplinas=session['disciplina_aux'],id_alunos=alunos.id).first()
         if dnome and daluno :
-            if dnome.nomeDisciplina == session["disciplinas_id"] and daluno.id_alunos == alunos.id :
+            if verificacao:
                 flash("Disciplina Já Analizada para o aluno selecionado!")
                 return redirect(url_for('inserirSituacoes',id = alunos.id))
 
@@ -389,7 +393,7 @@ def alunosAnalise():
 @app.route("/percentualdisci1/",methods=["GET", "POST"])
 @login_required
 def percentualdisci1():
-    alunos = Alunos.query.all()
+    alunos = Alunos.query.filter(Alunos.resultado>0)
     return render_template('listAlunosDisci.html',alunos=alunos)
 
 @app.route("/percentualdisci/<int:id>",methods=["GET", "POST"])
@@ -404,8 +408,8 @@ def percentualdisci(id):
     aluno = Alunos.query.filter_by(id=id).first()
     if aluno:
         if aluno.id==id:
-            disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data)
-            disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id)
+            disAlunos = Disciplinas_Alunos(daform.id_disciplinas.data,daform.nomeDisciplina,daform.resultado.data,daform.id_alunos.data,daform.status.data)
+            disAlunos = Disciplinas_Alunos.query.filter(Disciplinas_Alunos.id_alunos==aluno.id,Disciplinas_Alunos.status != "APROVADO")
             return render_template('listAlunosDisciRelatorio.html',
             alunos=alunos,disAlunos=disAlunos)
     else:
@@ -485,6 +489,7 @@ def sessao():
     id = request.form.get("disciplina")
     session["salvardisciplina"] = request.form.get("disciplina")
     session["salvarstatus"] = request.form.get("status")
+    session["statusdisciplinas"] = request.form.get("status")
     session["disciplinas_id"]= id
     session['disciplina_aux'] = request.form.get("disciplina")
     periodo = Periodo.query.all()
