@@ -1,6 +1,6 @@
 cairocffi==1.0.2
 CairoSVG==2.3.0
-Flask==0.12.2
+Flask==2.3.2
 Flask-BabelEx==0.9.3
 Flask-Hashing==1.1
 Flask-Login==0.4.1
